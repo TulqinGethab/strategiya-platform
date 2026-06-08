@@ -1,0 +1,108 @@
+<section id="dashboardSection">
+
+  <div class="section-head">
+    <div>
+      <h2>Umumiy ko‘rsatkichlar</h2>
+      <p>Loyihalar holati, muddatlar va xavf monitoringi</p>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <section class="kpi">
+    <div class="kpi-card">
+      <div class="kpi-icon green">
+        <i class="ri-folder-chart-line"></i>
+      </div>
+
+      <div class="kpi-info">
+        <div class="kpi-row">
+          <h2 id="totalCount">0</h2>
+          <span class="trend up" id="totalTrend">↑ 0%</span>
+        </div>
+
+        <p>Jami loyihalar</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon blue">
+        <i class="ri-loader-4-line"></i>
+      </div>
+
+      <div class="kpi-info">
+        <div class="kpi-row">
+          <h2 id="activeCount">0</h2>
+          <span class="trend up" id="activeTrend">↑ 0%</span>
+        </div>
+
+        <p>Jarayonda</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon gray">
+        <i class="ri-checkbox-circle-line"></i>
+      </div>
+
+      <div class="kpi-info">
+        <div class="kpi-row">
+          <h2 id="completedCount">0</h2>
+          <span class="trend up" id="completedTrend">↑ 0%</span>
+        </div>
+
+        <p>Bajarilgan</p>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon red">
+        <i class="ri-error-warning-line"></i>
+      </div>
+
+      <div class="kpi-info">
+        <div class="kpi-row">
+          <h2 id="riskCount">0</h2>
+          <span class="trend down" id="riskTrend">↓ 0%</span>
+        </div>
+
+        <p>Xavf / kechikkan</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD CONTENT -->
+  <div class="dashboard-grid">
+
+    <!-- CALENDAR -->
+    <div class="panel-card calendar-panel">
+      <div class="panel-head">
+        <div>
+          <h3>
+            <i class="ri-calendar-2-line"></i>
+            Loyihalar kalendari
+          </h3>
+          <p>Deadline va tadbirlar jadvali</p>
+        </div>
+      </div>
+
+      <div id="calendar"></div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="panel-card timeline">
+      <div class="panel-head">
+        <div>
+          <h3>
+            <i class="ri-time-line"></i>
+            Project Timeline
+          </h3>
+          <p>Yaqinlashayotgan muddatlar</p>
+        </div>
+      </div>
+
+      <div id="timeline"></div>
+    </div>
+
+  </div>
+
+</section>

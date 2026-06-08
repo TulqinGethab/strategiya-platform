@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Strategiya Platformasi</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+  >
+
+  <!-- FullCalendar -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css"
+    rel="stylesheet"
+  >
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/strategy-app/css/main.css?v=73">
+</head>
+
+<body>
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <div data-include="layout/sidebar.html"></div>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- HEADER -->
+      <div data-include="layout/header.html"></div>
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <!-- DASHBOARD -->
+        <div data-include="modules/dashboard/dashboard.html"></div>
+
+        <!-- PROJECTS -->
+        <div data-include="modules/projects/projects.html"></div>
+
+        <!-- STRUCTURE -->
+        <div data-include="modules/structure/structure.html"></div>
+
+        <!-- TADAT -->
+        <div data-include="modules/tadat/tadat.html"></div>
+
+        <!-- REPORTS -->
+        <div data-include="modules/reports/reports.html"></div>
+
+        <!-- SETTINGS -->
+        <div data-include="modules/settings/settings.html"></div>
+
+      </div>
+
+    </main>
+  </div>
+  <!-- DOCX import -->
+<script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
+  <!-- Include loader -->
+  <script src="/strategy-app/js/include.js?v=73"></script>
+</body>
+</html>

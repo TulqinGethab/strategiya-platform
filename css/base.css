@@ -1,0 +1,133 @@
+/* =========================================================
+   BASE.CSS
+   Variables + Reset + Global defaults
+========================================================= */
+
+/* ================= VARIABLES ================= */
+
+:root{
+  --bg:#f6f8fc;
+  --bg-soft:#eef4ff;
+
+  --card:#ffffff;
+  --card-soft:#f8fafc;
+
+  --text:#0f172a;
+  --muted:#64748b;
+  --muted-2:#94a3b8;
+
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --primary-soft:#dbeafe;
+
+  --success:#16a34a;
+  --success-soft:#dcfce7;
+
+  --warning:#f59e0b;
+  --warning-soft:#fef3c7;
+
+  --danger:#dc2626;
+  --danger-soft:#fee2e2;
+
+  --gray:#64748b;
+  --gray-soft:#f1f5f9;
+
+  --border:#e2e8f0;
+
+  --radius-sm:10px;
+  --radius:16px;
+  --radius-lg:22px;
+
+  --shadow-sm:0 4px 12px rgba(15,23,42,.05);
+  --shadow:0 12px 30px rgba(15,23,42,.08);
+  --shadow-lg:0 22px 55px rgba(15,23,42,.14);
+
+  --sidebar-width:280px;
+  --header-height:86px;
+}
+
+/* ================= RESET ================= */
+
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100dvh;
+  overflow:hidden;
+
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+
+  background:
+    radial-gradient(circle at top left, rgba(37,99,235,.10), transparent 32%),
+    linear-gradient(180deg,#f8fafc,#eef2f7);
+}
+
+/* ================= ELEMENT DEFAULTS ================= */
+
+button,
+input,
+select,
+textarea{
+  font-family:inherit;
+  outline:none;
+}
+
+button{
+  border:none;
+  cursor:pointer;
+  user-select:none;
+  transition:.2s ease;
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+input,
+select,
+textarea{
+  color:var(--text);
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+ul,
+ol{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+/* ================= UTILITIES ================= */
+
+.hidden{
+  display:none !important;
+}
+
+.no-scroll{
+  overflow:hidden !important;
+}

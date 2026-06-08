@@ -1,0 +1,151 @@
+<div class="modal" id="modal">
+  <div class="modal-content">
+
+    <!-- MODAL HEADER -->
+    <div class="modal-header">
+      <div>
+        <span class="modal-eyebrow">Project form</span>
+        <h3 id="modalTitle">New Project</h3>
+      </div>
+
+      <button type="button" class="modal-close" onclick="closeModal()">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <!-- MODAL BODY -->
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label for="kirimNumber">Kirim raqami</label>
+        <input
+          id="kirimNumber"
+          type="text"
+          placeholder="Masalan: 01-123"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="kirimDate">Kirim sanasi</label>
+        <input
+          id="kirimDate"
+          type="date"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="chiqimNumber">Chiqim raqami</label>
+        <input
+          id="chiqimNumber"
+          type="text"
+          placeholder="Masalan: 02-456"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="chiqimDate">Chiqim sanasi</label>
+        <input
+          id="chiqimDate"
+          type="date"
+        >
+      </div>
+
+      <div class="form-group full">
+        <label for="author">Muallif</label>
+        <input
+          id="author"
+          type="text"
+          placeholder="Masalan: T.Ismailov"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="form-group full">
+        <label for="eventName">Tadbir nomi</label>
+        <input
+          id="eventName"
+          type="text"
+          placeholder="Tadbir nomini kiriting"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="form-group full">
+        <label for="mechanism">Amalga oshirish mexanizmi</label>
+        <input
+          id="mechanism"
+          type="text"
+          placeholder="Mexanizmni kiriting"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="form">Amalga oshirish shakli</label>
+        <input
+          id="form"
+          type="text"
+          placeholder="Masalan: Reja-jadval"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="deadline">Muddat</label>
+        <input
+          id="deadline"
+          type="date"
+        >
+      </div>
+
+      <div class="form-group full">
+        <label for="executorInput">Ijrochilar</label>
+
+        <div class="executor-row">
+          <input
+            id="executorInput"
+            type="text"
+            placeholder="Ijrochi nomi"
+            autocomplete="off"
+          >
+
+          <button
+            type="button"
+            class="executor-add"
+            onclick="addExecutor()"
+            title="Ijrochi qo‘shish"
+          >
+            <i class="ri-add-line"></i>
+          </button>
+        </div>
+
+        <div id="executorList"></div>
+      </div>
+
+      <div class="form-group full">
+        <label for="status">Holati</label>
+
+        <select id="status">
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="risk">Risk</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- MODAL ACTIONS -->
+    <div class="modal-actions">
+      <button type="button" class="cancel" onclick="closeModal()">
+        Cancel
+      </button>
+
+      <button type="button" class="save" onclick="saveProject()">
+        Save
+      </button>
+    </div>
+
+  </div>
+</div>

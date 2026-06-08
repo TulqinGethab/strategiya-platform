@@ -1,0 +1,126 @@
+<section id="structureSection" style="display:none">
+
+  <div class="structure-page">
+
+    <aside class="structure-builder-panel">
+      <div class="builder-header">
+        <span>STRUCTURE BUILDER</span>
+        <h3>Struktura yaratish</h3>
+      </div>
+
+      <div class="builder-body">
+
+        <div class="builder-format-box">
+          <div class="builder-format-title">
+            <span>Format tanlash</span>
+            <p>Preview uchun qog‘oz formati va yo‘nalishini tanlang</p>
+          </div>
+
+          <div class="format-buttons">
+            <button type="button" class="format-btn active" id="createA4Format">
+              <i class="ri-file-paper-2-line"></i>
+              A4 format
+            </button>
+
+            <button type="button" class="format-btn" id="createA3Format">
+              <i class="ri-file-paper-line"></i>
+              A3 format
+            </button>
+          </div>
+
+          <div class="orientation-buttons">
+            <button type="button" class="orientation-btn" id="selectPortraitFormat">
+              <i class="ri-layout-top-line"></i>
+              Knijni
+            </button>
+
+            <button type="button" class="orientation-btn active" id="selectLandscapeFormat">
+              <i class="ri-layout-left-line"></i>
+              Albom
+            </button>
+          </div>
+        </div>
+
+        <div class="builder-help-box">
+          <i class="ri-cursor-line"></i>
+
+          <div>
+            <h4>Sarlavhani format ichida yozing</h4>
+            <p>
+              A4/A3 qog‘oz ichidagi sarlavha joyiga bosing va matnni bevosita shu yerda yozing.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <main class="structure-preview-panel">
+      <div class="preview-header">
+        <div>
+          <span>PREVIEW</span>
+          <h2>Struktura preview</h2>
+        </div>
+
+        <div class="preview-header-actions">
+          <div class="zoom-controls">
+            <button type="button" class="zoom-btn" id="zoomOutStructure">
+              <i class="ri-subtract-line"></i>
+            </button>
+
+            <button type="button" class="zoom-value" id="zoomResetStructure">
+              100%
+            </button>
+
+            <button type="button" class="zoom-btn" id="zoomInStructure">
+              <i class="ri-add-line"></i>
+            </button>
+          </div>
+
+          <div class="preview-format-badge" id="previewFormatBadge">
+            A4 • Albom
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-canvas">
+
+        <div class="paper-stage">
+          <div class="paper-zoom-stage" id="paperZoomStage">
+
+            <div class="preview-paper paper-a4 paper-landscape" id="previewPaper">
+
+              <div class="paper-body">
+
+                <div class="paper-title-area">
+                  <h2
+                    id="paperTitlePreview"
+                    contenteditable="true"
+                    spellcheck="false"
+                    data-placeholder="Sarlavhani shu yerga yozing"
+                  ></h2>
+                </div>
+
+                <div class="paper-content-area">
+                  <div class="paper-empty">
+                    <i class="ri-organization-chart"></i>
+                    <h3>Preview panel</h3>
+                    <p>
+                      Keyingi bosqichlarda struktura bloklari shu format ichida yaratiladi.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+</section>

@@ -1,0 +1,587 @@
+/* =========================================================
+   SIDEBAR
+   Full sidebar + collapsed icon-only mode
+========================================================= */
+
+.sidebar{
+  width:var(--sidebar-width);
+  flex:0 0 var(--sidebar-width);
+
+  height:calc(100dvh - 20px);
+  min-height:calc(100dvh - 20px);
+
+  margin:10px;
+  padding:22px;
+
+  display:flex;
+  flex-direction:column;
+
+  background:
+    linear-gradient(180deg,rgba(37,99,235,.98),rgba(29,78,216,.98)),
+    radial-gradient(circle at top,rgba(255,255,255,.22),transparent 38%);
+
+  color:#fff;
+
+  border-radius:26px;
+  box-shadow:var(--shadow-lg);
+
+  position:sticky;
+  top:10px;
+
+  overflow:visible;
+
+  transition:
+    width .25s ease,
+    flex-basis .25s ease,
+    padding .25s ease;
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.sidebar-brand{
+  /* MUHIM: relative bo‘lmasin, aks holda toggle tepada qoladi */
+  position:static;
+
+  display:flex;
+  align-items:center;
+  gap:13px;
+
+  padding:8px 8px 24px;
+
+  border-bottom:1px solid rgba(255,255,255,.16);
+  margin-bottom:18px;
+}
+
+.brand-icon{
+  width:48px;
+  height:48px;
+
+  flex:0 0 48px;
+
+  border-radius:16px;
+  background:rgba(255,255,255,.16);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+}
+
+.brand-icon i{
+  font-size:25px;
+}
+
+.brand-text{
+  min-width:0;
+
+  transition:
+    opacity .18s ease,
+    transform .18s ease,
+    width .18s ease;
+}
+
+.sidebar-brand h2{
+  margin:0;
+
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:.2px;
+  line-height:1.1;
+
+  white-space:nowrap;
+}
+
+.sidebar-brand p{
+  margin:3px 0 0;
+
+  color:#dbeafe;
+  font-size:13px;
+  font-weight:500;
+
+  white-space:nowrap;
+}
+
+/* =========================================================
+   SIDEBAR TOGGLE BUTTON
+   Sidebar o‘ng chetining o‘rtasida turadi
+========================================================= */
+
+.sidebar-toggle{
+  position:absolute;
+
+  right:-13px;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:30px;
+  height:64px;
+
+  margin:0;
+  padding:0;
+
+  border:none;
+  outline:none;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#ffffff;
+  color:#2563eb;
+
+  border-radius:14px;
+  box-shadow:0 10px 24px rgba(15,23,42,.18);
+
+  z-index:100;
+
+  transition:
+    background .22s ease,
+    color .22s ease,
+    box-shadow .22s ease;
+}
+
+.sidebar-toggle:hover{
+  background:#f8fbff;
+  color:#1d4ed8;
+  box-shadow:0 12px 28px rgba(15,23,42,.22);
+}
+
+.sidebar-toggle i{
+  font-size:18px;
+  line-height:1;
+  transition:.22s ease;
+}
+
+/* Knopka ichidagi vertikal chiziq */
+.sidebar-toggle::before{
+  content:"";
+
+  position:absolute;
+  left:7px;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:1px;
+  height:36px;
+
+  background:#dbeafe;
+  border-radius:999px;
+}
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.sidebar-menu{
+  flex:1;
+  min-height:0;
+
+  overflow:hidden;
+}
+
+.sidebar-menu ul,
+.sidebar ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.sidebar li{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  gap:13px;
+
+  padding:13px 14px;
+  margin-bottom:8px;
+
+  border-radius:16px;
+
+  cursor:pointer;
+
+  color:#dbeafe;
+
+  font-size:14px;
+  font-weight:600;
+
+  transition:
+    background .22s ease,
+    color .22s ease,
+    padding .22s ease;
+}
+
+.sidebar li i{
+  width:24px;
+  flex:0 0 24px;
+
+  text-align:center;
+  font-size:20px;
+}
+
+.sidebar-text{
+  white-space:nowrap;
+
+  transition:
+    opacity .18s ease,
+    transform .18s ease,
+    width .18s ease;
+}
+
+.sidebar li:hover{
+  background:rgba(255,255,255,.13);
+  color:#fff;
+}
+
+.sidebar li.active{
+  background:rgba(255,255,255,.20);
+  color:#fff;
+
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);
+}
+
+.sidebar li.active::before{
+  content:"";
+
+  position:absolute;
+  left:-8px;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:4px;
+  height:28px;
+
+  border-radius:999px;
+  background:#fff;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.sidebar-footer{
+  flex:0 0 auto;
+
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.16);
+}
+
+.mini-user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  padding:12px;
+
+  border-radius:18px;
+  background:rgba(255,255,255,.12);
+}
+
+.mini-avatar{
+  width:38px;
+  height:38px;
+
+  flex:0 0 38px;
+
+  border-radius:14px;
+
+  background:#fff;
+  color:var(--primary);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:800;
+}
+
+.mini-user-info{
+  min-width:0;
+
+  transition:
+    opacity .18s ease,
+    transform .18s ease,
+    width .18s ease;
+}
+
+.mini-user strong{
+  display:block;
+
+  font-size:14px;
+  white-space:nowrap;
+}
+
+.mini-user span{
+  display:block;
+
+  color:#dbeafe;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+========================================================= */
+
+body.sidebar-collapsed{
+  --sidebar-width:88px;
+}
+
+body.sidebar-collapsed .sidebar{
+  width:88px;
+  flex:0 0 88px;
+
+  padding:22px 12px;
+
+  overflow:visible;
+}
+
+body.sidebar-collapsed .sidebar-brand{
+  justify-content:center;
+
+  padding:8px 0 24px;
+  gap:0;
+}
+
+body.sidebar-collapsed .brand-icon{
+  width:48px;
+  height:48px;
+
+  margin:0 auto;
+}
+
+body.sidebar-collapsed .brand-text{
+  display:none;
+}
+
+body.sidebar-collapsed .sidebar-toggle{
+  right:-13px;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:30px;
+  height:64px;
+
+  background:#ffffff;
+  color:#2563eb;
+
+  border-radius:14px;
+  box-shadow:0 10px 24px rgba(15,23,42,.18);
+}
+
+body.sidebar-collapsed .sidebar-toggle i{
+  transform:rotate(180deg);
+}
+
+body.sidebar-collapsed .sidebar-menu{
+  overflow:visible;
+}
+
+body.sidebar-collapsed .sidebar-menu ul{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+body.sidebar-collapsed .sidebar li{
+  width:56px;
+  height:56px;
+
+  padding:0;
+  margin-bottom:10px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:18px;
+  gap:0;
+}
+
+body.sidebar-collapsed .sidebar li i{
+  width:auto;
+  flex:0 0 auto;
+
+  margin:0;
+  padding:0;
+
+  font-size:22px;
+  line-height:1;
+}
+
+body.sidebar-collapsed .sidebar-text{
+  display:none;
+}
+
+body.sidebar-collapsed .sidebar li:hover{
+  background:rgba(255,255,255,.16);
+  color:#fff;
+
+  transform:none;
+}
+
+body.sidebar-collapsed .sidebar li.active{
+  background:rgba(255,255,255,.22);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+}
+
+body.sidebar-collapsed .sidebar li.active::before{
+  left:-12px;
+
+  width:4px;
+  height:28px;
+}
+
+/* Tooltip chiqmasin */
+body.sidebar-collapsed .sidebar li:hover::after{
+  display:none !important;
+  content:none !important;
+}
+
+body.sidebar-collapsed .sidebar-footer{
+  display:flex;
+  justify-content:center;
+
+  padding-top:18px;
+}
+
+body.sidebar-collapsed .mini-user{
+  width:56px;
+  height:56px;
+
+  padding:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:18px;
+}
+
+body.sidebar-collapsed .mini-avatar{
+  width:38px;
+  height:38px;
+
+  margin:0;
+}
+
+body.sidebar-collapsed .mini-user-info{
+  display:none;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width:900px){
+  .sidebar{
+    width:auto;
+    height:auto;
+    min-height:auto;
+
+    margin:10px;
+    padding:22px;
+
+    position:relative;
+    top:auto;
+
+    overflow:hidden;
+  }
+
+  .sidebar-brand{
+    padding-bottom:16px;
+  }
+
+  .sidebar-menu{
+    overflow:visible;
+  }
+
+  .sidebar-menu ul{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:8px;
+  }
+
+  .sidebar li{
+    width:auto;
+    height:auto;
+
+    margin-bottom:0;
+    padding:12px 8px;
+
+    justify-content:center;
+    flex-direction:column;
+    gap:5px;
+
+    text-align:center;
+  }
+
+  .sidebar li.active::before{
+    display:none;
+  }
+
+  .sidebar-footer{
+    display:none;
+  }
+
+  .sidebar-toggle{
+    display:none;
+  }
+
+  body.sidebar-collapsed{
+    --sidebar-width:280px;
+  }
+
+  body.sidebar-collapsed .sidebar{
+    width:auto;
+    flex-basis:auto;
+
+    padding:22px;
+    overflow:hidden;
+  }
+
+  body.sidebar-collapsed .brand-text,
+  body.sidebar-collapsed .sidebar-text,
+  body.sidebar-collapsed .mini-user-info{
+    display:block;
+
+    width:auto;
+    opacity:1;
+    transform:none;
+
+    overflow:visible;
+    pointer-events:auto;
+  }
+
+  body.sidebar-collapsed .sidebar-menu ul{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:8px;
+  }
+
+  body.sidebar-collapsed .sidebar li{
+    width:auto;
+    height:auto;
+
+    justify-content:center;
+    padding:12px 8px;
+
+    flex-direction:column;
+    gap:5px;
+  }
+
+  body.sidebar-collapsed .sidebar li:hover::after{
+    display:none;
+  }
+}
+
+@media (max-width:520px){
+  .sidebar-menu ul,
+  body.sidebar-collapsed .sidebar-menu ul{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}

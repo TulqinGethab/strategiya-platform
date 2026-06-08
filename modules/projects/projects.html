@@ -1,0 +1,106 @@
+<section id="projectsSection" style="display:none">
+
+  <!-- ================= PROJECTS LIST VIEW ================= -->
+  <div id="projectsListView" class="projects-list-view">
+
+    <!-- PROJECTS TOOLBAR -->
+    <div class="projects-toolbar">
+      <div class="filters">
+
+        <div class="filter-input">
+          <i class="ri-search-line"></i>
+          <input id="searchInput" placeholder="Qidirish">
+        </div>
+
+        <select id="statusFilter">
+          <option value="all">All status</option>
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="risk">Risk</option>
+        </select>
+
+      </div>
+
+      <button class="add-btn" id="openModal">
+        <i class="ri-add-line"></i>
+        Add Project
+      </button>
+    </div>
+
+    <!-- PROJECTS TABLE -->
+    <div class="projects-table-box">
+
+      <!-- TABLE HEADER -->
+      <table class="projects-table projects-table-header">
+        <thead>
+          <tr>
+            <th>Icon</th>
+            <th>ID</th>
+            <th>Kirim raqami va sanasi</th>
+            <th>Chiqim raqami va sanasi</th>
+            <th>Muallif</th>
+            <th>Tadbir nomi</th>
+            <th>Amalga oshirish mexanizmi</th>
+            <th>Amalga oshirish shakli</th>
+            <th>Ijrochilar</th>
+            <th>Muddat</th>
+            <th>Holati</th>
+            <th>Amallar</th>
+          </tr>
+        </thead>
+      </table>
+
+      <!-- TABLE BODY -->
+      <div class="projects-table-body-scroll">
+        <table class="projects-table projects-table-body">
+          <tbody id="projects">
+            <!-- JS orqali project qatorlari qo‘shiladi -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- PROJECTS PAGINATION -->
+    <div class="projects-pagination">
+
+      <div class="pagination-left">
+        <span>Qatorlar soni:</span>
+
+        <select id="projectPageSize">
+          <option value="1">1</option>
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <div class="pagination-center">
+        <button id="projectPrevPage" class="page-btn">
+          <i class="ri-arrow-left-s-line"></i>
+        </button>
+
+        <span>Page</span>
+
+        <select id="projectPageSelect"></select>
+
+        <span id="projectPageInfo">/ 1</span>
+
+        <button id="projectNextPage" class="page-btn">
+          <i class="ri-arrow-right-s-line"></i>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- PROJECT WORKSPACE -->
+  <div data-include="modules/projects/project-workspace.html"></div>
+
+  <!-- PROJECT MODAL -->
+  <div data-include="modules/projects/project-modal.html"></div>
+
+</section>

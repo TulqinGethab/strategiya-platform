@@ -1,0 +1,731 @@
+/* =========================================================
+   PROJECTS SECTION HEIGHT FIX
+========================================================= */
+
+#projectsSection{
+  height:100%;
+  min-height:0;
+
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* Toolbar tepada turadi */
+.projects-toolbar{
+  flex:0 0 auto;
+}
+
+/* Table box qolgan bo‘sh joyni oladi */
+.projects-table-box{
+  flex:1;
+  min-height:0;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* Header qotib turadi */
+.projects-table-header{
+  flex:0 0 auto;
+}
+
+/* Faqat table body scroll bo‘ladi */
+.projects-table-body-scroll{
+  flex:1;
+  min-height:0;
+  max-height:none;
+
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+/* Pagination pastda, content ichida qoladi */
+.projects-pagination{
+  flex:0 0 auto;
+}
+/* =========================================================
+   TOOLBAR: Search + Status + Add Project
+========================================================= */
+
+.projects-toolbar{
+  flex:0 0 auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:14px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow-sm);
+}
+
+.projects-toolbar .filters{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0;
+}
+
+.projects-toolbar .filter-input{
+  flex:1;
+  height:46px;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:0 14px;
+  background:var(--gray-soft);
+  border:1px solid transparent;
+  border-radius:15px;
+  transition:.2s ease;
+}
+
+.projects-toolbar .filter-input:focus-within{
+  background:#fff;
+  border-color:rgba(37,99,235,.45);
+  box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+
+.projects-toolbar .filter-input i{
+  color:var(--muted);
+  font-size:18px;
+}
+
+.projects-toolbar input{
+  width:100%;
+  height:44px;
+  border:none;
+  background:transparent;
+  font-size:14px;
+  color:var(--text);
+}
+
+.projects-toolbar select{
+  min-width:170px;
+  height:46px;
+  padding:0 14px;
+
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:#fff;
+
+  color:var(--text);
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* Add Project button */
+.add-btn{
+  height:46px;
+  padding:0 18px;
+  border:none;
+  border-radius:15px;
+  cursor:pointer;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color:#fff;
+  font-size:14px;
+  font-weight:800;
+  white-space:nowrap;
+
+  box-shadow:0 12px 24px rgba(37,99,235,.20);
+}
+
+.add-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 30px rgba(37,99,235,.28);
+}
+
+.add-btn i{
+  font-size:18px;
+}
+
+/* =========================================================
+   TABLE BOX — HEADER QOTADI, BODY SCROLL BO‘LADI
+========================================================= */
+
+.projects-table-box{
+  flex:1;
+  min-height:0;
+
+  width:100%;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:24px 24px 0 0;
+  box-shadow:var(--shadow-sm);
+  overflow:hidden;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* Umumiy table */
+.projects-table{
+  width:100%;
+  min-width:0;
+  table-layout:fixed;
+
+  border-collapse:separate;
+  border-spacing:0;
+  background:#fff;
+}
+
+/* Header table */
+.projects-table-header{
+  flex:0 0 auto;
+  position:relative;
+  z-index:20;
+}
+
+/* Body scroll */
+.projects-table-body-scroll{
+  flex:1;
+  min-height:0;
+  max-height:none;
+
+  overflow-y:auto;
+  overflow-x:hidden;
+  background:#fff;
+}
+
+/* Scroll design */
+.projects-table-body-scroll::-webkit-scrollbar{
+  width:10px;
+}
+
+.projects-table-body-scroll::-webkit-scrollbar-track{
+  background:#f1f5f9;
+}
+
+.projects-table-body-scroll::-webkit-scrollbar-thumb{
+  background:#cbd5e1;
+  border-radius:999px;
+}
+
+.projects-table-body-scroll::-webkit-scrollbar-thumb:hover{
+  background:#94a3b8;
+}
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.projects-table th{
+  padding:13px 8px;
+
+  background:#f8fafc;
+  color:#334155;
+
+  font-size:11px;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+
+  text-align:center;
+  vertical-align:middle;
+
+  border-bottom:1px solid var(--border);
+
+  white-space:normal;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+  line-height:1.35;
+}
+
+.projects-table th:first-child{
+  border-top-left-radius:24px;
+  padding-left:14px;
+}
+
+.projects-table th:last-child{
+  border-top-right-radius:24px;
+  padding-right:14px;
+}
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.projects-table td{
+  padding:13px 8px;
+
+  border-bottom:1px solid #edf2f7;
+  color:#1e293b;
+
+  font-size:12.5px;
+  line-height:1.45;
+
+  text-align:center;
+  vertical-align:middle;
+
+  white-space:normal;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.projects-table tbody tr{
+  transition:.2s ease;
+}
+
+.projects-table tbody tr:hover{
+  background:#f8fbff;
+}
+
+.projects-table tbody tr:last-child td{
+  border-bottom:none;
+}
+
+/* =========================================================
+   TABLE COLUMN WIDTHS
+========================================================= */
+
+/* 1. Icon */
+.projects-table th:nth-child(1),
+.projects-table td:nth-child(1){
+  width:4%;
+}
+
+/* 2. ID */
+.projects-table th:nth-child(2),
+.projects-table td:nth-child(2){
+  width:4%;
+  font-weight:800;
+  color:#475569;
+}
+
+/* 3. Kirim raqami va sanasi */
+.projects-table th:nth-child(3),
+.projects-table td:nth-child(3){
+  width:7%;
+}
+
+/* 4. Chiqim raqami va sanasi */
+.projects-table th:nth-child(4),
+.projects-table td:nth-child(4){
+  width:7%;
+}
+
+/* 5. Muallif */
+.projects-table th:nth-child(5),
+.projects-table td:nth-child(5){
+  width:8%;
+}
+
+/* 6. Tadbir nomi */
+.projects-table th:nth-child(6),
+.projects-table td:nth-child(6){
+  width:14%;
+}
+
+/* 7. Amalga oshirish mexanizmi */
+.projects-table th:nth-child(7),
+.projects-table td:nth-child(7){
+  width:16%;
+}
+
+/* 8. Amalga oshirish shakli */
+.projects-table th:nth-child(8),
+.projects-table td:nth-child(8){
+  width:11%;
+}
+
+/* 9. Ijrochilar */
+.projects-table th:nth-child(9),
+.projects-table td:nth-child(9){
+  width:8%;
+}
+
+/* 10. Muddat */
+.projects-table th:nth-child(10),
+.projects-table td:nth-child(10){
+  width:7%;
+}
+
+/* 11. Holati */
+.projects-table th:nth-child(11),
+.projects-table td:nth-child(11){
+  width:5%;
+}
+
+/* 12. Amallar */
+.projects-table th:nth-child(12),
+.projects-table td:nth-child(12){
+  width:5%;
+}
+
+/* =========================================================
+   TABLE CELL ELEMENTS
+========================================================= */
+
+.project-icon{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  background:var(--primary-soft);
+  color:var(--primary);
+  font-size:18px;
+  margin:0 auto;
+}
+
+.project-icon.completed{
+  background:var(--success-soft);
+  color:var(--success);
+}
+
+.project-icon.risk{
+  background:var(--danger-soft);
+  color:var(--danger);
+}
+
+/* Kirim / chiqim */
+.doc-info{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  text-align:center;
+}
+
+.doc-number{
+  font-weight:850;
+  color:#0f172a;
+}
+
+.doc-date{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:650;
+}
+
+/* Text */
+.table-title{
+  font-weight:850;
+  color:#0f172a;
+  line-height:1.45;
+
+  text-align:center;
+  white-space:normal;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.table-text{
+  color:#334155;
+  line-height:1.55;
+
+  text-align:center;
+  white-space:normal;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.table-muted{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:650;
+}
+
+/* =========================================================
+   EXECUTORS
+========================================================= */
+
+.executor-chips{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:6px;
+  text-align:center;
+}
+
+.executor-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  max-width:100%;
+
+  padding:5px 9px;
+  border-radius:999px;
+
+  background:#eef2ff;
+  border:1px solid #dbeafe;
+
+  color:#3730a3;
+  font-size:11px;
+  font-weight:800;
+
+  text-align:center;
+  white-space:normal;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.executor-chip.empty{
+  background:#f1f5f9;
+  border-color:#e2e8f0;
+  color:#64748b;
+}
+
+/* =========================================================
+   DEADLINE
+========================================================= */
+
+.deadline-cell{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+
+  max-width:100%;
+  margin:0 auto;
+  padding:7px 8px;
+  border-radius:999px;
+
+  background:var(--primary-soft);
+  color:var(--primary-dark);
+
+  font-size:11px;
+  font-weight:850;
+
+  white-space:normal;
+  text-align:center;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.deadline-cell.overdue{
+  background:var(--danger-soft);
+  color:var(--danger);
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+  min-height:30px;
+  margin:0 auto;
+  padding:5px 7px;
+
+  border-radius:999px;
+  font-size:11px;
+  font-weight:850;
+
+  white-space:normal;
+  text-align:center;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.status-active{
+  background:var(--primary-soft);
+  color:var(--primary-dark);
+}
+
+.status-completed{
+  background:var(--success-soft);
+  color:var(--success);
+}
+
+.status-risk{
+  background:var(--danger-soft);
+  color:var(--danger);
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.table-actions{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.table-actions button{
+  width:32px;
+  height:32px;
+
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#fff;
+  border:1px solid var(--border);
+  font-size:15px;
+
+  transition:.2s ease;
+}
+
+.table-actions button:hover{
+  transform:translateY(-2px);
+}
+
+.table-actions .edit{
+  color:var(--primary);
+}
+
+.table-actions .edit:hover{
+  background:var(--primary-soft);
+}
+
+.table-actions .delete{
+  color:var(--danger);
+}
+
+.table-actions .delete:hover{
+  background:var(--danger-soft);
+}
+
+/* =========================================================
+   EMPTY ROW
+========================================================= */
+
+.projects-empty-row td{
+  padding:40px 20px;
+  text-align:center;
+}
+
+.projects-empty{
+  max-width:430px;
+  margin:0 auto;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.projects-empty i{
+  width:64px;
+  height:64px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:22px;
+  background:var(--primary-soft);
+  color:var(--primary);
+
+  font-size:32px;
+  margin-bottom:14px;
+}
+
+.projects-empty strong{
+  display:block;
+  font-size:18px;
+  font-weight:850;
+  color:#0f172a;
+}
+
+.projects-empty span{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* =========================================================
+   PROJECTS PAGINATION
+========================================================= */
+
+.projects-pagination{
+  flex:0 0 auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+
+  padding:14px 16px;
+
+  background:#fff;
+  border:1px solid var(--border);
+  border-top:none;
+  border-radius:0 0 24px 24px;
+  box-shadow:var(--shadow-sm);
+}
+
+.pagination-left,
+.pagination-center{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  color:#475569;
+  font-size:13px;
+  font-weight:800;
+}
+
+.projects-pagination select{
+  height:38px;
+  padding:0 12px;
+
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+
+  color:var(--text);
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.page-btn{
+  width:38px;
+  height:38px;
+
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:var(--gray-soft);
+  color:var(--text);
+  font-size:20px;
+}
+
+.page-btn:hover{
+  background:var(--primary-soft);
+  color:var(--primary);
+}
+
+.page-btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none;
+}
+

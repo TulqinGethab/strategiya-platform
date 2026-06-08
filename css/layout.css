@@ -1,0 +1,269 @@
+/* =========================================================
+   LAYOUT.CSS
+   App layout + common cards
+========================================================= */
+
+/* =========================================================
+   APP LAYOUT
+   Sidebar va main bir xil pastki tekislikda tugaydi
+========================================================= */
+
+.layout{
+  width:100%;
+  height:100dvh;
+  min-height:0;
+
+  display:flex;
+  gap:18px;
+
+  padding:10px;
+
+  overflow:hidden;
+}
+
+/* Sidebar balandligini layout boshqaradi */
+body .layout > .sidebar{
+  flex:0 0 var(--sidebar-width);
+  width:var(--sidebar-width);
+  height:100%;
+  min-height:0;
+
+  margin:0;
+
+  display:flex;
+  flex-direction:column;
+
+  overflow:hidden;
+}
+
+/* Main sidebar bilan bir xil balandlikda */
+.main{
+  flex:1;
+  min-width:0;
+  min-height:0;
+  height:100%;
+
+  display:flex;
+  flex-direction:column;
+
+  overflow:hidden;
+}
+
+/* =========================================================
+   CONTENT
+   Pastki padding 0 — dashboard panel sidebar bilan teng tugaydi
+========================================================= */
+
+.content{
+  flex:1;
+  min-height:0;
+
+  padding:26px 18px 0 0;
+
+  display:flex;
+  flex-direction:column;
+
+  overflow:hidden;
+}
+
+.content > section{
+  flex:1;
+  width:100%;
+  min-height:0;
+  height:auto;
+  max-height:100%;
+
+  overflow:hidden;
+}
+
+.section-scroll{
+  flex:1;
+  min-height:0;
+  overflow:auto;
+}
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px;
+
+  margin-bottom:20px;
+}
+
+.section-head h2{
+  margin:0;
+
+  color:var(--text);
+  font-size:24px;
+  font-weight:900;
+  line-height:1.2;
+  letter-spacing:-.03em;
+}
+
+.section-head p{
+  margin:6px 0 0;
+
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+  font-weight:600;
+}
+
+/* =========================================================
+   COMMON CARD
+========================================================= */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+
+  padding:28px;
+
+  box-shadow:var(--shadow-sm);
+
+  color:var(--text);
+  font-size:22px;
+  font-weight:850;
+}
+
+.card span{
+  display:block;
+
+  margin-top:7px;
+
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  font-weight:500;
+}
+
+.card.gray,
+.gray{
+  border-left:4px solid var(--gray);
+}
+
+/* =========================================================
+   EMPTY CARD
+========================================================= */
+
+.empty-card{
+  min-height:260px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+
+  padding:28px;
+
+  box-shadow:var(--shadow-sm);
+}
+
+.empty-icon{
+  width:72px;
+  height:72px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-bottom:16px;
+
+  border-radius:24px;
+  background:var(--primary-soft);
+  color:var(--primary);
+
+  font-size:34px;
+}
+
+.empty-card h3{
+  margin:0;
+
+  color:var(--text);
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:-.02em;
+}
+
+.empty-card p{
+  max-width:620px;
+
+  margin:10px auto 0;
+
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+  font-weight:500;
+}
+
+/* =========================================================
+   RESPONSIVE BASE
+========================================================= */
+
+@media (max-width:900px){
+  .layout{
+    height:auto;
+    min-height:100dvh;
+    flex-direction:column;
+    gap:10px;
+    padding:10px;
+    overflow:visible;
+  }
+
+  body .layout > .sidebar{
+    width:auto;
+    height:auto;
+    min-height:auto;
+    flex:0 0 auto;
+  }
+
+  .main{
+    height:auto;
+    min-height:0;
+    overflow:visible;
+  }
+
+  .content{
+    padding:20px 0 0 0;
+    overflow:visible;
+  }
+
+  .content > section{
+    height:auto;
+    max-height:none;
+    overflow:visible;
+  }
+
+  .section-head{
+    flex-direction:column;
+    gap:12px;
+  }
+}
+
+@media (max-width:600px){
+  .content{
+    padding:16px 0 0 0;
+  }
+
+  .section-head h2{
+    font-size:21px;
+  }
+
+  .card,
+  .empty-card{
+    border-radius:20px;
+    padding:22px;
+  }
+}

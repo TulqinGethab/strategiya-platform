@@ -1,0 +1,318 @@
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+  background:rgba(15,23,42,.50);
+  backdrop-filter:blur(8px);
+}
+
+.modal.show{
+  display:flex;
+}
+
+/* Modal ichida scroll emas, ichki form-grid scroll qiladi */
+.modal-content{
+  width:min(760px,100%);
+  max-height:92vh;
+
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+
+  background:#fff;
+  border:1px solid rgba(255,255,255,.65);
+  border-radius:26px;
+  box-shadow:0 25px 70px rgba(15,23,42,.25);
+  padding:0;
+}
+
+/* =========================================================
+   HEADER — DOIM TEPADA TURADI
+========================================================= */
+
+.modal-header{
+  flex:0 0 auto;
+
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+
+  padding:22px 24px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,#ffffff,#f8fafc);
+}
+
+.modal-eyebrow{
+  display:block;
+  margin-bottom:4px;
+
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--primary);
+}
+
+.modal-header h3{
+  margin:0;
+  font-size:22px;
+  font-weight:850;
+  letter-spacing:-.03em;
+  color:var(--text);
+}
+
+.modal-close{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:13px;
+  background:var(--gray-soft);
+  color:var(--text);
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:20px;
+}
+
+.modal-close:hover{
+  background:var(--danger-soft);
+  color:var(--danger);
+}
+
+/* =========================================================
+   FORM — SCROLL FAQAT SHU YERDA ISHLAYDI
+========================================================= */
+
+.form-grid{
+  flex:1;
+  min-height:0;
+
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  padding:22px 24px;
+}
+
+/* Form scroll style */
+.form-grid::-webkit-scrollbar{
+  width:9px;
+}
+
+.form-grid::-webkit-scrollbar-track{
+  background:#f1f5f9;
+  border-radius:999px;
+}
+
+.form-grid::-webkit-scrollbar-thumb{
+  background:#cbd5e1;
+  border-radius:999px;
+}
+
+.form-grid::-webkit-scrollbar-thumb:hover{
+  background:#94a3b8;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.form-group.full{
+  grid-column:1 / -1;
+}
+
+.form-group label{
+  font-size:13px;
+  font-weight:800;
+  color:#334155;
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+  height:45px;
+
+  padding:0 13px;
+  margin:0;
+
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+
+  font-size:14px;
+  color:var(--text);
+  transition:.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+  border-color:rgba(37,99,235,.55);
+  box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+
+/* =========================================================
+   EXECUTORS
+========================================================= */
+
+.executor-row{
+  display:flex;
+  gap:10px;
+}
+
+#executorInput{
+  flex:1;
+}
+
+.executor-add{
+  width:45px;
+  min-width:45px;
+  height:45px;
+
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color:#fff;
+  font-size:19px;
+  font-weight:800;
+
+  box-shadow:0 10px 20px rgba(37,99,235,.20);
+}
+
+.executor-add:hover{
+  transform:translateY(-2px);
+}
+
+#executorList{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+
+.executor{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+
+  padding:7px 9px;
+  border-radius:999px;
+
+  background:var(--gray-soft);
+  border:1px solid var(--border);
+
+  font-size:13px;
+  font-weight:700;
+  color:#334155;
+}
+
+.executor button{
+  width:20px;
+  height:20px;
+
+  border:none;
+  background:transparent;
+  color:var(--danger);
+  cursor:pointer;
+
+  font-size:13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* =========================================================
+   ACTIONS — PASTDA DOIM KO‘RINIB TURADI
+========================================================= */
+
+.modal-actions{
+  flex:0 0 auto;
+
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+
+  padding:18px 24px 22px;
+  border-top:1px solid var(--border);
+  background:#fff;
+}
+
+.save,
+.cancel{
+  height:43px;
+  padding:0 18px;
+
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+
+  font-weight:800;
+  font-size:14px;
+}
+
+.save{
+  background:linear-gradient(135deg,var(--success),#15803d);
+  color:#fff;
+  box-shadow:0 10px 20px rgba(22,163,74,.18);
+}
+
+.save:hover{
+  transform:translateY(-2px);
+}
+
+.cancel{
+  background:var(--gray-soft);
+  color:var(--text);
+}
+
+.cancel:hover{
+  background:#e2e8f0;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width:700px){
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:520px){
+  .modal-content{
+    border-radius:22px;
+    max-height:94vh;
+  }
+
+  .modal-header,
+  .form-grid,
+  .modal-actions{
+    padding-left:18px;
+    padding-right:18px;
+  }
+}

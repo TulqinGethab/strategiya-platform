@@ -1,0 +1,35 @@
+/* =========================================================
+   MAIN.CSS
+   Barcha global, layout va module CSS fayllarni ulash
+========================================================= */
+
+/* CORE */
+@import url("./base.css");
+@import url("./layout.css");
+
+/* APP LAYOUT PARTS */
+@import url("../layout/sidebar.css");
+@import url("../layout/header.css");
+
+/* DASHBOARD MODULE */
+@import url("../modules/dashboard/dashboard.css");
+
+/* PROJECTS MODULE */
+@import url("../modules/projects/projects.css");
+@import url("../modules/projects/project-modal.css");
+@import url("../modules/projects/project-workspace.css");
+
+/* STRUCTURE MODULE */
+@import url("../modules/structure/structure.css");
+
+/* TADAT MODULE */
+@import url("../modules/tadat/tadat.css");
+
+/* REPORTS MODULE */
+@import url("../modules/reports/reports.css");
+
+/* SETTINGS MODULE */
+@import url("../modules/settings/settings.css");
+
+/* RESPONSIVE */
+@import url("./responsive.css");
