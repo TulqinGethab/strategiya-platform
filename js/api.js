@@ -1,52 +1,229 @@
-async function apiRequest(url, options = {}) {
-  const res = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {})
-    },
-    ...options
-  });
+/* =========================================================
+   API.JS
+   Supabase bilan ishlash
+========================================================= */
 
-  let data = null;
+const SUPABASE_URL = "https://besaextxeghbhztcvgyt.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Dd7-Z_udkO4FItXwW0tW6Q_QCS1YR8R";
 
-  try {
-    data = await res.json();
-  } catch {
-    data = null;
-  }
-
-  if (!res.ok) {
-    const msg =
-      data?.details?.join("\n") ||
-      data?.error ||
-      "Server xatolik berdi";
-
-    throw new Error(msg);
-  }
-
-  return data;
+if (typeof supabase === "undefined") {
+  console.error("Supabase JS yuklanmagan. index.html ichida supabase scriptni tekshiring.");
 }
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+/* =========================================================
+   SUPABASE ROW -> APP PROJECT
+========================================================= */
+
+function mapSupabaseProject(row) {
+  return {
+    id: row.id,
+
+    incomingNumber: row.incoming_number || "",
+    incomingDate: row.incoming_date || "",
+
+    outgoingNumber: row.outgoing_number || "",
+    outgoingDate: row.outgoing_date || "",
+
+    docNumber: row.doc_number || "",
+    docName: row.doc_name || "",
+    docDate: row.doc_date || "",
+
+    eventName: row.event_name || "",
+    name: row.event_name || row.doc_name || "Nomsiz project",
+
+    mechanism: row.mechanism || "",
+    implementationForm: row.implementation_form || "",
+
+    author: row.author || "",
+    executors: row.executors || "",
+
+    deadline: row.deadline || "",
+    status: row.status || "active",
+
+    createdAt: row.created_at || "",
+    updatedAt: row.updated_at || "",
+
+    /* Eski kodlarda snake_case ishlatilgan bo‘lsa ham ishlashi uchun */
+    incoming_number: row.incoming_number || "",
+    incoming_date: row.incoming_date || "",
+    outgoing_number: row.outgoing_number || "",
+    outgoing_date: row.outgoing_date || "",
+    doc_number: row.doc_number || "",
+    doc_name: row.doc_name || "",
+    doc_date: row.doc_date || "",
+    event_name: row.event_name || "",
+    implementation_form: row.implementation_form || "",
+    created_at: row.created_at || "",
+    updated_at: row.updated_at || ""
+  };
+}
+
+/* =========================================================
+   APP PROJECT -> SUPABASE ROW
+========================================================= */
+
+function mapProjectPayload(project = {}) {
+  return {
+    incoming_number:
+      project.incomingNumber ||
+      project.incoming_number ||
+      "",
+
+    incoming_date:
+      project.incomingDate ||
+      project.incoming_date ||
+      null,
+
+    outgoing_number:
+      project.outgoingNumber ||
+      project.outgoing_number ||
+      "",
+
+    outgoing_date:
+      project.outgoingDate ||
+      project.outgoing_date ||
+      null,
+
+    doc_number:
+      project.docNumber ||
+      project.doc_number ||
+      "",
+
+    doc_name:
+      project.docName ||
+      project.doc_name ||
+      project.name ||
+      "",
+
+    doc_date:
+      project.docDate ||
+      project.doc_date ||
+      null,
+
+    event_name:
+      project.eventName ||
+      project.event_name ||
+      project.name ||
+      project.docName ||
+      project.doc_name ||
+      "Nomsiz project",
+
+    mechanism:
+      project.mechanism ||
+      "",
+
+    implementation_form:
+      project.implementationForm ||
+      project.implementation_form ||
+      "",
+
+    author:
+      project.author ||
+      "",
+
+    executors:
+      project.executors ||
+      "",
+
+    deadline:
+      project.deadline ||
+      null,
+
+    status:
+      project.status ||
+      "active"
+  };
+}
+
+/* =========================================================
+   LOAD PROJECTS
+   Eski koddagi loadProjects() nomi saqlab qolindi
+========================================================= */
 
 async function loadProjects() {
-  AppState.projects = await apiRequest(API_URL);
+  const { data, error } = await supabaseClient
+    .from("projects")
+    .select("*")
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error("SUPABASE LOAD PROJECTS ERROR:", error);
+    throw new Error(error.message || "Projectlar yuklanmadi");
+  }
+
+  AppState.projects = (data || []).map(mapSupabaseProject);
+
+  return AppState.projects;
 }
+
+/* =========================================================
+   CREATE PROJECT
+   Eski koddagi createProject(data) nomi saqlab qolindi
+========================================================= */
 
 async function createProject(data) {
-  return apiRequest(API_URL, {
-    method: "POST",
-    body: JSON.stringify(data)
-  });
+  const payload = mapProjectPayload(data);
+
+  const { data: created, error } = await supabaseClient
+    .from("projects")
+    .insert(payload)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("SUPABASE CREATE PROJECT ERROR:", error);
+    throw new Error(error.message || "Project qo‘shilmadi");
+  }
+
+  return mapSupabaseProject(created);
 }
+
+/* =========================================================
+   UPDATE PROJECT
+   Eski koddagi updateProject(id, data) nomi saqlab qolindi
+========================================================= */
 
 async function updateProject(id, data) {
-  return apiRequest(`${API_URL}/${id}`, {
-    method: "PUT",
-    body: JSON.stringify(data)
-  });
+  const payload = {
+    ...mapProjectPayload(data),
+    updated_at: new Date().toISOString()
+  };
+
+  const { data: updated, error } = await supabaseClient
+    .from("projects")
+    .update(payload)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("SUPABASE UPDATE PROJECT ERROR:", error);
+    throw new Error(error.message || "Project yangilanmadi");
+  }
+
+  return mapSupabaseProject(updated);
 }
 
+/* =========================================================
+   DELETE PROJECT
+   Eski koddagi removeProject(id) nomi saqlab qolindi
+========================================================= */
+
 async function removeProject(id) {
-  return apiRequest(`${API_URL}/${id}`, {
-    method: "DELETE"
-  });
+  const { error } = await supabaseClient
+    .from("projects")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("SUPABASE DELETE PROJECT ERROR:", error);
+    throw new Error(error.message || "Project o‘chirilmadi");
+  }
+
+  return true;
 }
