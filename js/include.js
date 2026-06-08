@@ -1,71 +1,43 @@
 /* =========================================================
    HTML INCLUDE LOADER
    GitHub Pages + Localhost uchun mos
-   Nested include qo‘llab-quvvatlanadi
 ========================================================= */
 
-/*
-  Muhim:
-  Bu fayl index.html ichida shunday chaqirilishi kerak:
-
-  <script src="./js/include.js?v=74"></script>
-
-  index.html css ham shunday bo‘lsin:
-
-  <link rel="stylesheet" href="./css/main.css?v=74">
-*/
-
-const INCLUDE_VERSION = "74";
-
-/* include.js qayerdan yuklangan bo‘lsa, project rootni avtomatik topadi */
-const INCLUDE_SCRIPT_URL = document.currentScript
-  ? document.currentScript.src
-  : window.location.href;
-
-/*
-  Agar include.js:
-  https://tulqingethab.github.io/strategiya-platform/js/include.js
-  bo‘lsa, APP_BASE_URL:
-  https://tulqingethab.github.io/strategiya-platform/
-  bo‘ladi.
-*/
-const APP_BASE_URL = new URL("../", INCLUDE_SCRIPT_URL);
+const APP_VERSION = "75";
 
 /* =========================================================
    URL HELPER
 ========================================================= */
 
-function makeIncludeUrl(file) {
-  if (!file) return "";
+function getBasePath() {
+  /*
+    GitHub Pages:
+    /strategiya-platform/
+    
+    Localhost:
+    /
+  */
+  const path = window.location.pathname;
 
-  const fileText = String(file).trim();
-
-  if (
-    fileText.startsWith("http://") ||
-    fileText.startsWith("https://") ||
-    fileText.startsWith("data:")
-  ) {
-    return fileText;
+  if (path.includes("/strategiya-platform/")) {
+    return "/strategiya-platform/";
   }
 
-  /*
-    Boshidagi / ni olib tashlaymiz.
-    Masalan:
-    /layout/header.html -> layout/header.html
-  */
-  const cleanFile = fileText.replace(/^\/+/, "");
-
-  return new URL(cleanFile, APP_BASE_URL).href;
+  return "./";
 }
 
-function makeVersionedUrl(file) {
-  const url = makeIncludeUrl(file);
+const APP_BASE = getBasePath();
 
-  if (!url) return "";
+function makeUrl(file) {
+  if (!file) return "";
 
-  const separator = url.includes("?") ? "&" : "?";
+  const cleanFile = String(file).trim().replace(/^\/+/, "");
 
-  return `${url}${separator}v=${INCLUDE_VERSION}`;
+  if (cleanFile.startsWith("http://") || cleanFile.startsWith("https://")) {
+    return cleanFile;
+  }
+
+  return `${APP_BASE}${cleanFile}?v=${APP_VERSION}`;
 }
 
 /* =========================================================
@@ -75,18 +47,12 @@ function makeVersionedUrl(file) {
 async function includeHTMLParts() {
   let hasError = false;
 
-  /*
-    while kerak:
-    Chunki bitta html ichida yana data-include bo‘lishi mumkin.
-  */
   while (document.querySelector("[data-include]")) {
-    const includeElements = Array.from(
-      document.querySelectorAll("[data-include]")
-    );
+    const includeElements = Array.from(document.querySelectorAll("[data-include]"));
 
     for (const element of includeElements) {
       const file = element.getAttribute("data-include");
-      const url = makeVersionedUrl(file);
+      const url = makeUrl(file);
 
       try {
         const response = await fetch(url, {
@@ -94,26 +60,21 @@ async function includeHTMLParts() {
         });
 
         if (!response.ok) {
-          throw new Error(`${file} yuklanmadi. HTTP ${response.status}`);
+          throw new Error(`${file} yuklanmadi. HTTP ${response.status}. URL: ${url}`);
         }
 
         const html = await response.text();
-
         element.outerHTML = html;
 
       } catch (error) {
         hasError = true;
 
-        console.error("INCLUDE ERROR:", {
-          file,
-          url,
-          error
-        });
+        console.error("INCLUDE ERROR:", error);
 
         element.innerHTML = `
           <div style="
             padding:14px 16px;
-            margin:10px 0;
+            margin:10px;
             border:1px solid #fecaca;
             border-radius:12px;
             background:#fef2f2;
@@ -125,10 +86,6 @@ async function includeHTMLParts() {
           </div>
         `;
 
-        /*
-          data-include olib tashlanadi,
-          aks holda while cheksiz aylanib qoladi.
-        */
         element.removeAttribute("data-include");
       }
     }
@@ -143,26 +100,14 @@ async function includeHTMLParts() {
 
 function loadScript(file) {
   return new Promise((resolve, reject) => {
-    const src = makeVersionedUrl(file);
-
-    const exists = Array.from(document.scripts).some(script => {
-      return script.src === src;
-    });
-
-    if (exists) {
-      resolve();
-      return;
-    }
-
     const script = document.createElement("script");
 
-    script.src = src;
-    script.defer = false;
+    script.src = makeUrl(file);
 
     script.onload = () => resolve();
 
     script.onerror = () => {
-      reject(new Error(`${file} yuklanmadi: ${src}`));
+      reject(new Error(`${file} yuklanmadi`));
     };
 
     document.body.appendChild(script);
@@ -174,16 +119,9 @@ function loadScript(file) {
 ========================================================= */
 
 async function loadAppScripts() {
-  /*
-    Bu yerda hech qayerda /strategy-app/ yozilmaydi.
-    Hammasi APP_BASE_URL orqali avtomatik yuradi.
-  */
-
-  /* Core */
   await loadScript("js/core.js");
   await loadScript("js/api.js");
 
-  /* Modules */
   await loadScript("modules/dashboard/dashboard.js");
   await loadScript("modules/projects/projects.js");
   await loadScript("modules/projects/project-workspace.js");
@@ -192,7 +130,6 @@ async function loadAppScripts() {
   await loadScript("modules/reports/reports.js");
   await loadScript("modules/settings/settings.js");
 
-  /* Main app */
   await loadScript("js/app.js");
 }
 
@@ -205,7 +142,7 @@ async function startApp() {
     const htmlLoaded = await includeHTMLParts();
 
     if (!htmlLoaded) {
-      console.error("Ba’zi HTML bo‘limlar yuklanmadi. app.js ishga tushirilmadi.");
+      console.error("Ba’zi HTML bo‘limlar yuklanmadi.");
       return;
     }
 
@@ -214,28 +151,24 @@ async function startApp() {
   } catch (error) {
     console.error("APP START ERROR:", error);
 
-    document.body.insertAdjacentHTML(
-      "beforeend",
-      `
+    document.body.insertAdjacentHTML("beforeend", `
       <div style="
         position:fixed;
         left:20px;
         right:20px;
         bottom:20px;
         z-index:99999;
-        padding:16px 18px;
-        border-radius:16px;
+        padding:16px;
+        border-radius:14px;
         background:#fef2f2;
         border:1px solid #fecaca;
         color:#991b1b;
         font-family:Inter, Arial, sans-serif;
         font-weight:800;
-        box-shadow:0 20px 40px rgba(15,23,42,.18);
       ">
-        Platformani yuklashda xatolik bo‘ldi. Console oynasini tekshiring.
+        Platformani yuklashda xatolik bor. Console oynasini tekshiring.
       </div>
-      `
-    );
+    `);
   }
 }
 
