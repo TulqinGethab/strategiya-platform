@@ -1,5 +1,3 @@
-const API_URL = "/api/projects";
-
 const $ = id => document.getElementById(id);
 
 const AppState = {
@@ -63,6 +61,7 @@ const AppEls = {
   executorInput: $("executorInput"),
   executorList: $("executorList")
 };
+
 /* ================= HELPERS ================= */
 
 function escapeHTML(value) {
