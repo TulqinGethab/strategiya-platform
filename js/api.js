@@ -19,7 +19,7 @@ const supabaseClient = supabase.createClient(
    SUPABASE ROW -> APP PROJECT
 ========================================================= */
 
-function mapSupabaseProject(row) {
+function mapSupabaseProject(row = {}) {
   return {
     id: row.id,
 
@@ -48,7 +48,7 @@ function mapSupabaseProject(row) {
     createdAt: row.created_at || "",
     updatedAt: row.updated_at || "",
 
-    /* Eski kodlarda snake_case ishlatilgan bo‘lsa ham ishlashi uchun */
+    /* Eski kodlar uchun snake_case */
     incoming_number: row.incoming_number || "",
     incoming_date: row.incoming_date || "",
     outgoing_number: row.outgoing_number || "",
@@ -142,7 +142,6 @@ function mapProjectPayload(project = {}) {
 
 /* =========================================================
    LOAD PROJECTS
-   Eski koddagi loadProjects() nomi saqlab qolindi
 ========================================================= */
 
 async function loadProjects() {
@@ -163,7 +162,6 @@ async function loadProjects() {
 
 /* =========================================================
    CREATE PROJECT
-   Eski koddagi createProject(data) nomi saqlab qolindi
 ========================================================= */
 
 async function createProject(data) {
@@ -172,20 +170,22 @@ async function createProject(data) {
   const { data: created, error } = await supabaseClient
     .from("projects")
     .insert(payload)
-    .select()
-    .single();
+    .select();
 
   if (error) {
     console.error("SUPABASE CREATE PROJECT ERROR:", error);
     throw new Error(error.message || "Project qo‘shilmadi");
   }
 
-  return mapSupabaseProject(created);
+  if (!created || created.length === 0) {
+    throw new Error("Project qo‘shildi, lekin qaytgan ma’lumot topilmadi. Supabase SELECT policy tekshiring.");
+  }
+
+  return mapSupabaseProject(created[0]);
 }
 
 /* =========================================================
    UPDATE PROJECT
-   Eski koddagi updateProject(id, data) nomi saqlab qolindi
 ========================================================= */
 
 async function updateProject(id, data) {
@@ -198,20 +198,22 @@ async function updateProject(id, data) {
     .from("projects")
     .update(payload)
     .eq("id", id)
-    .select()
-    .single();
+    .select();
 
   if (error) {
     console.error("SUPABASE UPDATE PROJECT ERROR:", error);
     throw new Error(error.message || "Project yangilanmadi");
   }
 
-  return mapSupabaseProject(updated);
+  if (!updated || updated.length === 0) {
+    throw new Error("Project yangilanmadi. ID topilmadi yoki Supabase UPDATE/SELECT policy ruxsat bermayapti.");
+  }
+
+  return mapSupabaseProject(updated[0]);
 }
 
 /* =========================================================
    DELETE PROJECT
-   Eski koddagi removeProject(id) nomi saqlab qolindi
 ========================================================= */
 
 async function removeProject(id) {
