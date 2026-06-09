@@ -3,7 +3,7 @@
    GitHub Pages + Localhost uchun mos
 ========================================================= */
 
-const APP_VERSION = "81";
+const APP_VERSION = "84";
 
 /* =========================================================
    URL HELPER
