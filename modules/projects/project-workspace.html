@@ -1,522 +1,350 @@
 <div id="projectWorkspaceView" class="project-workspace-view" style="display:none">
 
-  <div class="project-workspace-body" id="projectWorkspaceBody">
+  <div class="project-workspace-body pdf-task-workspace-body" id="projectWorkspaceBody">
 
-    <!-- LEFT PANEL -->
-    <aside class="workspace-left-panel">
+    <!-- LEFT: WORKFLOW STATUS -->
+    <aside class="workspace-left-panel workflow-left-panel">
 
-      <div class="left-panel-top">
-        <button type="button" class="task-add-btn" title="Topshiriq qo‘shish">
-          <i class="ri-add-line"></i>
+      <div class="left-panel-top workflow-panel-top">
+        <button type="button" class="workspace-back-btn" id="backToProjectsBtn">
+          <i class="ri-arrow-left-line"></i>
+          <span>Orqaga</span>
         </button>
+
+        <div class="workflow-top-title">
+          <span>Topshiriq jarayoni</span>
+          <strong id="workspaceTaskStatus">Jarayon kuzatuvi</strong>
+        </div>
       </div>
 
-      <div class="workspace-left-scroll">
-
-        <!-- TASK MAIN CARD -->
-        <div class="task-preview-card">
-
-          <div class="task-preview-head">
-            <span>Asosiy loyiha</span>
-            <h3 id="workspaceTaskText">Strategik islohotlar</h3>
-            <strong>Mavzu</strong>
-          </div>
-
-          <div class="task-helper-row">
-            <div class="task-helper-item">T.Muminov</div>
-            <div class="task-helper-item">A.Komilov</div>
-            <div class="task-helper-item">M.Tursunov</div>
-            <div class="task-helper-item">Z.Xamidov</div>
-          </div>
-
-          <div class="task-helper-label">Yordamchi ijrochilar</div>
-
-          <div class="task-supervisor">
-            <strong id="workspaceAuthor">F.Pulatov</strong>
-            <span>Nazorat qiluvchi rahbar</span>
-          </div>
-
-          <div class="task-preview-meta">
-            <div>
-              <i class="ri-calendar-line"></i>
-              <span>Sana:</span>
-              <b id="workspaceIncomingDate">2026-05-12</b>
-            </div>
-
-            <div>
-              <i class="ri-time-line"></i>
-              <span>Muddat:</span>
-              <b id="workspaceDeadline">04.09.2026</b>
-            </div>
-          </div>
+      <div class="workspace-left-scroll workflow-left-scroll">
+        <div class="workflow-main-card">
+<div class="workflow-steps" id="workspaceWorkflowSteps"></div>
 
         </div>
-
-        <!-- VARIANTS -->
-        <div class="variant-list">
-
-          <div class="variant-item active" data-workspace-variant="word">
-            <div class="variant-icon variant-word">
-              <i class="ri-file-word-2-fill"></i>
-            </div>
-            <span>Yozuvlar</span>
-            <i class="ri-check-line variant-check"></i>
-          </div>
-
-          <div class="variant-item" data-workspace-variant="survey">
-            <div class="variant-icon variant-telegram">
-              <i class="ri-telegram-fill"></i>
-            </div>
-            <span>Ijtimoiy so‘rov</span>
-            <i class="ri-check-line variant-check"></i>
-          </div>
-
-          <div class="variant-item" data-workspace-variant="program">
-            <div class="variant-icon variant-python">
-              <b>Py</b>
-            </div>
-            <span>Dasturiy mahsul</span>
-            <i class="ri-check-line variant-check"></i>
-          </div>
-
-        </div>
-
-        <!-- PROGRESS -->
-        <div class="workspace-section-card progress-card">
-          <div class="section-title-center">
-            Topshiriqni bajarish jarayoni
-          </div>
-
-          <div class="progress-list">
-
-            <div class="progress-row">
-              <div class="progress-row-top">
-                <div class="progress-row-icon variant-word">
-                  <i class="ri-file-word-2-fill"></i>
-                </div>
-
-                <strong>Qonun va qaror loyihasi jarayoni</strong>
-                <span>49%</span>
-              </div>
-
-              <div class="progress-bar">
-                <div class="progress-fill progress-fill-blue" style="width:49%"></div>
-              </div>
-            </div>
-
-            <div class="progress-row">
-              <div class="progress-row-top">
-                <div class="progress-row-icon variant-telegram">
-                  <i class="ri-telegram-fill"></i>
-                </div>
-
-                <strong>Ijtimoiy so‘rov o‘tkazish jarayoni</strong>
-                <span>37%</span>
-              </div>
-
-              <div class="progress-bar">
-                <div class="progress-fill progress-fill-cyan" style="width:37%"></div>
-              </div>
-            </div>
-
-            <div class="progress-row">
-              <div class="progress-row-top">
-                <div class="progress-row-icon variant-python">
-                  <b>Py</b>
-                </div>
-
-                <strong>Dastur mahsulini ishga tushirish jarayoni</strong>
-                <span>57%</span>
-              </div>
-
-              <div class="progress-bar">
-                <div class="progress-fill progress-fill-indigo" style="width:57%"></div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- SEND -->
-        <div class="workspace-section-card send-section">
-          <div class="section-title-center">
-            Imzolash uchun rahbarga yuborish
-          </div>
-
-          <div class="send-box">
-            <input
-              type="text"
-              class="send-input"
-              id="workspaceLeaderInput"
-              value="Abdiyev Jaxongir Ibragimovich"
-            >
-
-            <button type="button" class="send-btn" id="workspaceSendLeaderBtn">
-              <span>Yuborish</span>
-              <i class="ri-telegram-fill"></i>
-            </button>
-          </div>
-        </div>
-
       </div>
 
     </aside>
 
-    <!-- EDITOR SIDE -->
-    <main class="workspace-editor-side">
-
-      <!-- TOOLBAR -->
-      <div class="word-toolbar">
-
-        <div class="word-toolbar-row">
-
-          <!-- BACK BUTTON TOOLBAR ICHIDA -->
-          <div class="word-group back-group">
-            <button type="button" class="editor-back-btn" id="backToProjectsBtn">
-              <i class="ri-arrow-left-line"></i>
-              <span>Orqaga</span>
-            </button>
-          </div>
-
-          <div class="word-group">
-            <button type="button" class="word-btn" data-cmd="undo" title="Undo">
-              <i class="ri-arrow-go-back-line"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="redo" title="Redo">
-              <i class="ri-arrow-go-forward-line"></i>
-            </button>
-          </div>
-
-          <div class="word-group font-group">
-            <select class="word-select font-name" id="workspaceFontName">
-              <option value="Calibri">Calibri</option>
-              <option value="Arial">Arial</option>
-              <option value="Times New Roman">Times New Roman</option>
-              <option value="Inter">Inter</option>
-            </select>
-
-            <select class="word-select font-size" id="workspaceFontSize">
-              <option value="3">12</option>
-              <option value="4">14</option>
-              <option value="5">18</option>
-              <option value="6">24</option>
-              <option value="7">32</option>
-            </select>
-          </div>
-
-          <div class="word-group orientation-group">
-            <button type="button" class="word-orientation-btn" id="orientationBtn">
-              <i class="ri-file-copy-2-line"></i>
-              <span id="orientationLabel">Kitobcha</span>
-              <i class="ri-arrow-down-s-line"></i>
-            </button>
-
-            <div class="orientation-menu" id="orientationMenu">
-              <button type="button" data-orientation="portrait">
-                <i class="ri-file-line"></i>
-                <span>Kitobcha</span>
-              </button>
-
-              <button type="button" data-orientation="landscape">
-                <i class="ri-file-copy-line"></i>
-                <span>Albom</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="word-group">
-            <button type="button" class="word-btn" data-cmd="bold">
-              <i class="ri-bold"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="italic">
-              <i class="ri-italic"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="underline">
-              <i class="ri-underline"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="strikeThrough">
-              <i class="ri-strikethrough"></i>
-            </button>
-          </div>
-
-          <div class="word-group">
-            <button type="button" class="word-btn" data-cmd="justifyLeft">
-              <i class="ri-align-left"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="justifyCenter">
-              <i class="ri-align-center"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="justifyRight">
-              <i class="ri-align-right"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="justifyFull">
-              <i class="ri-align-justify"></i>
-            </button>
-          </div>
-
-          <div class="word-group">
-            <button type="button" class="word-btn" data-cmd="insertUnorderedList">
-              <i class="ri-list-unordered"></i>
-            </button>
-
-            <button type="button" class="word-btn" data-cmd="insertOrderedList">
-              <i class="ri-list-ordered"></i>
-            </button>
-
-            <button type="button" class="word-btn" id="insertTableBtn">
-              <i class="ri-table-line"></i>
-            </button>
-          </div>
-
-          <div class="word-group">
-            <input type="color" id="workspaceTextColor" class="word-color">
-
-            <button type="button" class="word-btn" data-cmd="removeFormat">
-              <i class="ri-eraser-line"></i>
-            </button>
-          </div>
-
-        </div>
-
-        <div class="word-toolbar-row second">
-
-          <div class="word-group user-track-group">
-            <button
-              type="button"
-              class="word-btn track-active"
-              id="trackChangesBtn"
-              title="Kim yozganini ko‘rsatish"
-            >
-              <i class="ri-user-follow-line"></i>
-            </button>
-
-            <button type="button" class="word-user-btn" id="workspaceUserBtn">
-              T.Muminov
-            </button>
-          </div>
-
-          <div class="word-toolbar-actions">
-            <button type="button" class="toolbar-action-btn" id="printWorkspaceBtn">
-              <i class="ri-printer-line"></i>
-              <span>Chop etish</span>
-            </button>
-
-            <button type="button" class="toolbar-action-btn" id="exportWorkspaceBtn">
-              <i class="ri-download-2-line"></i>
-              <span>Yuklab olish</span>
-            </button>
-
-            <button type="button" class="toolbar-action-btn" id="importWordBtn">
-              <i class="ri-file-word-line"></i>
-              <span>Import qilish</span>
-            </button>
-
-            <input
-              type="file"
-              id="importWordInput"
-              accept=".docx"
-              style="display:none"
-            >
-
-            <button type="button" class="workspace-save-icon-btn" id="saveWorkspaceBtn">
-              <i class="ri-save-3-line"></i>
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- DOCUMENT -->
-      <div class="workspace-document-area">
-
-        <div class="workspace-pages" id="workspacePages">
-          <div class="page-thumb active" data-page-thumb="1">
-            <span>1</span>
-          </div>
-        </div>
-
-        <div class="workspace-page-line"></div>
-
-        <div class="workspace-paper-wrap">
-
-          <div class="workspace-paper-stage">
-
-            <div class="ruler-corner"></div>
-
-            <!-- TOP HORIZONTAL RULER -->
-            <div class="ruler-horizontal-box">
-              <div class="ruler-horizontal">
-
-                <button
-                  type="button"
-                  class="ruler-indent-marker first-line-indent"
-                  data-indent-marker="first"
-                  title="Отступ первой строки"
-                ></button>
-
-                <button
-                  type="button"
-                  class="ruler-indent-marker left-indent"
-                  data-indent-marker="left"
-                  title="Отступ слева"
-                ></button>
-
-                <button
-                  type="button"
-                  class="ruler-indent-marker right-indent"
-                  data-indent-marker="right"
-                  title="Отступ справа"
-                ></button>
-
-                <span style="left:5%">1</span>
-                <span style="left:10%">2</span>
-                <span style="left:15%">3</span>
-                <span style="left:20%">4</span>
-                <span style="left:25%">5</span>
-                <span style="left:30%">6</span>
-                <span style="left:35%">7</span>
-                <span style="left:40%">8</span>
-                <span style="left:45%">9</span>
-                <span style="left:50%">10</span>
-                <span style="left:55%">11</span>
-                <span style="left:60%">12</span>
-                <span style="left:65%">13</span>
-                <span style="left:70%">14</span>
-                <span style="left:75%">15</span>
-                <span style="left:80%">16</span>
-                <span style="left:85%">17</span>
-                <span style="left:90%">18</span>
-                <span style="left:95%">19</span>
-
-              </div>
-            </div>
-
-            <!-- LEFT VERTICAL RULER -->
-            <div class="ruler-vertical-box">
-              <div class="ruler-vertical">
-
-                <button
-                  type="button"
-                  class="ruler-v-indent-marker top-margin-indent"
-                  data-v-indent-marker="top"
-                  title="Отступ сверху"
-                ></button>
-
-                <button
-                  type="button"
-                  class="ruler-v-indent-marker bottom-margin-indent"
-                  data-v-indent-marker="bottom"
-                  title="Отступ снизу"
-                ></button>
-
-                <span style="top:8%">1</span>
-                <span style="top:16%">2</span>
-                <span style="top:24%">3</span>
-                <span style="top:32%">4</span>
-                <span style="top:40%">5</span>
-                <span style="top:48%">6</span>
-                <span style="top:56%">7</span>
-                <span style="top:64%">8</span>
-                <span style="top:72%">9</span>
-                <span style="top:80%">10</span>
-                <span style="top:88%">11</span>
-                <span style="top:96%">12</span>
-
-              </div>
-            </div>
-
-            <div class="workspace-paper-center">
-              <div id="workspacePaperStack" class="workspace-paper-stack">
-
-                <div
-                  class="workspace-paper active"
-                  contenteditable="true"
-                  spellcheck="false"
-                  data-page="1"
-                >
-                  <h1>Strategik islohotlar</h1>
-                  <p><strong>Muallif:</strong> T.Ismailov</p>
-                  <p><strong>Muddat:</strong> 2026-06-12</p>
-                  <p><strong>Holati:</strong> active</p>
-                  <p><strong>Amalga oshirish mexanizmi:</strong> 2. Jamoatchilik fikrini baholash uchun mustaqil tashkilotlarni tanlash.</p>
-                  <p><strong>Amalga oshirish shakli:</strong> Strategik islohotlar</p>
-                  <p>Bu yerda loyiha bo‘yicha to‘liq matn, topshiriq, izoh, tahlil va hujjat matnlarini yozish mumkin.</p>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- BOTTOM BAR -->
-      <div class="workspace-bottom-bar">
-
-        <div class="bottom-doc-info">
-          <button type="button" class="bottom-file-btn">
-            <i class="ri-file-text-line"></i>
+    <!-- RIGHT: ONLY ONE PDF VIEWER -->
+    <main class="workspace-editor-side pdf-viewer-side">
+      <section class="pdf-desktop-shell">
+        <div class="workspace-document-tabs" id="workspaceDocumentTabs">
+          <button type="button" class="workspace-doc-tab task-card-tab" id="workspaceTaskCardBtn">
+            <i class="ri-profile-line"></i>
+            <span>Topshiriq kartochkasi</span>
           </button>
 
-          <div class="bottom-page-info">
-            Sahifa 1 / 1
-            <i class="ri-arrow-down-s-line"></i>
-          </div>
-
-          <div class="bottom-stat">
-            So‘zlar: <b>128</b>
-          </div>
-
-          <div class="bottom-stat">
-            Belgilar: <b>874</b>
-          </div>
-        </div>
-
-        <div class="workspace-bottom-actions">
-
-          <div class="bottom-zoom-control">
-            <button type="button" class="bottom-zoom-btn" id="zoomOutBtn">
-              <i class="ri-zoom-out-line"></i>
-            </button>
-
-            <select class="bottom-zoom-select" id="workspaceZoomSelect">
-              <option value="50">50%</option>
-              <option value="75">75%</option>
-              <option value="90" selected>90%</option>
-              <option value="100">100%</option>
-              <option value="110">110%</option>
-              <option value="125">125%</option>
-              <option value="150">150%</option>
-              <option value="175">175%</option>
-              <option value="200">200%</option>
-            </select>
-
-            <button type="button" class="bottom-zoom-btn" id="zoomInBtn">
-              <i class="ri-zoom-in-line"></i>
-            </button>
-          </div>
-
-          <button type="button" class="workspace-bottom-btn secondary" id="clearWorkspaceBtn">
-            <i class="ri-sparkling-line"></i>
-            <span>Tozalash</span>
+          <button type="button" class="workspace-doc-tab is-active" id="workspaceTaskDocBtn">
+            <i class="ri-file-pdf-2-line"></i>
+            <span>Topshiriq bo‘yicha hujjat</span>
           </button>
 
+          <button type="button" class="workspace-doc-tab" id="workspaceExecutionDocBtn">
+            <i class="ri-file-upload-line"></i>
+            <span>Ijro bo‘yicha hujjat</span>
+          </button>
         </div>
 
-      </div>
+        <div class="pdf-preview-workdesk" id="workspacePdfDesk">
+          <iframe
+            id="workspacePdfFrame"
+            class="workspace-pdf-frame"
+            title="Topshiriq PDF"
+            src="about:blank">
+          </iframe>
 
+          <img
+            id="workspaceImagePreview"
+            class="workspace-image-preview"
+            alt="Topshiriq rasmi"
+            style="display:none"
+          >
+
+          <div class="pdf-empty-state" id="workspacePdfEmpty">
+            <div class="pdf-empty-icon">
+              <i class="ri-file-pdf-2-line"></i>
+            </div>
+            <h3>PDF fayl biriktirilmagan</h3>
+            <p>O‘ng tomonda PDF chiqishi uchun topshiriqqa PDF fayl yuklang.</p>
+          </div>
+        </div>
+      </section>
     </main>
 
   </div>
 
+</div>
+
+
+<!-- STEP 1: EXECUTION FILE UPLOAD MODAL -->
+<div class="workflow-modal-overlay" id="workflowExecutionModal" style="display:none">
+  <div class="workflow-modal">
+    <div class="workflow-modal-head">
+      <div>
+        <span>1-bosqich</span>
+        <h3>Ijro fayl yuklash</h3>
+      </div>
+
+      <button type="button" class="workflow-modal-close" id="workflowExecutionModalClose" aria-label="Yopish">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="workflow-modal-body">
+      <label class="workflow-field">
+        <span>Saqlash turi</span>
+        <select id="workflowSaveType">
+          <option value="ijro_hujjati">Ijro hujjati</option>
+          <option value="kelishish_uchun">Kelishish uchun</option>
+          <option value="yakuniy_hujjat">Yakuniy hujjat</option>
+          <option value="qoralama">Qoralama</option>
+        </select>
+      </label>
+
+      <label class="workflow-field">
+        <span>Fayl</span>
+        <input
+          type="file"
+          id="workflowExecutionFile"
+          accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.txt,.zip,.rar,.7z"
+        >
+      </label>
+
+      <label class="workflow-field">
+        <span>Bajaruvchi mas’ul</span>
+        <select id="workflowResponsible">
+          <option value="">Mas’ulni tanlang</option>
+          <option value="Boshqarma boshlig‘i">Boshqarma boshlig‘i</option>
+          <option value="Bo‘lim boshlig‘i">Bo‘lim boshlig‘i</option>
+          <option value="Mas’ul ijrochi">Mas’ul ijrochi</option>
+          <option value="Yetakchi mutaxassis">Yetakchi mutaxassis</option>
+          <option value="Bosh inspektor">Bosh inspektor</option>
+        </select>
+      </label>
+
+      <label class="workflow-field">
+        <span>Qisqacha izoh</span>
+        <textarea id="workflowExecutionNote" rows="4" placeholder="Ijro bo‘yicha qisqacha izoh yozing..."></textarea>
+      </label>
+    </div>
+
+    <div class="workflow-modal-foot">
+      <button type="button" class="workflow-modal-btn cancel" id="workflowExecutionModalCancel">
+        Bekor qilish
+      </button>
+
+      <button type="button" class="workflow-modal-btn save" id="workflowExecutionModalSave">
+        <i class="ri-save-3-line"></i>
+        <span>Saqlash</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- STEP 2: SEND TO AGREEMENT MODAL -->
+<div class="workflow-modal-overlay" id="workflowAgreementModal" style="display:none">
+  <div class="workflow-modal workflow-agreement-modal">
+    <div class="workflow-modal-head">
+      <div>
+        <span>2-bosqich</span>
+        <h3>Kelishishga yuborish</h3>
+      </div>
+
+      <button type="button" class="workflow-modal-close" id="workflowAgreementModalClose" aria-label="Yopish">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="workflow-modal-body">
+      <div class="workflow-field">
+        <span>Xodimlarni tanlang</span>
+
+        <div class="agreement-employee-list" id="workflowAgreementEmployees">
+          <label class="agreement-employee-item">
+            <input type="checkbox" value="Boshqarma boshlig‘i">
+            <span>Boshqarma boshlig‘i</span>
+          </label>
+
+          <label class="agreement-employee-item">
+            <input type="checkbox" value="Bo‘lim boshlig‘i">
+            <span>Bo‘lim boshlig‘i</span>
+          </label>
+
+          <label class="agreement-employee-item">
+            <input type="checkbox" value="Mas’ul ijrochi">
+            <span>Mas’ul ijrochi</span>
+          </label>
+
+          <label class="agreement-employee-item">
+            <input type="checkbox" value="Yetakchi mutaxassis">
+            <span>Yetakchi mutaxassis</span>
+          </label>
+
+          <label class="agreement-employee-item">
+            <input type="checkbox" value="Bosh inspektor">
+            <span>Bosh inspektor</span>
+          </label>
+        </div>
+      </div>
+
+      <label class="workflow-field">
+        <span>Yuborish izohi</span>
+        <textarea id="workflowAgreementNote" rows="4" placeholder="Kelishuv uchun qisqacha izoh yozing..."></textarea>
+      </label>
+    </div>
+
+    <div class="workflow-modal-foot">
+      <button type="button" class="workflow-modal-btn cancel" id="workflowAgreementModalCancel">
+        Bekor qilish
+      </button>
+
+      <button type="button" class="workflow-modal-btn save" id="workflowAgreementModalSend">
+        <i class="ri-send-plane-2-line"></i>
+        <span>Xodimlarga yuborish</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- STEP 3: SEND TO SECRETARIAT MODAL -->
+<div class="workflow-modal-overlay" id="workflowSecretariatModal" style="display:none">
+  <div class="workflow-modal workflow-secretariat-modal">
+    <div class="workflow-modal-head">
+      <div>
+        <span>3-bosqich</span>
+        <h3>Kotibiyatga yuborish</h3>
+      </div>
+
+      <button type="button" class="workflow-modal-close" id="workflowSecretariatModalClose" aria-label="Yopish">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="workflow-modal-body">
+      <div class="workflow-field">
+        <span>Rahbar kotiblari ro‘yxati</span>
+
+        <div class="secretary-list" id="workflowSecretariatEmployees">
+          <label class="secretary-item">
+            <input type="radio" name="workflowSecretary" value="Dilnoza Karimova">
+            <span>Dilnoza Karimova</span>
+          </label>
+
+          <label class="secretary-item">
+            <input type="radio" name="workflowSecretary" value="Malika Abdullayeva">
+            <span>Malika Abdullayeva</span>
+          </label>
+
+          <label class="secretary-item">
+            <input type="radio" name="workflowSecretary" value="Nodira Akramova">
+            <span>Nodira Akramova</span>
+          </label>
+
+          <label class="secretary-item">
+            <input type="radio" name="workflowSecretary" value="Shahnoza Rahimova">
+            <span>Shahnoza Rahimova</span>
+          </label>
+
+          <label class="secretary-item">
+            <input type="radio" name="workflowSecretary" value="Aziza Tursunova">
+            <span>Aziza Tursunova</span>
+          </label>
+        </div>
+      </div>
+
+      <label class="workflow-field">
+        <span>Yuborish izohi</span>
+        <textarea id="workflowSecretariatNote" rows="4" placeholder="Kotibiyatga yuborish bo‘yicha qisqacha izoh yozing..."></textarea>
+      </label>
+    </div>
+
+    <div class="workflow-modal-foot">
+      <button type="button" class="workflow-modal-btn cancel" id="workflowSecretariatModalCancel">
+        Bekor qilish
+      </button>
+
+      <button type="button" class="workflow-modal-btn save" id="workflowSecretariatModalSend">
+        <i class="ri-send-plane-2-line"></i>
+        <span>Kotibiyatga yuborish</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- TASK CARD MODAL -->
+<div class="workflow-modal-overlay task-card-modal-overlay" id="workspaceTaskCardModal" style="display:none">
+  <div class="workflow-modal task-card-modal">
+    <div class="workflow-modal-head task-card-modal-head">
+      <div>
+        <span>Topshiriq ma’lumotlari</span>
+        <h3>Topshiriq kartochkasi</h3>
+      </div>
+
+      <button type="button" class="workflow-modal-close" id="workspaceTaskCardModalClose" aria-label="Yopish">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="task-card-modal-body">
+      <div class="task-card-modal-title-row">
+        <div class="task-card-modal-icon">
+          <i class="ri-file-list-3-line"></i>
+        </div>
+
+        <div>
+          <span>Topshiriq mazmuni</span>
+          <h4 id="taskCardModalTaskText">Topshiriq</h4>
+        </div>
+      </div>
+
+      <div class="task-card-modal-grid">
+        <div class="task-card-modal-info">
+          <span>Topshiriqni yuborgan tashkilot</span>
+          <strong id="taskCardModalSender">Tanlanmagan</strong>
+        </div>
+
+        <div class="task-card-modal-info">
+          <span>Rahbariyat topshirig‘i</span>
+          <strong id="taskCardModalLeadership">Tanlanmagan</strong>
+        </div>
+
+        <div class="task-card-modal-info">
+          <span>Joriy jarayon</span>
+          <strong id="taskCardModalStage">1-bosqich</strong>
+        </div>
+
+        <div class="task-card-modal-info">
+          <span>Hujjat holati</span>
+          <strong id="taskCardModalFileStatus">Fayl yuklanmagan</strong>
+        </div>
+      </div>
+
+      <div class="task-card-modal-summary">
+        <span>Topshiriqning qisqacha mazmuni</span>
+        <p id="taskCardModalSummary">Mazmun kiritilmagan</p>
+      </div>
+
+      <div class="task-card-modal-file">
+        <div class="task-card-modal-file-icon" id="taskCardModalFileIcon">
+          <i class="ri-file-3-line"></i>
+        </div>
+
+        <div>
+          <span>Biriktirilgan hujjat</span>
+          <strong id="taskCardModalFileName">Fayl yuklanmagan</strong>
+          <p id="taskCardModalFileMeta">Topshiriqqa asosiy hujjat biriktirilmagan</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="workflow-modal-foot">
+      <button type="button" class="workflow-modal-btn cancel" id="workspaceTaskCardModalCancel">
+        Yopish
+      </button>
+    </div>
+  </div>
 </div>

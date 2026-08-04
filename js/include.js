@@ -3,7 +3,7 @@
    GitHub Pages + Localhost uchun mos
 ========================================================= */
 
-const APP_VERSION = "84";
+const APP_VERSION = "structure-sq-orgchart-20260803";
 
 /* =========================================================
    URL HELPER
@@ -127,7 +127,9 @@ async function loadAppScripts() {
   await loadScript("modules/projects/project-workspace.js");
   await loadScript("modules/structure/structure.js");
   await loadScript("modules/tadat/tadat.js");
-  await loadScript("modules/reports/reports.js");
+  await loadScript("modules/bready/bready.js");
+  await loadScript("modules/indexlar/indexlar.js");
+  await loadScript("modules/indicators/indicators.js");
   await loadScript("modules/settings/settings.js");
 
   await loadScript("js/app.js");

@@ -12,48 +12,117 @@
     </div>
 
     <button
-    type="button"
-    class="sidebar-toggle"
-    id="sidebarToggle"
-    title="Sidebar"
-    aria-label="Sidebarni qisqartirish"
-  >
-    <i class="ri-menu-fold-line"></i>
-  </button>
+      type="button"
+      class="sidebar-brand-toggle"
+      id="sidebarToggle"
+      title="Sidebarni qisqartirish"
+      aria-label="Sidebarni qisqartirish"
+      aria-expanded="true"
+    >
+      <span class="sidebar-brand-toggle-icon" aria-hidden="true"></span>
+    </button>
   </div>
 
   <!-- MENU -->
   <nav class="sidebar-menu">
     <ul>
 
-      <li id="menuDashboard" class="active" data-title="Dashboard">
+      <li id="menuDashboard" class="active" data-title="DASHBOARD">
         <i class="ri-dashboard-line"></i>
-        <span class="sidebar-text">Dashboard</span>
+        <span class="sidebar-text">DASHBOARD</span>
       </li>
 
-      <li id="menuProjects" data-title="Projects">
+      <li id="menuProjects" class="has-submenu" data-title="PROJECTS" aria-expanded="false">
         <i class="ri-folder-3-line"></i>
-        <span class="sidebar-text">Projects</span>
+        <span class="sidebar-text">PROJECTS</span>
+        <i class="ri-arrow-down-s-line sidebar-submenu-arrow"></i>
       </li>
 
-      <li id="menuStructure" data-title="Struktura">
+      <ul class="sidebar-submenu" id="projectsSubmenu" aria-hidden="true">
+        <li id="menuProjectNewTask" class="sidebar-subitem" data-project-target="newTask">
+          <span class="sidebar-subitem-no">1.</span>
+          <span class="sidebar-subitem-text">YANGI TOPSHIRIQ</span>
+        </li>
+        <li id="menuProjectReceived" class="sidebar-subitem" data-project-target="received">
+          <span class="sidebar-subitem-no">2.</span>
+          <span class="sidebar-subitem-text">QABUL QILINGAN HUJJATLAR</span>
+        </li>
+        <li id="menuProjectSent" class="sidebar-subitem" data-project-target="sent">
+          <span class="sidebar-subitem-no">3.</span>
+          <span class="sidebar-subitem-text">YUBORILGAN HUJJATLAR</span>
+        </li>
+      </ul>
+
+      <li id="menuStructure" class="has-submenu" data-title="STRUKTURA" aria-expanded="false">
         <i class="ri-organization-chart"></i>
-        <span class="sidebar-text">Struktura</span>
+        <span class="sidebar-text">STRUKTURA</span>
+        <i class="ri-arrow-down-s-line sidebar-submenu-arrow"></i>
       </li>
 
-      <li id="menuTadat" data-title="Tadat">
+      <ul class="sidebar-submenu" id="structureSubmenu" aria-hidden="true">
+        <li id="menuStructureCommittee" class="sidebar-subitem" data-structure-target="committee">
+          <span class="sidebar-subitem-no">1.</span>
+          <span class="sidebar-subitem-text">SOLIQ QO‘MITASI STRUKTURASI</span>
+        </li>
+        <li id="menuStructureYsti" class="sidebar-subitem" data-structure-target="ysti">
+          <span class="sidebar-subitem-no">2.</span>
+          <span class="sidebar-subitem-text">YSTI STRUKTURASI</span>
+        </li>
+        <li id="menuStructureDepartments" class="sidebar-subitem" data-structure-target="departments">
+          <span class="sidebar-subitem-no">3.</span>
+          <span class="sidebar-subitem-text">SOLIQ BOSHQARMALARI STRUKTURASI</span>
+        </li>
+        <li id="menuStructureInspections" class="sidebar-subitem" data-structure-target="inspections">
+          <span class="sidebar-subitem-no">4.</span>
+          <span class="sidebar-subitem-text">SOLIQ INSPEKSIYALARI STRUKTURASI</span>
+        </li>
+      </ul>
+
+      <li id="menuTadat" class="has-submenu" data-title="BAHOLASH" aria-expanded="false">
         <i class="ri-file-chart-line"></i>
-        <span class="sidebar-text">Tadat</span>
+        <span class="sidebar-text">BAHOLASH</span>
+        <i class="ri-arrow-down-s-line sidebar-submenu-arrow"></i>
       </li>
 
-      <li id="menuReports" data-title="Reports">
-        <i class="ri-bar-chart-box-line"></i>
-        <span class="sidebar-text">Reports</span>
+      <ul class="sidebar-submenu" id="tadatSubmenu" aria-hidden="true">
+        <li id="menuTadatMain" class="sidebar-subitem" data-tadat-target="tadatMain">
+          <span class="sidebar-subitem-no">1.</span>
+          <span class="sidebar-subitem-text">TADAT</span>
+        </li>
+        <li id="menuBReady" class="sidebar-subitem" data-tadat-target="bready">
+          <span class="sidebar-subitem-no">2.</span>
+          <span class="sidebar-subitem-text">B-READY</span>
+        </li>
+      </ul>
+
+      <li id="menuIndexlar" class="has-submenu" data-title="INDEXLAR" aria-expanded="false">
+        <i class="ri-percent-line"></i>
+        <span class="sidebar-text">INDEXLAR</span>
+        <i class="ri-arrow-down-s-line sidebar-submenu-arrow"></i>
       </li>
 
-      <li id="menuSettings" data-title="Settings">
+      <ul class="sidebar-submenu" id="indexlarSubmenu" aria-hidden="true">
+        <li id="menuIndexRegister" class="sidebar-subitem" data-index-target="indexlarRegisterPanel">
+          <span class="sidebar-subitem-no">1.</span>
+          <span class="sidebar-subitem-text">KO‘RSATKICHLAR REESTRI</span>
+        </li>
+        <li id="menuIndexWorkflow" class="sidebar-subitem" data-index-target="indexlarWorkflowPanel">
+          <span class="sidebar-subitem-no">2.</span>
+          <span class="sidebar-subitem-text">HISOBLASH VA AMALGA OSHIRISH SXEMASI</span>
+        </li>
+        <li id="menuIndexReports" class="sidebar-subitem" data-index-target="indexlarReportFormsPanel">
+          <span class="sidebar-subitem-no">3.</span>
+          <span class="sidebar-subitem-text">HISOBOT SHAKLLARI</span>
+        </li>
+      </ul>
+
+      <li id="menuIndicators" data-title="INDIKATORLAR">
+        <i class="ri-line-chart-line"></i>
+        <span class="sidebar-text">INDIKATORLAR</span>
+      </li>
+      <li id="menuSettings" data-title="SETTINGS">
         <i class="ri-settings-3-line"></i>
-        <span class="sidebar-text">Settings</span>
+        <span class="sidebar-text">SETTINGS</span>
       </li>
 
     </ul>

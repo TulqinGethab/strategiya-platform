@@ -1,11 +1,11 @@
 <div class="modal" id="modal">
-  <div class="modal-content">
+  <div class="modal-content project-task-modal">
 
     <!-- MODAL HEADER -->
     <div class="modal-header">
       <div>
-        <span class="modal-eyebrow">Project form</span>
-        <h3 id="modalTitle">New Project</h3>
+        <span class="modal-eyebrow">TOPSHIRIQ FORMASI</span>
+        <h3 id="modalTitle">Yangi topshiriq</h3>
       </div>
 
       <button type="button" class="modal-close" onclick="closeModal()">
@@ -14,124 +14,83 @@
     </div>
 
     <!-- MODAL BODY -->
-    <div class="form-grid">
+    <div class="form-grid project-task-form-grid">
 
-      <div class="form-group">
-        <label for="kirimNumber">Kirim raqami</label>
-        <input
-          id="kirimNumber"
-          type="text"
-          placeholder="Masalan: 01-123"
-          autocomplete="off"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="kirimDate">Kirim sanasi</label>
-        <input
-          id="kirimDate"
-          type="date"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="chiqimNumber">Chiqim raqami</label>
-        <input
-          id="chiqimNumber"
-          type="text"
-          placeholder="Masalan: 02-456"
-          autocomplete="off"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="chiqimDate">Chiqim sanasi</label>
-        <input
-          id="chiqimDate"
-          type="date"
-        >
+      <div class="form-group full">
+        <label for="taskSender">Topshiriqni yuborgan vazirlik, idora va boshqa tashkilot</label>
+        <select id="taskSender">
+          <option value="">Tanlang</option>
+          <option value="O‘zbekiston Respublikasi Prezidenti Administratsiyasi">O‘zbekiston Respublikasi Prezidenti Administratsiyasi</option>
+          <option value="O‘zbekiston Respublikasi Vazirlar Mahkamasi">O‘zbekiston Respublikasi Vazirlar Mahkamasi</option>
+          <option value="Iqtisodiyot va moliya vazirligi">Iqtisodiyot va moliya vazirligi</option>
+          <option value="Adliya vazirligi">Adliya vazirligi</option>
+          <option value="Raqamli texnologiyalar vazirligi">Raqamli texnologiyalar vazirligi</option>
+          <option value="Davlat xizmatlari agentligi">Davlat xizmatlari agentligi</option>
+          <option value="Savdo-sanoat palatasi">Savdo-sanoat palatasi</option>
+          <option value="Boshqa vazirlik, idora yoki tashkilot">Boshqa vazirlik, idora yoki tashkilot</option>
+        </select>
       </div>
 
       <div class="form-group full">
-        <label for="author">Muallif</label>
-        <input
-          id="author"
-          type="text"
-          placeholder="Masalan: T.Ismailov"
-          autocomplete="off"
-        >
+        <label for="leadershipTask">Rahbariyat tomonidan berilgan topshiriq</label>
+        <select id="leadershipTask">
+          <option value="">Tanlang</option>
+          <option value="Rais topshirig‘i">Rais topshirig‘i</option>
+          <option value="Raisning birinchi o‘rinbosari topshirig‘i">Raisning birinchi o‘rinbosari topshirig‘i</option>
+          <option value="Rais o‘rinbosari topshirig‘i">Rais o‘rinbosari topshirig‘i</option>
+          <option value="Hay’at yig‘ilishi bayoni topshirig‘i">Hay’at yig‘ilishi bayoni topshirig‘i</option>
+          <option value="Apparat yig‘ilishi topshirig‘i">Apparat yig‘ilishi topshirig‘i</option>
+          <option value="Nazorat rejasi asosidagi topshiriq">Nazorat rejasi asosidagi topshiriq</option>
+          <option value="Boshqa rahbariyat topshirig‘i">Boshqa rahbariyat topshirig‘i</option>
+        </select>
       </div>
 
       <div class="form-group full">
-        <label for="eventName">Tadbir nomi</label>
-        <input
-          id="eventName"
-          type="text"
-          placeholder="Tadbir nomini kiriting"
-          autocomplete="off"
-        >
+        <label for="taskSummary">Topshiriqning qisqacha mazmuni</label>
+        <textarea
+          id="taskSummary"
+          rows="5"
+          placeholder="Topshiriq mazmunini qisqacha kiriting"
+        ></textarea>
       </div>
 
       <div class="form-group full">
-        <label for="mechanism">Amalga oshirish mexanizmi</label>
-        <input
-          id="mechanism"
-          type="text"
-          placeholder="Mexanizmni kiriting"
-          autocomplete="off"
-        >
-      </div>
+        <label>Topshiriq faylini yuklash</label>
 
-      <div class="form-group">
-        <label for="form">Amalga oshirish shakli</label>
-        <input
-          id="form"
-          type="text"
-          placeholder="Masalan: Reja-jadval"
-          autocomplete="off"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="deadline">Muddat</label>
-        <input
-          id="deadline"
-          type="date"
-        >
-      </div>
-
-      <div class="form-group full">
-        <label for="executorInput">Ijrochilar</label>
-
-        <div class="executor-row">
+        <div class="task-upload-box">
           <input
-            id="executorInput"
-            type="text"
-            placeholder="Ijrochi nomi"
-            autocomplete="off"
+            id="taskFileInput"
+            type="file"
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.webp,.txt,.zip,.rar,.7z"
+            onchange="handleProjectFileUpload(event)"
+            hidden
           >
 
           <button
             type="button"
-            class="executor-add"
-            onclick="addExecutor()"
-            title="Ijrochi qo‘shish"
+            class="task-upload-btn"
+            onclick="document.getElementById('taskFileInput').click()"
           >
-            <i class="ri-add-line"></i>
+            <i class="ri-upload-cloud-2-line"></i>
+            Fayl tanlash
+          </button>
+
+          <div class="task-upload-info">
+            <strong id="taskFileName">Fayl tanlanmagan</strong>
+            <span id="taskFileSize">PDF, Word, Excel, JPG, JPEG, PNG va boshqa fayllar</span>
+          </div>
+
+          <button
+            type="button"
+            class="task-file-clear"
+            id="clearTaskFileBtn"
+            onclick="clearProjectFile()"
+            title="Faylni olib tashlash"
+            style="display:none"
+          >
+            <i class="ri-close-line"></i>
           </button>
         </div>
-
-        <div id="executorList"></div>
-      </div>
-
-      <div class="form-group full">
-        <label for="status">Holati</label>
-
-        <select id="status">
-          <option value="active">Active</option>
-          <option value="completed">Completed</option>
-          <option value="risk">Risk</option>
-        </select>
       </div>
 
     </div>

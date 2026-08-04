@@ -1,0 +1,275 @@
+<section id="tadatSection" style="display:none">
+
+  <div class="tadat-page">
+
+    <!-- KPI -->
+    <div class="tadat-kpi-grid">
+      <div class="tadat-kpi-card blue">
+        <div class="tadat-kpi-icon">
+          <i class="ri-file-chart-line"></i>
+        </div>
+        <div>
+          <h3 id="tadatTotalCount">0</h3>
+          <p>Jami indikator</p>
+        </div>
+      </div>
+
+      <div class="tadat-kpi-card violet">
+        <div class="tadat-kpi-icon">
+          <i class="ri-layout-grid-line"></i>
+        </div>
+        <div>
+          <h3 id="tadatPoaCount">0</h3>
+          <p>POA natija sohasi</p>
+        </div>
+      </div>
+
+      <div class="tadat-kpi-card green">
+        <div class="tadat-kpi-icon">
+          <i class="ri-check-double-line"></i>
+        </div>
+        <div>
+          <h3 id="tadatCompleteCount">0</h3>
+          <p>To‘liq kiritildi</p>
+        </div>
+      </div>
+
+      <div class="tadat-kpi-card amber">
+        <div class="tadat-kpi-icon">
+          <i class="ri-filter-3-line"></i>
+        </div>
+        <div>
+          <h3 id="tadatVisibleCount">0</h3>
+          <p>Ko‘rinayotgan qator</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="tadat-toolbar">
+      <div class="tadat-search-box">
+        <i class="ri-search-line"></i>
+        <input id="tadatSearchInput" type="text" placeholder="POA, indikator kodi, nomi yoki mezon bo‘yicha qidirish">
+      </div>
+
+      <select id="tadatPoaFilter">
+        <option value="all">Barcha POA</option>
+      </select>
+
+      <select id="tadatLangFilter">
+        <option value="uz" selected>UZ</option>
+        <option value="en">EN</option>
+      </select>
+
+      <button type="button" class="tadat-clear-btn" id="tadatClearBtn">
+        <i class="ri-refresh-line"></i>
+        <span id="tadatClearText">Tozalash</span>
+      </button>
+    </div>
+
+    <!-- SUMMARY TABLE -->
+    <div class="tadat-summary-panel">
+      <div class="tadat-panel-head">
+        <div>
+          <h3 id="tadatSummaryTitle">Natija sohalari (POA) bo‘yicha umumiy ko‘rinish</h3>
+          <p id="tadatSummarySubtitle">Har bir qator ustiga bossangiz, shu POA ga tegishli indikatorlar va “A” bahosi mezonlari ochiladi</p>
+        </div>
+
+        <button type="button" class="tadat-add-row-btn" id="tadatAddRowBtn">
+          <i class="ri-add-line"></i>
+          <span id="tadatAddRowText">Qator qo‘shish</span>
+        </button>
+      </div>
+
+      <div class="tadat-summary-scroll">
+        <table class="tadat-summary-table">
+          <thead>
+            <tr>
+              <th id="tadatSummaryThPoa" style="width:110px">POA</th>
+              <th id="tadatSummaryThArea">Natija sohasi</th>
+              <th id="tadatSummaryThRange" style="width:180px">Indikator oralig‘i</th>
+              <th id="tadatSummaryThCount" style="width:120px">Soni</th>
+              <th id="tadatSummaryThStatus" style="width:170px">Holat</th>
+              <th id="tadatSummaryThOpen" style="width:90px">Ochish</th>
+              <th id="tadatSummaryThAction" style="width:130px">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tadatSummaryGrid"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ADD POA ROW MODAL -->
+    <div class="tadat-row-modal" id="tadatRowModal" aria-hidden="true">
+      <div class="tadat-row-card">
+        <div class="tadat-row-top">
+          <div>
+            <span id="tadatRowModalLabel">Yangi POA qatori</span>
+            <h3 id="tadatRowModalTitle">Qator qo‘shish</h3>
+          </div>
+
+          <button type="button" class="tadat-row-close" id="tadatRowClose" title="Yopish">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+
+        <form class="tadat-row-form" id="tadatRowForm">
+          <label>
+            <span id="tadatRowPoaLabel">POA kodi</span>
+            <input id="tadatRowPoaInput" type="text" placeholder="Masalan: POA 10" required>
+          </label>
+
+          <label>
+            <span id="tadatRowNameUzLabel">Natija sohasi (UZ)</span>
+            <input id="tadatRowNameUzInput" type="text" placeholder="O‘zbekcha nomi" required>
+          </label>
+
+          <label>
+            <span id="tadatRowNameEnLabel">Result area (EN)</span>
+            <input id="tadatRowNameEnInput" type="text" placeholder="English name">
+          </label>
+
+          <div class="tadat-row-form-grid">
+            <label>
+              <span id="tadatRowRangeLabel">Indikator oralig‘i</span>
+              <input id="tadatRowRangeInput" type="text" placeholder="Masalan: P10-36 - P10-40">
+            </label>
+
+            <label>
+              <span id="tadatRowCountLabel">Soni</span>
+              <input id="tadatRowCountInput" type="number" min="0" value="0">
+            </label>
+          </div>
+
+          <label>
+            <span id="tadatRowStatusLabel">Holat</span>
+            <select id="tadatRowStatusInput">
+              <option value="complete">To‘liq kiritildi / Complete</option>
+              <option value="process">Jarayonda / In progress</option>
+              <option value="draft">Qoralama / Draft</option>
+            </select>
+          </label>
+
+          <div class="tadat-row-actions">
+            <button type="button" class="tadat-row-cancel" id="tadatRowCancel">Bekor qilish</button>
+            <button type="submit" class="tadat-row-save" id="tadatRowSave">Saqlash</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- ADD INDICATOR / CRITERIA MODAL -->
+    <div class="tadat-indicator-modal" id="tadatIndicatorModal" aria-hidden="true">
+      <div class="tadat-indicator-card">
+        <div class="tadat-indicator-top">
+          <div>
+            <span id="tadatIndicatorModalLabel">POA ichiga indikator qo‘shish</span>
+            <h3 id="tadatIndicatorModalTitle">Mezonlar qatorini yaratish</h3>
+          </div>
+
+          <button type="button" class="tadat-indicator-close" id="tadatIndicatorClose" title="Yopish">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+
+        <form class="tadat-indicator-form" id="tadatIndicatorForm">
+          <input id="tadatIndicatorPoaInput" type="hidden">
+
+          <div class="tadat-indicator-form-grid three">
+            <label>
+              <span id="tadatIndicatorPoaViewLabel">POA</span>
+              <input id="tadatIndicatorPoaView" type="text" disabled>
+            </label>
+
+            <label>
+              <span id="tadatIndicatorCodeLabel">Indikator kodi</span>
+              <input id="tadatIndicatorCodeInput" type="text" placeholder="Masalan: P10-36" required>
+            </label>
+
+            <label>
+              <span id="tadatIndicatorDimensionLabel">Baholash o‘lchovi</span>
+              <input id="tadatIndicatorDimensionInput" type="text" placeholder="Dimension / o‘lchov">
+            </label>
+          </div>
+
+          <div class="tadat-indicator-form-grid">
+            <label>
+              <span id="tadatIndicatorNameUzLabel">Indikator nomi (UZ)</span>
+              <input id="tadatIndicatorNameUzInput" type="text" placeholder="O‘zbekcha indikator nomi" required>
+            </label>
+
+            <label>
+              <span id="tadatIndicatorNameEnLabel">Indicator name (EN)</span>
+              <input id="tadatIndicatorNameEnInput" type="text" placeholder="English indicator name">
+            </label>
+          </div>
+
+          <div class="tadat-indicator-form-grid">
+            <label>
+              <span id="tadatIndicatorCriteriaUzLabel">“A” bahosi mezonlari (UZ)</span>
+              <textarea id="tadatIndicatorCriteriaUzInput" rows="6" placeholder="Har bir mezonni yangi qatordan yozing" required></textarea>
+            </label>
+
+            <label>
+              <span id="tadatIndicatorCriteriaEnLabel">Scoring criteria for “A” (EN)</span>
+              <textarea id="tadatIndicatorCriteriaEnInput" rows="6" placeholder="Write each criterion on a new line"></textarea>
+            </label>
+          </div>
+
+          <div class="tadat-indicator-actions">
+            <button type="button" class="tadat-indicator-cancel" id="tadatIndicatorCancel">Bekor qilish</button>
+            <button type="submit" class="tadat-indicator-save" id="tadatIndicatorSave">Qo‘shish</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <div class="tadat-detail-panel" id="tadatDetailPanel" aria-hidden="true">
+      <div class="tadat-detail-card">
+        <div class="tadat-detail-top">
+          <div>
+            <span id="tadatDetailPoa">POA</span>
+            <h3 id="tadatDetailCode">P0-0</h3>
+          </div>
+
+          <button type="button" class="tadat-detail-close" id="tadatDetailClose" title="Yopish">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
+
+        <div class="tadat-detail-body">
+          <div class="tadat-detail-section">
+            <span>Indikator nomlanishi (UZ)</span>
+            <h4 id="tadatDetailNameUz"></h4>
+          </div>
+
+          <div class="tadat-detail-section">
+            <span>Indicator name (EN)</span>
+            <h4 id="tadatDetailNameEn"></h4>
+          </div>
+
+          <div class="tadat-detail-section">
+            <span>Baholash o‘lchovi / Dimension</span>
+            <p id="tadatDetailDimension"></p>
+          </div>
+
+          <div class="tadat-criteria-grid">
+            <div>
+              <span>“A” bahosi mezonlari (UZ)</span>
+              <div id="tadatDetailCriteriaUz" class="tadat-criteria-list"></div>
+            </div>
+
+            <div>
+              <span>Scoring criteria for “A” (EN Original)</span>
+              <div id="tadatDetailCriteriaEn" class="tadat-criteria-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

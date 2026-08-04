@@ -8,7 +8,7 @@
 @import url("./layout.css");
 
 /* APP LAYOUT PARTS */
-@import url("../layout/sidebar.css");
+@import url("../layout/sidebar.css?v=91");
 @import url("../layout/header.css");
 
 /* DASHBOARD MODULE */
@@ -17,16 +17,20 @@
 /* PROJECTS MODULE */
 @import url("../modules/projects/projects.css");
 @import url("../modules/projects/project-modal.css");
-@import url("../modules/projects/project-workspace.css");
+@import url("../modules/projects/project-workspace.css?v=113");
 
 /* STRUCTURE MODULE */
 @import url("../modules/structure/structure.css");
 
 /* TADAT MODULE */
 @import url("../modules/tadat/tadat.css");
+@import url("../modules/bready/bready.css");
 
-/* REPORTS MODULE */
-@import url("../modules/reports/reports.css");
+/* INDEXLAR MODULE */
+@import url("../modules/indexlar/indexlar.css");
+
+/* INDICATORS MODULE */
+@import url("../modules/indicators/indicators.css");
 
 /* SETTINGS MODULE */
 @import url("../modules/settings/settings.css");

@@ -3,6 +3,72 @@
   <!-- ================= PROJECTS LIST VIEW ================= -->
   <div id="projectsListView" class="projects-list-view">
 
+    <!-- PROJECTS TOP STATS -->
+    <div class="projects-top-stats">
+      <div class="projects-stats-title">
+        <h2>Umumiy ko‘rsatkichlar</h2>
+        <p>Loyihalar holati, muddatlar va xavf monitoringi</p>
+      </div>
+
+      <div class="projects-kpi-grid">
+        <div class="projects-kpi-card">
+          <div class="projects-kpi-icon green">
+            <i class="ri-bar-chart-box-line"></i>
+          </div>
+
+          <div class="projects-kpi-info">
+            <div>
+              <strong id="projectsTotalKpi">0</strong>
+              <span class="projects-kpi-trend" id="projectsTotalTrend">↗ 0%</span>
+            </div>
+            <p>Jami loyihalar</p>
+          </div>
+        </div>
+
+        <div class="projects-kpi-card">
+          <div class="projects-kpi-icon blue">
+            <i class="ri-loader-4-line"></i>
+          </div>
+
+          <div class="projects-kpi-info">
+            <div>
+              <strong id="projectsActiveKpi">0</strong>
+              <span class="projects-kpi-trend" id="projectsActiveTrend">↗ 0%</span>
+            </div>
+            <p>Jarayonda</p>
+          </div>
+        </div>
+
+        <div class="projects-kpi-card">
+          <div class="projects-kpi-icon slate">
+            <i class="ri-checkbox-circle-line"></i>
+          </div>
+
+          <div class="projects-kpi-info">
+            <div>
+              <strong id="projectsCompletedKpi">0</strong>
+              <span class="projects-kpi-trend" id="projectsCompletedTrend">↗ 0%</span>
+            </div>
+            <p>Bajarilgan</p>
+          </div>
+        </div>
+
+        <div class="projects-kpi-card">
+          <div class="projects-kpi-icon red">
+            <i class="ri-error-warning-line"></i>
+          </div>
+
+          <div class="projects-kpi-info">
+            <div>
+              <strong id="projectsRiskKpi">0</strong>
+              <span class="projects-kpi-trend" id="projectsRiskTrend">↗ 0%</span>
+            </div>
+            <p>Xavf / kechikkan</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- PROJECTS TOOLBAR -->
     <div class="projects-toolbar">
       <div class="filters">
@@ -23,7 +89,7 @@
 
       <button class="add-btn" id="openModal">
         <i class="ri-add-line"></i>
-        Add Project
+        Topshiriq qo‘shish
       </button>
     </div>
 
@@ -36,15 +102,10 @@
           <tr>
             <th>Icon</th>
             <th>ID</th>
-            <th>Kirim raqami va sanasi</th>
-            <th>Chiqim raqami va sanasi</th>
-            <th>Muallif</th>
-            <th>Tadbir nomi</th>
-            <th>Amalga oshirish mexanizmi</th>
-            <th>Amalga oshirish shakli</th>
-            <th>Ijrochilar</th>
-            <th>Muddat</th>
-            <th>Holati</th>
+            <th>Topshiriqni yuborgan</th>
+            <th>Rahbariyat topshirig‘i</th>
+            <th>Topshiriqning qisqacha mazmuni</th>
+            <th>Fayl</th>
             <th>Amallar</th>
           </tr>
         </thead>

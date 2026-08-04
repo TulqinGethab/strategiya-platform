@@ -14,7 +14,38 @@ let workspacePageOrientation = "portrait";
 let workspaceZoomValue = 90;
 let workspaceWheelZoomLock = false;
 
+let workspaceActiveDocumentType = "task";
+
 const WORKSPACE_ZOOM_LEVELS = [50, 75, 90, 100, 110, 125, 150, 175, 200];
+
+
+const WORKFLOW_STAGES = [
+  {
+    key: 1,
+    title: "Birinchi ijro bo‘yicha hujjat yuklash",
+    desc: "Ijrochi hujjatni tizimga yuklaydi va birlamchi ijro jarayonini boshlaydi."
+  },
+  {
+    key: 2,
+    title: "Kelishishga yuborildi",
+    desc: "Topshiriq tegishli mas’ullar va bo‘limlar bilan kelishish bosqichida turibdi."
+  },
+  {
+    key: 3,
+    title: "Kotibiyatga yuborildi",
+    desc: "Kelishilgan hujjat kotibiyatga yuborilgan va rasmiy ko‘rib chiqishga tayyor."
+  },
+  {
+    key: 4,
+    title: "Rahbariyat ko‘rib chiqmoqda",
+    desc: "Hujjat rahbariyat tomonidan ko‘rib chiqilmoqda va yakuniy qaror kutilmoqda."
+  },
+  {
+    key: 5,
+    title: "Tasdiqlandi",
+    desc: "Topshiriq bo‘yicha hujjat tasdiqlangan va jarayon muvaffaqiyatli yakunlangan."
+  }
+];
 
 let workspaceIndentState = {
   paperLeft: 70,
@@ -75,6 +106,72 @@ function getProjectWorkspaceEls() {
     importWordInput: document.getElementById("importWordInput"),
 
     taskText: document.getElementById("workspaceTaskText"),
+    taskStatus: document.getElementById("workspaceTaskStatus"),
+    currentStageText: document.getElementById("workspaceCurrentStageText"),
+    workflowSteps: document.getElementById("workspaceWorkflowSteps"),
+
+    workflowExecutionModal: document.getElementById("workflowExecutionModal"),
+    workflowExecutionModalClose: document.getElementById("workflowExecutionModalClose"),
+    workflowExecutionModalCancel: document.getElementById("workflowExecutionModalCancel"),
+    workflowExecutionModalSave: document.getElementById("workflowExecutionModalSave"),
+    workflowSaveType: document.getElementById("workflowSaveType"),
+    workflowExecutionFile: document.getElementById("workflowExecutionFile"),
+    workflowResponsible: document.getElementById("workflowResponsible"),
+    workflowExecutionNote: document.getElementById("workflowExecutionNote"),
+
+    workflowAgreementModal: document.getElementById("workflowAgreementModal"),
+    workflowAgreementModalClose: document.getElementById("workflowAgreementModalClose"),
+    workflowAgreementModalCancel: document.getElementById("workflowAgreementModalCancel"),
+    workflowAgreementModalSend: document.getElementById("workflowAgreementModalSend"),
+    workflowAgreementEmployees: document.getElementById("workflowAgreementEmployees"),
+    workflowAgreementNote: document.getElementById("workflowAgreementNote"),
+
+    workflowSecretariatModal: document.getElementById("workflowSecretariatModal"),
+    workflowSecretariatModalClose: document.getElementById("workflowSecretariatModalClose"),
+    workflowSecretariatModalCancel: document.getElementById("workflowSecretariatModalCancel"),
+    workflowSecretariatModalSend: document.getElementById("workflowSecretariatModalSend"),
+    workflowSecretariatEmployees: document.getElementById("workflowSecretariatEmployees"),
+    workflowSecretariatNote: document.getElementById("workflowSecretariatNote"),
+
+    taskCardBtn: document.getElementById("workspaceTaskCardBtn"),
+    taskCardModal: document.getElementById("workspaceTaskCardModal"),
+    taskCardModalClose: document.getElementById("workspaceTaskCardModalClose"),
+    taskCardModalCancel: document.getElementById("workspaceTaskCardModalCancel"),
+    taskCardModalTaskText: document.getElementById("taskCardModalTaskText"),
+    taskCardModalSender: document.getElementById("taskCardModalSender"),
+    taskCardModalLeadership: document.getElementById("taskCardModalLeadership"),
+    taskCardModalStage: document.getElementById("taskCardModalStage"),
+    taskCardModalFileStatus: document.getElementById("taskCardModalFileStatus"),
+    taskCardModalSummary: document.getElementById("taskCardModalSummary"),
+    taskCardModalFileIcon: document.getElementById("taskCardModalFileIcon"),
+    taskCardModalFileName: document.getElementById("taskCardModalFileName"),
+    taskCardModalFileMeta: document.getElementById("taskCardModalFileMeta"),
+
+    taskDocBtn: document.getElementById("workspaceTaskDocBtn"),
+    executionDocBtn: document.getElementById("workspaceExecutionDocBtn"),
+    sender: document.getElementById("workspaceSender"),
+    leadershipTask: document.getElementById("workspaceLeadershipTask"),
+    taskSummary: document.getElementById("workspaceTaskSummary"),
+    taskFileCard: document.getElementById("workspaceTaskFileCard"),
+    taskFileIcon: document.getElementById("workspaceTaskFileIcon"),
+    taskFileName: document.getElementById("workspaceTaskFileName"),
+    taskFileMeta: document.getElementById("workspaceTaskFileMeta"),
+    taskFileActions: document.getElementById("workspaceTaskFileActions"),
+    taskFileViewBtn: document.getElementById("workspaceTaskFileViewBtn"),
+    taskFileDownloadBtn: document.getElementById("workspaceTaskFileDownloadBtn"),
+    taskEmptyNote: document.getElementById("workspaceTaskEmptyNote"),
+
+    pdfTitle: document.getElementById("workspacePdfTitle"),
+    pdfAddress: document.getElementById("workspacePdfAddress"),
+    pdfActions: document.getElementById("workspacePdfActions"),
+    pdfOpenBtn: document.getElementById("workspacePdfOpenBtn"),
+    pdfDownloadBtn: document.getElementById("workspacePdfDownloadBtn"),
+    pdfRefreshBtn: document.getElementById("workspacePdfRefreshBtn"),
+    pdfFrame: document.getElementById("workspacePdfFrame"),
+    imagePreview: document.getElementById("workspaceImagePreview"),
+    pdfEmpty: document.getElementById("workspacePdfEmpty"),
+    pdfDesk: document.getElementById("workspacePdfDesk"),
+
     author: document.getElementById("workspaceAuthor"),
     incomingDate: document.getElementById("workspaceIncomingDate"),
     deadline: document.getElementById("workspaceDeadline"),
@@ -217,12 +314,993 @@ function getProjectForm(project) {
   );
 }
 
+
+function getProjectTaskSender(project) {
+  return (
+    project?.taskSender ||
+    project?.task_sender ||
+    project?.author ||
+    "Tanlanmagan"
+  );
+}
+
+function getProjectLeadershipTask(project) {
+  return (
+    project?.leadershipTask ||
+    project?.leadership_task ||
+    project?.manager ||
+    project?.mechanism ||
+    "Tanlanmagan"
+  );
+}
+
+function getProjectTaskSummary(project) {
+  return (
+    project?.taskSummary ||
+    project?.task_summary ||
+    project?.name ||
+    project?.eventName ||
+    project?.event_name ||
+    "Mazmun kiritilmagan"
+  );
+}
+
+function getProjectTaskFile(project) {
+  return project?.taskFile || project?.task_file || null;
+}
+
+function formatWorkspaceFileSize(bytes) {
+  const size = Number(bytes) || 0;
+
+  if (!size) return "";
+
+  if (size < 1024) return `${size} B`;
+  if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function getWorkspaceFileIconClass(file = null) {
+  const name = String(file?.name || "").toLowerCase();
+  const type = String(file?.type || "").toLowerCase();
+
+  if (type.includes("pdf") || name.endsWith(".pdf")) return "ri-file-pdf-2-line";
+  if (type.includes("word") || name.endsWith(".doc") || name.endsWith(".docx")) return "ri-file-word-2-line";
+  if (type.includes("excel") || type.includes("spreadsheet") || name.endsWith(".xls") || name.endsWith(".xlsx")) return "ri-file-excel-2-line";
+  if (type.includes("image") || /\.(jpg|jpeg|png|gif|webp)$/i.test(name)) return "ri-image-line";
+  if (name.endsWith(".zip") || name.endsWith(".rar") || name.endsWith(".7z")) return "ri-file-zip-line";
+
+  return "ri-file-3-line";
+}
+
+function downloadWorkspaceTaskFile(file = null) {
+  const taskFile = file || getProjectTaskFile(selectedProjectForWorkspace);
+
+  if (!taskFile || !taskFile.data) {
+    alert("Yuklangan fayl topilmadi");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.href = taskFile.data;
+  link.download = taskFile.name || "topshiriq-fayli";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function viewWorkspaceTaskFile(file = null) {
+  const taskFile = file || getProjectTaskFile(selectedProjectForWorkspace);
+
+  if (!taskFile || !taskFile.data) {
+    alert("Yuklangan fayl topilmadi");
+    return;
+  }
+
+  const win = window.open("", "_blank");
+
+  if (!win) {
+    downloadWorkspaceTaskFile(taskFile);
+    return;
+  }
+
+  win.document.write(`
+    <!DOCTYPE html>
+    <html lang="uz">
+    <head>
+      <meta charset="UTF-8">
+      <title>${escapeHTML(taskFile.name || "Topshiriq fayli")}</title>
+      <style>
+        html,body{margin:0;width:100%;height:100%;background:#0f172a;font-family:Arial,sans-serif;}
+        .top{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#fff;color:#0f172a;font-weight:800;}
+        .top a{padding:10px 14px;border-radius:12px;background:#2563eb;color:#fff;text-decoration:none;}
+        iframe{width:100%;height:calc(100% - 54px);border:0;background:#fff;}
+      </style>
+    </head>
+    <body>
+      <div class="top">
+        <span>${escapeHTML(taskFile.name || "Topshiriq fayli")}</span>
+        <a href="${taskFile.data}" download="${escapeHTML(taskFile.name || "topshiriq-fayli")}">Yuklab olish</a>
+      </div>
+      <iframe src="${taskFile.data}"></iframe>
+    </body>
+    </html>
+  `);
+  win.document.close();
+}
+
+
+function isWorkspacePdfFile(file = null) {
+  const name = String(file?.name || file?.originalName || "").toLowerCase();
+  const type = String(file?.type || "").toLowerCase();
+
+  return type.includes("pdf") || name.endsWith(".pdf");
+}
+
+function isWorkspaceImageFile(file = null) {
+  const name = String(file?.name || file?.originalName || "").toLowerCase();
+  const type = String(file?.type || "").toLowerCase();
+
+  return type.includes("image") || /\.(jpg|jpeg|png|gif|webp)$/i.test(name);
+}
+
+function getWorkspaceFileUrl(file = null) {
+  return file?.url || file?.data || file?.fileUrl || file?.file_url || "";
+}
+
+function getWorkspacePdfEmbedUrl(url = "") {
+  const cleanUrl = String(url || "").trim();
+
+  if (!cleanUrl || cleanUrl.startsWith("data:")) {
+    return cleanUrl;
+  }
+
+  return cleanUrl.includes("#")
+    ? cleanUrl
+    : `${cleanUrl}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`;
+}
+
+
+
+function getSavedWorkflowExecutionDocument(project) {
+  if (typeof getSavedWorkflowExecution === "function") {
+    return getSavedWorkflowExecution(project);
+  }
+
+  try {
+    const raw = localStorage.getItem(`strategiya_workflow_step1_${project?.id || "new"}`);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function normalizeWorkspaceExecutionFile(project) {
+  const saved = getSavedWorkflowExecutionDocument(project);
+
+  if (!saved || !saved.fileData) {
+    return null;
+  }
+
+  return {
+    name: saved.fileName || "Ijro hujjati",
+    originalName: saved.fileName || "Ijro hujjati",
+    type: saved.fileType || "application/pdf",
+    size: Number(saved.fileSize || 0),
+    data: saved.fileData,
+    url: saved.fileData,
+    uploadedAt: saved.savedAt || ""
+  };
+}
+
+function getWorkspaceVisibleFile(project) {
+  if (workspaceActiveDocumentType === "execution") {
+    return normalizeWorkspaceExecutionFile(project);
+  }
+
+  return getProjectTaskFile(project);
+}
+
+function updateWorkspaceDocumentButtons(project) {
+  const els = getProjectWorkspaceEls();
+  const executionFile = normalizeWorkspaceExecutionFile(project);
+
+  if (els.taskDocBtn) {
+    els.taskDocBtn.classList.toggle("is-active", workspaceActiveDocumentType === "task");
+    els.taskDocBtn.disabled = false;
+
+    if (els.taskDocBtn.dataset.bound !== "1") {
+      els.taskDocBtn.dataset.bound = "1";
+      els.taskDocBtn.onclick = () => {
+        workspaceActiveDocumentType = "task";
+        renderWorkspacePdfPreview(selectedProjectForWorkspace);
+      };
+    }
+  }
+
+  if (els.executionDocBtn) {
+    els.executionDocBtn.classList.toggle("is-active", workspaceActiveDocumentType === "execution");
+    els.executionDocBtn.classList.toggle("is-disabled", !executionFile);
+    els.executionDocBtn.disabled = !executionFile;
+
+    if (els.executionDocBtn.dataset.bound !== "1") {
+      els.executionDocBtn.dataset.bound = "1";
+      els.executionDocBtn.onclick = () => {
+        workspaceActiveDocumentType = "execution";
+        renderWorkspacePdfPreview(selectedProjectForWorkspace);
+      };
+    }
+  }
+}
+
+function clearWorkspacePdfPreview(message = "PDF fayl biriktirilmagan") {
+  const els = getProjectWorkspaceEls();
+
+  if (els.pdfTitle) els.pdfTitle.textContent = message;
+  if (els.pdfAddress) els.pdfAddress.textContent = "localhost:3000 / topshiriq fayli";
+  if (els.pdfFrame) {
+    els.pdfFrame.style.display = "none";
+    els.pdfFrame.removeAttribute("src");
+  }
+  if (els.imagePreview) {
+    els.imagePreview.style.display = "none";
+    els.imagePreview.removeAttribute("src");
+  }
+  if (els.pdfEmpty) els.pdfEmpty.style.display = "flex";
+  if (els.pdfActions) els.pdfActions.style.display = "none";
+  if (els.pdfDesk) els.pdfDesk.classList.add("is-empty");
+}
+
+function renderWorkspacePdfPreview(project) {
+  const els = getProjectWorkspaceEls();
+  bindWorkspaceTaskCardModalEvents();
+  updateWorkspaceDocumentButtons(project);
+  const file = getWorkspaceVisibleFile(project);
+  const url = getWorkspaceFileUrl(file);
+
+  if (!els.pdfFrame && !els.imagePreview && !els.pdfEmpty) return;
+
+  if (!file || !url) {
+    clearWorkspacePdfPreview(workspaceActiveDocumentType === "execution" ? "Ijro hujjati yuklanmagan" : "PDF fayl biriktirilmagan");
+    return;
+  }
+
+  const fileName = file.name || file.originalName || "Topshiriq fayli";
+
+  if (els.pdfTitle) els.pdfTitle.textContent = fileName;
+  if (els.pdfAddress) els.pdfAddress.textContent = url.replace(/^https?:\/\//, "");
+  if (els.pdfActions) els.pdfActions.style.display = "flex";
+  if (els.pdfEmpty) els.pdfEmpty.style.display = "none";
+  if (els.pdfDesk) els.pdfDesk.classList.remove("is-empty");
+
+  if (isWorkspacePdfFile(file)) {
+    if (els.imagePreview) {
+      els.imagePreview.style.display = "none";
+      els.imagePreview.removeAttribute("src");
+    }
+    if (els.pdfFrame) {
+      els.pdfFrame.style.display = "block";
+      els.pdfFrame.src = getWorkspacePdfEmbedUrl(url);
+    }
+  } else if (isWorkspaceImageFile(file)) {
+    if (els.pdfFrame) {
+      els.pdfFrame.style.display = "none";
+      els.pdfFrame.removeAttribute("src");
+    }
+    if (els.imagePreview) {
+      els.imagePreview.style.display = "block";
+      els.imagePreview.src = url;
+    }
+  } else {
+    if (els.pdfFrame) {
+      els.pdfFrame.style.display = "none";
+      els.pdfFrame.removeAttribute("src");
+    }
+    if (els.imagePreview) {
+      els.imagePreview.style.display = "none";
+      els.imagePreview.removeAttribute("src");
+    }
+    if (els.pdfEmpty) {
+      els.pdfEmpty.style.display = "flex";
+      els.pdfEmpty.innerHTML = `
+        <div class="pdf-empty-icon"><i class="${getWorkspaceFileIconClass(file)}"></i></div>
+        <h3>Bu fayl brauzerda PDF sifatida ochilmaydi</h3>
+        <p>${escapeHTML(fileName)} faylini ko‘rish uchun “Yangi oynada” yoki “Yuklab olish” tugmasidan foydalaning.</p>
+      `;
+    }
+  }
+
+  if (els.pdfOpenBtn && els.pdfOpenBtn.dataset.bound !== "1") {
+    els.pdfOpenBtn.dataset.bound = "1";
+    els.pdfOpenBtn.onclick = () => viewWorkspaceTaskFile();
+  }
+
+  if (els.pdfDownloadBtn && els.pdfDownloadBtn.dataset.bound !== "1") {
+    els.pdfDownloadBtn.dataset.bound = "1";
+    els.pdfDownloadBtn.onclick = () => downloadWorkspaceTaskFile();
+  }
+
+  if (els.pdfRefreshBtn && els.pdfRefreshBtn.dataset.bound !== "1") {
+    els.pdfRefreshBtn.dataset.bound = "1";
+    els.pdfRefreshBtn.onclick = () => renderWorkspacePdfPreview(selectedProjectForWorkspace);
+  }
+}
+
+function setWorkspacePdfViewMode() {
+  const els = getProjectWorkspaceEls();
+
+  if (!els.workspaceView) return;
+
+  els.workspaceView.classList.remove("panel-center");
+  els.workspaceView.classList.add("editor-open");
+  els.workspaceView.classList.add("pdf-preview-open");
+
+  if (els.workspaceBody) {
+    els.workspaceBody.classList.remove("editor-full-mode");
+  }
+}
+
+
+function getProjectWorkflowStage(project) {
+  const savedSecretariatForStage = typeof getSavedWorkflowSecretariat === "function" ? getSavedWorkflowSecretariat(project) : null;
+  if (savedSecretariatForStage?.sentAt) return 4;
+
+  const savedAgreementForStage = typeof getSavedWorkflowAgreement === "function" ? getSavedWorkflowAgreement(project) : null;
+  if (savedAgreementForStage?.sentAt) return 3;
+
+  const savedExecutionForStage = typeof getSavedWorkflowExecution === "function" ? getSavedWorkflowExecution(project) : null;
+  if (savedExecutionForStage?.fileName) return 2;
+
+  const raw = String(
+    project?.workflowStage ||
+    project?.workflow_stage ||
+    project?.currentStage ||
+    project?.current_stage ||
+    project?.status ||
+    ""
+  ).trim().toLowerCase();
+
+  const numeric = Number(raw);
+  if (Number.isFinite(numeric) && numeric >= 1 && numeric <= 5) {
+    return numeric;
+  }
+
+  if (!raw) return 1;
+  if (raw.includes("tasdiq") || raw.includes("approved") || raw.includes("completed")) return 5;
+  if (raw.includes("rahbar") || raw.includes("ko‘rib") || raw.includes("korib") || raw.includes("review")) return 4;
+  if (raw.includes("kotib")) return 3;
+  if (raw.includes("kelish")) return 2;
+  if (raw.includes("ijro") || raw.includes("upload") || raw.includes("active")) return 1;
+  return 1;
+}
+
+
+function getWorkflowExecutionStorageKey(project) {
+  return `strategiya_workflow_step1_${project?.id || "new"}`;
+}
+
+function getSavedWorkflowExecution(project) {
+  try {
+    const raw = localStorage.getItem(getWorkflowExecutionStorageKey(project));
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function openWorkflowExecutionModal() {
+  const els = getProjectWorkspaceEls();
+  if (!els.workflowExecutionModal) return;
+
+  const saved = getSavedWorkflowExecution(selectedProjectForWorkspace);
+
+  if (els.workflowSaveType) els.workflowSaveType.value = saved?.saveType || "ijro_hujjati";
+  if (els.workflowResponsible) els.workflowResponsible.value = saved?.responsible || "";
+  if (els.workflowExecutionNote) els.workflowExecutionNote.value = saved?.note || "";
+  if (els.workflowExecutionFile) els.workflowExecutionFile.value = "";
+
+  els.workflowExecutionModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeWorkflowExecutionModal() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.workflowExecutionModal) {
+    els.workflowExecutionModal.style.display = "none";
+  }
+
+  document.body.style.overflow = "";
+}
+
+
+function readWorkflowFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve("");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(reader.error || new Error("Fayl o‘qilmadi"));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function saveWorkflowExecutionModal() {
+  const els = getProjectWorkspaceEls();
+  const file = els.workflowExecutionFile?.files?.[0] || null;
+
+  const fileData = file ? await readWorkflowFileAsDataUrl(file) : "";
+
+  const payload = {
+    projectId: selectedProjectForWorkspace?.id || null,
+    saveType: els.workflowSaveType?.value || "ijro_hujjati",
+    fileName: file?.name || "",
+    fileSize: file?.size || 0,
+    fileType: file?.type || "",
+    fileData,
+    responsible: els.workflowResponsible?.value || "",
+    note: els.workflowExecutionNote?.value || "",
+    savedAt: new Date().toISOString()
+  };
+
+  if (!payload.responsible) {
+    alert("Bajaruvchi mas’ulni tanlang");
+    return;
+  }
+
+  if (!payload.fileName) {
+    alert("Ijro faylini tanlang");
+    return;
+  }
+
+  try {
+    localStorage.setItem(
+      getWorkflowExecutionStorageKey(selectedProjectForWorkspace),
+      JSON.stringify(payload)
+    );
+  } catch {}
+
+  if (selectedProjectForWorkspace) {
+    selectedProjectForWorkspace.workflowStage = 2;
+    selectedProjectForWorkspace.currentStage = 2;
+  }
+
+  workspaceActiveDocumentType = "execution";
+  renderWorkspaceWorkflow(selectedProjectForWorkspace);
+  renderWorkspacePdfPreview(selectedProjectForWorkspace);
+  closeWorkflowExecutionModal();
+}
+
+function bindWorkflowExecutionModalEvents() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.workflowExecutionModalClose && els.workflowExecutionModalClose.dataset.bound !== "1") {
+    els.workflowExecutionModalClose.dataset.bound = "1";
+    els.workflowExecutionModalClose.onclick = closeWorkflowExecutionModal;
+  }
+
+  if (els.workflowExecutionModalCancel && els.workflowExecutionModalCancel.dataset.bound !== "1") {
+    els.workflowExecutionModalCancel.dataset.bound = "1";
+    els.workflowExecutionModalCancel.onclick = closeWorkflowExecutionModal;
+  }
+
+  if (els.workflowExecutionModalSave && els.workflowExecutionModalSave.dataset.bound !== "1") {
+    els.workflowExecutionModalSave.dataset.bound = "1";
+    els.workflowExecutionModalSave.onclick = saveWorkflowExecutionModal;
+  }
+
+  if (els.workflowExecutionModal && els.workflowExecutionModal.dataset.bound !== "1") {
+    els.workflowExecutionModal.dataset.bound = "1";
+    els.workflowExecutionModal.addEventListener("click", event => {
+      if (event.target === els.workflowExecutionModal) {
+        closeWorkflowExecutionModal();
+      }
+    });
+  }
+}
+
+
+function getWorkflowAgreementStorageKey(project) {
+  return `strategiya_workflow_step2_${project?.id || "new"}`;
+}
+
+function getSavedWorkflowAgreement(project) {
+  try {
+    const raw = localStorage.getItem(getWorkflowAgreementStorageKey(project));
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function getSelectedAgreementEmployees() {
+  const els = getProjectWorkspaceEls();
+
+  if (!els.workflowAgreementEmployees) return [];
+
+  return Array.from(els.workflowAgreementEmployees.querySelectorAll("input[type='checkbox']:checked"))
+    .map(input => input.value)
+    .filter(Boolean);
+}
+
+function setSelectedAgreementEmployees(values = []) {
+  const els = getProjectWorkspaceEls();
+  const selected = new Set(values);
+
+  if (!els.workflowAgreementEmployees) return;
+
+  els.workflowAgreementEmployees.querySelectorAll("input[type='checkbox']").forEach(input => {
+    input.checked = selected.has(input.value);
+  });
+}
+
+function openWorkflowAgreementModal() {
+  const els = getProjectWorkspaceEls();
+  if (!els.workflowAgreementModal) return;
+
+  const saved = getSavedWorkflowAgreement(selectedProjectForWorkspace);
+  setSelectedAgreementEmployees(saved?.employees || []);
+
+  if (els.workflowAgreementNote) {
+    els.workflowAgreementNote.value = saved?.note || "";
+  }
+
+  els.workflowAgreementModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeWorkflowAgreementModal() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.workflowAgreementModal) {
+    els.workflowAgreementModal.style.display = "none";
+  }
+
+  document.body.style.overflow = "";
+}
+
+function sendWorkflowAgreementModal() {
+  const els = getProjectWorkspaceEls();
+  const employees = getSelectedAgreementEmployees();
+
+  if (!employees.length) {
+    alert("Kelishishga yuboriladigan xodimlarni tanlang");
+    return;
+  }
+
+  const payload = {
+    projectId: selectedProjectForWorkspace?.id || null,
+    employees,
+    note: els.workflowAgreementNote?.value || "",
+    sentAt: new Date().toISOString()
+  };
+
+  try {
+    localStorage.setItem(
+      getWorkflowAgreementStorageKey(selectedProjectForWorkspace),
+      JSON.stringify(payload)
+    );
+  } catch {}
+
+  if (selectedProjectForWorkspace) {
+    selectedProjectForWorkspace.workflowStage = 3;
+    selectedProjectForWorkspace.currentStage = 3;
+  }
+
+  renderWorkspaceWorkflow(selectedProjectForWorkspace);
+  closeWorkflowAgreementModal();
+
+  alert("Hujjat tanlangan xodimlarga kelishish uchun yuborildi");
+}
+
+function bindWorkflowAgreementModalEvents() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.workflowAgreementModalClose && els.workflowAgreementModalClose.dataset.bound !== "1") {
+    els.workflowAgreementModalClose.dataset.bound = "1";
+    els.workflowAgreementModalClose.onclick = closeWorkflowAgreementModal;
+  }
+
+  if (els.workflowAgreementModalCancel && els.workflowAgreementModalCancel.dataset.bound !== "1") {
+    els.workflowAgreementModalCancel.dataset.bound = "1";
+    els.workflowAgreementModalCancel.onclick = closeWorkflowAgreementModal;
+  }
+
+  if (els.workflowAgreementModalSend && els.workflowAgreementModalSend.dataset.bound !== "1") {
+    els.workflowAgreementModalSend.dataset.bound = "1";
+    els.workflowAgreementModalSend.onclick = sendWorkflowAgreementModal;
+  }
+
+  if (els.workflowAgreementModal && els.workflowAgreementModal.dataset.bound !== "1") {
+    els.workflowAgreementModal.dataset.bound = "1";
+    els.workflowAgreementModal.addEventListener("click", event => {
+      if (event.target === els.workflowAgreementModal) {
+        closeWorkflowAgreementModal();
+      }
+    });
+  }
+}
+
+
+function getWorkflowSecretariatStorageKey(project) {
+  return `strategiya_workflow_step3_${project?.id || "new"}`;
+}
+
+function getSavedWorkflowSecretariat(project) {
+  try {
+    const raw = localStorage.getItem(getWorkflowSecretariatStorageKey(project));
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function getSelectedSecretariatEmployee() {
+  const els = getProjectWorkspaceEls();
+
+  if (!els.workflowSecretariatEmployees) return "";
+
+  const selected = els.workflowSecretariatEmployees.querySelector("input[name='workflowSecretary']:checked");
+  return selected?.value || "";
+}
+
+function setSelectedSecretariatEmployee(value = "") {
+  const els = getProjectWorkspaceEls();
+
+  if (!els.workflowSecretariatEmployees) return;
+
+  els.workflowSecretariatEmployees.querySelectorAll("input[name='workflowSecretary']").forEach(input => {
+    input.checked = input.value === value;
+  });
+}
+
+function openWorkflowSecretariatModal() {
+  const els = getProjectWorkspaceEls();
+  if (!els.workflowSecretariatModal) return;
+
+  const saved = getSavedWorkflowSecretariat(selectedProjectForWorkspace);
+
+  setSelectedSecretariatEmployee(saved?.secretary || "");
+
+  if (els.workflowSecretariatNote) {
+    els.workflowSecretariatNote.value = saved?.note || "";
+  }
+
+  els.workflowSecretariatModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeWorkflowSecretariatModal() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.workflowSecretariatModal) {
+    els.workflowSecretariatModal.style.display = "none";
+  }
+
+  document.body.style.overflow = "";
+}
+
+function sendWorkflowSecretariatModal() {
+  const els = getProjectWorkspaceEls();
+  const secretary = getSelectedSecretariatEmployee();
+
+  if (!secretary) {
+    alert("Rahbar kotibini tanlang");
+    return;
+  }
+
+  const payload = {
+    projectId: selectedProjectForWorkspace?.id || null,
+    secretary,
+    note: els.workflowSecretariatNote?.value || "",
+    sentAt: new Date().toISOString()
+  };
+
+  try {
+    localStorage.setItem(
+      getWorkflowSecretariatStorageKey(selectedProjectForWorkspace),
+      JSON.stringify(payload)
+    );
+  } catch {}
+
+  if (selectedProjectForWorkspace) {
+    selectedProjectForWorkspace.workflowStage = 4;
+    selectedProjectForWorkspace.currentStage = 4;
+  }
+
+  renderWorkspaceWorkflow(selectedProjectForWorkspace);
+  closeWorkflowSecretariatModal();
+
+  alert(`Hujjat ${secretary}ga kotibiyat orqali yuborildi`);
+}
+
+function bindWorkflowSecretariatModalEvents() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.workflowSecretariatModalClose && els.workflowSecretariatModalClose.dataset.bound !== "1") {
+    els.workflowSecretariatModalClose.dataset.bound = "1";
+    els.workflowSecretariatModalClose.onclick = closeWorkflowSecretariatModal;
+  }
+
+  if (els.workflowSecretariatModalCancel && els.workflowSecretariatModalCancel.dataset.bound !== "1") {
+    els.workflowSecretariatModalCancel.dataset.bound = "1";
+    els.workflowSecretariatModalCancel.onclick = closeWorkflowSecretariatModal;
+  }
+
+  if (els.workflowSecretariatModalSend && els.workflowSecretariatModalSend.dataset.bound !== "1") {
+    els.workflowSecretariatModalSend.dataset.bound = "1";
+    els.workflowSecretariatModalSend.onclick = sendWorkflowSecretariatModal;
+  }
+
+  if (els.workflowSecretariatModal && els.workflowSecretariatModal.dataset.bound !== "1") {
+    els.workflowSecretariatModal.dataset.bound = "1";
+    els.workflowSecretariatModal.addEventListener("click", event => {
+      if (event.target === els.workflowSecretariatModal) {
+        closeWorkflowSecretariatModal();
+      }
+    });
+  }
+}
+
+
+function getWorkflowStageTitle(stageNumber) {
+  const stage = WORKFLOW_STAGES.find(item => item.key === Number(stageNumber));
+  return stage ? stage.title : `${stageNumber || 1}-bosqich`;
+}
+
+function renderWorkspaceTaskCardModal(project) {
+  const els = getProjectWorkspaceEls();
+  const file = getProjectTaskFile(project);
+  const stageNumber = getProjectWorkflowStage(project);
+
+  if (els.taskCardModalTaskText) {
+    els.taskCardModalTaskText.textContent = getProjectTaskSummary(project);
+  }
+
+  if (els.taskCardModalSender) {
+    els.taskCardModalSender.textContent = getProjectTaskSender(project);
+  }
+
+  if (els.taskCardModalLeadership) {
+    els.taskCardModalLeadership.textContent = getProjectLeadershipTask(project);
+  }
+
+  if (els.taskCardModalStage) {
+    els.taskCardModalStage.textContent = `${stageNumber}-bosqich — ${getWorkflowStageTitle(stageNumber)}`;
+  }
+
+  if (els.taskCardModalSummary) {
+    els.taskCardModalSummary.textContent = getProjectTaskSummary(project);
+  }
+
+  if (file && (file.data || file.url)) {
+    if (els.taskCardModalFileStatus) {
+      els.taskCardModalFileStatus.textContent = "Hujjat biriktirilgan";
+    }
+
+    if (els.taskCardModalFileName) {
+      els.taskCardModalFileName.textContent = file.name || file.originalName || "Topshiriq hujjati";
+    }
+
+    if (els.taskCardModalFileMeta) {
+      els.taskCardModalFileMeta.textContent = [
+        formatWorkspaceFileSize(file.size),
+        file.type || "file"
+      ].filter(Boolean).join(" • ");
+    }
+
+    if (els.taskCardModalFileIcon) {
+      els.taskCardModalFileIcon.innerHTML = `<i class="${getWorkspaceFileIconClass(file)}"></i>`;
+    }
+  } else {
+    if (els.taskCardModalFileStatus) {
+      els.taskCardModalFileStatus.textContent = "Fayl yuklanmagan";
+    }
+
+    if (els.taskCardModalFileName) {
+      els.taskCardModalFileName.textContent = "Fayl yuklanmagan";
+    }
+
+    if (els.taskCardModalFileMeta) {
+      els.taskCardModalFileMeta.textContent = "Topshiriqqa asosiy hujjat biriktirilmagan";
+    }
+
+    if (els.taskCardModalFileIcon) {
+      els.taskCardModalFileIcon.innerHTML = `<i class="ri-file-warning-line"></i>`;
+    }
+  }
+}
+
+function openWorkspaceTaskCardModal() {
+  const els = getProjectWorkspaceEls();
+  if (!els.taskCardModal) return;
+
+  renderWorkspaceTaskCardModal(selectedProjectForWorkspace);
+
+  els.taskCardModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeWorkspaceTaskCardModal() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.taskCardModal) {
+    els.taskCardModal.style.display = "none";
+  }
+
+  document.body.style.overflow = "";
+}
+
+function bindWorkspaceTaskCardModalEvents() {
+  const els = getProjectWorkspaceEls();
+
+  if (els.taskCardBtn && els.taskCardBtn.dataset.bound !== "1") {
+    els.taskCardBtn.dataset.bound = "1";
+    els.taskCardBtn.onclick = openWorkspaceTaskCardModal;
+  }
+
+  if (els.taskCardModalClose && els.taskCardModalClose.dataset.bound !== "1") {
+    els.taskCardModalClose.dataset.bound = "1";
+    els.taskCardModalClose.onclick = closeWorkspaceTaskCardModal;
+  }
+
+  if (els.taskCardModalCancel && els.taskCardModalCancel.dataset.bound !== "1") {
+    els.taskCardModalCancel.dataset.bound = "1";
+    els.taskCardModalCancel.onclick = closeWorkspaceTaskCardModal;
+  }
+
+  if (els.taskCardModal && els.taskCardModal.dataset.bound !== "1") {
+    els.taskCardModal.dataset.bound = "1";
+    els.taskCardModal.addEventListener("click", event => {
+      if (event.target === els.taskCardModal) {
+        closeWorkspaceTaskCardModal();
+      }
+    });
+  }
+}
+
+function renderWorkspaceWorkflow(project) {
+  const els = getProjectWorkspaceEls();
+  if (!els.workflowSteps) return;
+
+  const activeStage = getProjectWorkflowStage(project);
+  const current = WORKFLOW_STAGES.find(stage => stage.key === activeStage) || WORKFLOW_STAGES[0];
+
+  if (els.currentStageText) {
+    els.currentStageText.textContent = current.title;
+  }
+
+  if (els.taskStatus) {
+    els.taskStatus.textContent = `Jarayon ${activeStage}-bosqichda`;
+  }
+
+  els.workflowSteps.innerHTML = WORKFLOW_STAGES.map(stage => {
+    const stateClass = stage.key < activeStage
+      ? "is-completed"
+      : stage.key === activeStage
+        ? "is-active"
+        : "is-upcoming";
+
+    const badgeText = stage.key < activeStage
+      ? "Bajarilgan"
+      : stage.key === activeStage
+        ? "Joriy bosqich"
+        : "Kutilmoqda";
+
+    const circleInner = stage.key < activeStage
+      ? '<i class="ri-check-line"></i>'
+      : String(stage.key);
+
+    return `
+      <div class="workflow-step ${stateClass} ${stage.key === 1 || stage.key === 2 || stage.key === 3 ? "is-clickable" : ""}" data-workflow-stage="${stage.key}">
+        <div class="workflow-step-marker-wrap">
+          <div class="workflow-step-circle">${circleInner}</div>
+          <div class="workflow-step-line"></div>
+        </div>
+
+        <div class="workflow-step-content">
+          <span class="workflow-step-badge">${badgeText}</span>
+          <h4 class="workflow-step-title">${stage.title}</h4>
+          <p class="workflow-step-desc">${stage.desc}</p>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  bindWorkflowExecutionModalEvents();
+
+  bindWorkflowAgreementModalEvents();
+
+  const firstStep = els.workflowSteps.querySelector('[data-workflow-stage="1"]');
+  if (firstStep) {
+    firstStep.onclick = openWorkflowExecutionModal;
+  }
+
+  const secondStep = els.workflowSteps.querySelector('[data-workflow-stage="2"]');
+  if (secondStep) {
+    secondStep.onclick = openWorkflowAgreementModal;
+  }
+
+  bindWorkflowSecretariatModalEvents();
+
+  const thirdStep = els.workflowSteps.querySelector('[data-workflow-stage="3"]');
+  if (thirdStep) {
+    thirdStep.onclick = openWorkflowSecretariatModal;
+  }
+}
+
+function renderWorkspaceTaskFile(project) {
+  const els = getProjectWorkspaceEls();
+  const file = getProjectTaskFile(project);
+
+  if (!els.taskFileName || !els.taskFileMeta) return;
+
+  if (!file || !file.data) {
+    els.taskFileName.textContent = "Fayl yuklanmagan";
+    els.taskFileMeta.textContent = "Modal orqali topshiriq faylini yuklang";
+
+    if (els.taskFileActions) els.taskFileActions.style.display = "none";
+    if (els.taskEmptyNote) els.taskEmptyNote.style.display = "flex";
+    if (els.taskFileIcon) els.taskFileIcon.innerHTML = `<i class="ri-file-warning-line"></i>`;
+    if (els.taskFileCard) els.taskFileCard.classList.add("is-empty");
+
+    return;
+  }
+
+  els.taskFileName.textContent = file.name || "Topshiriq fayli";
+  els.taskFileMeta.textContent = [
+    formatWorkspaceFileSize(file.size),
+    file.type || "file"
+  ].filter(Boolean).join(" • ");
+
+  if (els.taskFileActions) els.taskFileActions.style.display = "flex";
+  if (els.taskEmptyNote) els.taskEmptyNote.style.display = "none";
+  if (els.taskFileIcon) els.taskFileIcon.innerHTML = `<i class="${getWorkspaceFileIconClass(file)}"></i>`;
+  if (els.taskFileCard) els.taskFileCard.classList.remove("is-empty");
+
+  if (els.taskFileViewBtn && els.taskFileViewBtn.dataset.bound !== "1") {
+    els.taskFileViewBtn.dataset.bound = "1";
+    els.taskFileViewBtn.onclick = () => viewWorkspaceTaskFile();
+  }
+
+  if (els.taskFileDownloadBtn && els.taskFileDownloadBtn.dataset.bound !== "1") {
+    els.taskFileDownloadBtn.dataset.bound = "1";
+    els.taskFileDownloadBtn.onclick = () => downloadWorkspaceTaskFile();
+  }
+}
+
 function fillProjectWorkspaceInfo(project) {
   const els = getProjectWorkspaceEls();
 
   if (els.taskText) {
-    els.taskText.textContent = getProjectName(project);
+    els.taskText.textContent = getProjectTaskSummary(project);
   }
+
+  if (els.taskStatus) {
+    els.taskStatus.textContent = getProjectStatus(project) || "Ko‘rish rejimi";
+  }
+
+  if (els.sender) {
+    els.sender.textContent = getProjectTaskSender(project);
+  }
+
+  if (els.leadershipTask) {
+    els.leadershipTask.textContent = getProjectLeadershipTask(project);
+  }
+
+  if (els.taskSummary) {
+    els.taskSummary.textContent = getProjectTaskSummary(project);
+  }
+
+  workspaceActiveDocumentType = "task";
+  renderWorkspaceWorkflow(project);
+  renderWorkspaceTaskFile(project);
+  renderWorkspacePdfPreview(project);
+  bindWorkspaceTaskCardModalEvents();
+  renderWorkspaceTaskCardModal(project);
 
   if (els.author) {
     els.author.textContent = getProjectAuthor(project);
@@ -243,18 +1321,13 @@ function fillProjectWorkspaceInfo(project) {
 
 function createDefaultWorkspaceContent(project) {
   return `
-    <h1>${escapeHTML(getProjectName(project))}</h1>
+    <h1>${escapeHTML(getProjectTaskSummary(project))}</h1>
 
-    <p><strong>Muallif:</strong> ${escapeHTML(getProjectAuthor(project))}</p>
-    <p><strong>Muddat:</strong> ${escapeHTML(getProjectDeadline(project))}</p>
-    <p><strong>Holati:</strong> ${escapeHTML(getProjectStatus(project))}</p>
+    <p><strong>Topshiriqni yuborgan tashkilot:</strong> ${escapeHTML(getProjectTaskSender(project))}</p>
+    <p><strong>Rahbariyat topshirig‘i:</strong> ${escapeHTML(getProjectLeadershipTask(project))}</p>
 
-    <p><strong>Amalga oshirish mexanizmi:</strong> ${escapeHTML(getProjectMechanism(project))}</p>
-    <p><strong>Amalga oshirish shakli:</strong> ${escapeHTML(getProjectForm(project))}</p>
-
-    <p>
-      Bu yerda loyiha bo‘yicha to‘liq matn, topshiriq, izoh, tahlil va hujjat matnlarini yozish mumkin.
-    </p>
+    <p><strong>Topshiriqning qisqacha mazmuni:</strong></p>
+    <p>${escapeHTML(getProjectTaskSummary(project))}</p>
   `;
 }
 
@@ -282,6 +1355,7 @@ function setWorkspacePanelCenterMode() {
 
   els.workspaceView.classList.add("panel-center");
   els.workspaceView.classList.remove("editor-open");
+  els.workspaceView.classList.remove("pdf-preview-open");
 
   if (els.workspaceBody) {
     els.workspaceBody.classList.remove("editor-full-mode");
@@ -308,6 +1382,7 @@ function clearWorkspaceViewMode() {
 
   els.workspaceView.classList.remove("panel-center");
   els.workspaceView.classList.remove("editor-open");
+  els.workspaceView.classList.remove("pdf-preview-open");
 
   if (els.workspaceBody) {
     els.workspaceBody.classList.remove("editor-full-mode");
@@ -559,37 +1634,10 @@ function openProjectWorkspace(projectId) {
   els.listView.style.display = "none";
   els.workspaceView.style.display = "flex";
 
-  setWorkspacePanelCenterMode();
+  setWorkspacePdfViewMode();
   resetWorkspaceVariantSelection();
 
   fillProjectWorkspaceInfo(project);
-  resetWorkspacePages(loadWorkspaceContent(project));
-
-  bindWorkspaceVariantEvents();
-
-  bindWorkspaceOrientation();
-  loadWorkspaceOrientation();
-
-  bindWorkspaceZoom();
-  loadWorkspaceZoom();
-
-  bindWorkspaceRulerIndent();
-  bindWorkspaceVerticalRulerIndent();
-  loadWorkspaceIndent();
-
-  bindWorkspaceTrackChanges();
-
-  setTimeout(() => {
-    autoPaginateWorkspace();
-
-    const firstPage = getWorkspacePapers()[0];
-
-    if (firstPage) {
-      setActiveWorkspacePage(firstPage);
-    }
-
-    updateWorkspaceBottomStats();
-  }, 80);
 }
 
 function closeProjectWorkspace() {
@@ -2062,6 +3110,8 @@ document.addEventListener("DOMContentLoaded", () => {
    GLOBAL
 ========================================================= */
 
+window.downloadWorkspaceTaskFile = downloadWorkspaceTaskFile;
+window.viewWorkspaceTaskFile = viewWorkspaceTaskFile;
 window.openProjectWorkspace = openProjectWorkspace;
 window.closeProjectWorkspace = closeProjectWorkspace;
 window.initProjectWorkspace = initProjectWorkspace;

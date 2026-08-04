@@ -2,6 +2,8 @@ const $ = id => document.getElementById(id);
 
 const AppState = {
   projects: [],
+  indicators: [],
+  indexlar: [],
   editIndex: null,
   editId: null,
   executors: [],
@@ -13,14 +15,16 @@ const AppEls = {
   menuProjects: $("menuProjects"),
   menuStructure: $("menuStructure"),
   menuTadat: $("menuTadat"),
-  menuReports: $("menuReports"),
+  menuIndexlar: $("menuIndexlar"),
+  menuIndicators: $("menuIndicators"),
   menuSettings: $("menuSettings"),
 
   dashboardSection: $("dashboardSection"),
   projectsSection: $("projectsSection"),
   structureSection: $("structureSection"),
   tadatSection: $("tadatSection"),
-  reportsSection: $("reportsSection"),
+  indexlarSection: $("indexlarSection"),
+  indicatorsSection: $("indicatorsSection"),
   settingsSection: $("settingsSection"),
 
   pageTitle: document.querySelector(".page-title"),

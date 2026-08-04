@@ -43,6 +43,163 @@
 .projects-pagination{
   flex:0 0 auto;
 }
+
+/* =========================================================
+   PROJECTS TOP STATS
+========================================================= */
+
+.projects-top-stats{
+  flex:0 0 auto;
+  width:100%;
+  margin-bottom:20px;
+}
+
+.projects-stats-title{
+  margin-bottom:16px;
+}
+
+.projects-stats-title h2{
+  margin:0;
+  color:#0f172a;
+  font-size:26px;
+  line-height:1.15;
+  font-weight:950;
+  letter-spacing:-.04em;
+}
+
+.projects-stats-title p{
+  margin:7px 0 0;
+  color:#64748b;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:750;
+}
+
+.projects-kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+}
+
+.projects-kpi-card{
+  min-height:98px;
+  position:relative;
+  overflow:hidden;
+
+  display:flex;
+  align-items:center;
+  gap:18px;
+
+  padding:20px 24px;
+
+  border-radius:24px;
+  border:1px solid #dbe4f0;
+  background:linear-gradient(145deg,#ffffff,#f8fbff);
+  box-shadow:0 12px 30px rgba(15,23,42,.06);
+}
+
+.projects-kpi-card::after{
+  content:"";
+  position:absolute;
+  right:-28px;
+  top:-46px;
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  background:rgba(37,99,235,.08);
+}
+
+.projects-kpi-icon{
+  width:58px;
+  height:58px;
+  flex:0 0 58px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:18px;
+  color:#fff;
+  font-size:27px;
+  box-shadow:0 14px 26px rgba(15,23,42,.14);
+}
+
+.projects-kpi-icon.green{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.projects-kpi-icon.blue{
+  background:linear-gradient(135deg,#60a5fa,#2563eb);
+}
+
+.projects-kpi-icon.slate{
+  background:linear-gradient(135deg,#94a3b8,#475569);
+}
+
+.projects-kpi-icon.red{
+  background:linear-gradient(135deg,#fb7185,#ef4444);
+}
+
+.projects-kpi-info{
+  position:relative;
+  z-index:1;
+  min-width:0;
+}
+
+.projects-kpi-info > div{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.projects-kpi-info strong{
+  color:#0f172a;
+  font-size:34px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.05em;
+}
+
+.projects-kpi-info p{
+  margin:7px 0 0;
+  color:#64748b;
+  font-size:13px;
+  font-weight:850;
+}
+
+.projects-kpi-trend{
+  min-height:25px;
+  padding:0 10px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:999px;
+  background:#dcfce7;
+  color:#16a34a;
+
+  font-size:12px;
+  font-weight:950;
+  white-space:nowrap;
+}
+
+@media (max-width:1200px){
+  .projects-kpi-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media (max-width:700px){
+  .projects-kpi-grid{
+    grid-template-columns:1fr;
+  }
+
+  .projects-kpi-card{
+    padding:18px;
+  }
+}
+
 /* =========================================================
    TOOLBAR: Search + Status + Add Project
 ========================================================= */
@@ -729,3 +886,28 @@
   transform:none;
 }
 
+
+/* =========================================================
+   PROJECT TABLE — TASK MODAL COLUMNS
+========================================================= */
+
+.projects-table th:nth-child(1),
+.projects-table td:nth-child(1){ width:5%; }
+
+.projects-table th:nth-child(2),
+.projects-table td:nth-child(2){ width:6%; }
+
+.projects-table th:nth-child(3),
+.projects-table td:nth-child(3){ width:22%; }
+
+.projects-table th:nth-child(4),
+.projects-table td:nth-child(4){ width:20%; }
+
+.projects-table th:nth-child(5),
+.projects-table td:nth-child(5){ width:31%; text-align:left; }
+
+.projects-table th:nth-child(6),
+.projects-table td:nth-child(6){ width:8%; }
+
+.projects-table th:nth-child(7),
+.projects-table td:nth-child(7){ width:8%; }

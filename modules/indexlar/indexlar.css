@@ -1,0 +1,763 @@
+/* =========================================================
+   INDEXLAR MODULE
+   Mijozga yo'naltirilganlik indeksi
+========================================================= */
+
+#indexlarSection{
+  height:100%;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:8px;
+  scroll-behavior:smooth;
+  scrollbar-gutter:stable;
+}
+
+.indexlar-page{
+  width:100%;
+  min-height:max-content;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  padding-bottom:72px;
+}
+
+.indexlar-head{
+  align-items:flex-start;
+  gap:18px;
+}
+
+.indexlar-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:8px;
+  color:#2563eb;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+
+.indexlar-head h2{
+  margin:0;
+  font-size:28px;
+  font-weight:900;
+  color:#0f172a;
+  letter-spacing:-.03em;
+}
+
+.indexlar-head p{
+  margin:7px 0 0;
+  color:#64748b;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.indexlar-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.indexlar-light-btn,
+.indexlar-primary-btn{
+  height:40px;
+  border-radius:14px;
+  border:1px solid #dbe3ef;
+  padding:0 14px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+.indexlar-light-btn{
+  background:#fff;
+  color:#0f172a;
+}
+
+.indexlar-primary-btn{
+  background:#2563eb;
+  border-color:#2563eb;
+  color:#fff;
+  box-shadow:0 12px 30px rgba(37,99,235,.22);
+}
+
+.indexlar-light-btn:hover,
+.indexlar-primary-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 30px rgba(15,23,42,.12);
+}
+
+.indexlar-filter-card,
+.indexlar-panel,
+.indexlar-mi-card,
+.indexlar-kpi-card{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  box-shadow:0 14px 38px rgba(15,23,42,.06);
+}
+
+.indexlar-filter-card{
+  border-radius:22px;
+  padding:18px;
+}
+
+.indexlar-filter-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+
+.indexlar-filter-grid label{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.indexlar-filter-grid label span{
+  font-size:12px;
+  font-weight:900;
+  color:#475569;
+}
+
+.indexlar-filter-grid input,
+.indexlar-filter-grid select,
+.indexlar-search-box input{
+  width:100%;
+  height:42px;
+  border:1px solid #dbe3ef;
+  border-radius:14px;
+  background:#f8fafc;
+  color:#0f172a;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:700;
+  outline:none;
+  padding:0 13px;
+}
+
+.indexlar-search-box{
+  height:42px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid #dbe3ef;
+  border-radius:14px;
+  background:#f8fafc;
+  padding:0 12px;
+}
+
+.indexlar-search-box i{
+  color:#64748b;
+}
+
+.indexlar-search-box input{
+  border:0;
+  background:transparent;
+  padding:0;
+  height:40px;
+}
+
+.indexlar-summary-grid{
+  display:grid;
+  grid-template-columns:1.35fr repeat(3,1fr);
+  gap:16px;
+}
+
+.indexlar-mi-card,
+.indexlar-kpi-card{
+  border-radius:24px;
+  padding:20px;
+  min-height:148px;
+}
+
+.indexlar-mi-card{
+  background:linear-gradient(135deg,#0f172a 0%,#1d4ed8 100%);
+  color:#fff;
+  border:0;
+  overflow:hidden;
+  position:relative;
+}
+
+.indexlar-mi-card::after{
+  content:"";
+  position:absolute;
+  right:-60px;
+  bottom:-80px;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+}
+
+.indexlar-mi-top{
+  position:relative;
+  z-index:1;
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:flex-start;
+}
+
+.indexlar-mi-top span,
+.indexlar-kpi-card span{
+  font-size:12px;
+  font-weight:900;
+  opacity:.82;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.indexlar-mi-top h3,
+.indexlar-kpi-card h3{
+  margin:8px 0 0;
+  font-size:34px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+
+.indexlar-mi-card p{
+  position:relative;
+  z-index:1;
+  margin:16px 0 16px;
+  color:rgba(255,255,255,.82);
+  font-size:13px;
+  font-weight:700;
+}
+
+.indexlar-ring{
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  border:7px solid rgba(255,255,255,.28);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:900;
+  background:rgba(255,255,255,.1);
+}
+
+.indexlar-mi-progress{
+  position:relative;
+  z-index:1;
+  height:10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.22);
+  overflow:hidden;
+}
+
+.indexlar-mi-progress span{
+  display:block;
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:#fff;
+  transition:width .35s ease;
+}
+
+.indexlar-kpi-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.indexlar-kpi-card p{
+  margin:14px 0 0;
+  color:#64748b;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.45;
+}
+
+.indexlar-kpi-card.blue{ background:linear-gradient(180deg,#ffffff,#eff6ff); }
+.indexlar-kpi-card.green{ background:linear-gradient(180deg,#ffffff,#ecfdf5); }
+.indexlar-kpi-card.orange{ background:linear-gradient(180deg,#ffffff,#fff7ed); }
+.indexlar-kpi-card.blue span{ color:#2563eb; }
+.indexlar-kpi-card.green span{ color:#16a34a; }
+.indexlar-kpi-card.orange span{ color:#ea580c; }
+
+.indexlar-main-grid,
+.indexlar-bottom-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.indexlar-panel{
+  border-radius:24px;
+  padding:20px;
+  min-width:0;
+}
+
+.indexlar-panel-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:16px;
+}
+
+.indexlar-panel-head h3{
+  margin:0;
+  color:#0f172a;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:-.02em;
+}
+
+.indexlar-panel-head p{
+  margin:5px 0 0;
+  color:#64748b;
+  font-size:13px;
+  font-weight:600;
+  line-height:1.45;
+}
+
+.indexlar-component-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.indexlar-component-card{
+  border:1px solid #e2e8f0;
+  border-radius:18px;
+  padding:16px;
+  background:#f8fafc;
+}
+
+.indexlar-component-card-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.indexlar-component-code{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:900;
+  color:#fff;
+  background:#2563eb;
+}
+
+.indexlar-component-card h4{
+  margin:0;
+  color:#0f172a;
+  font-size:14px;
+  font-weight:900;
+  line-height:1.35;
+}
+
+.indexlar-component-card strong{
+  display:block;
+  margin-top:10px;
+  color:#0f172a;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:-.03em;
+}
+
+.indexlar-component-card small{
+  color:#64748b;
+  font-weight:800;
+}
+
+.indexlar-component-progress{
+  margin-top:12px;
+  height:8px;
+  background:#e2e8f0;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.indexlar-component-progress span{
+  display:block;
+  height:100%;
+  background:#2563eb;
+  border-radius:999px;
+}
+
+.indexlar-formula-box{
+  border:1px solid #bfdbfe;
+  border-radius:20px;
+  background:linear-gradient(135deg,#eff6ff,#f8fafc);
+  padding:22px;
+}
+
+.indexlar-formula-box strong{
+  display:block;
+  color:#1d4ed8;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+
+.indexlar-formula-box span{
+  display:block;
+  margin-top:8px;
+  color:#475569;
+  font-size:13px;
+  font-weight:800;
+}
+
+.indexlar-source-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+
+.indexlar-source-grid div{
+  border:1px solid #e2e8f0;
+  border-radius:18px;
+  padding:16px;
+  background:#fff;
+}
+
+.indexlar-source-grid i{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  background:#dbeafe;
+  color:#2563eb;
+  font-size:18px;
+}
+
+.indexlar-source-grid strong{
+  display:block;
+  margin-top:12px;
+  color:#0f172a;
+  font-size:13px;
+  font-weight:900;
+}
+
+.indexlar-source-grid span{
+  display:block;
+  margin-top:6px;
+  color:#64748b;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.45;
+}
+
+.indexlar-register-panel{
+  padding:0;
+  overflow:hidden;
+}
+
+.indexlar-register-head{
+  margin:0;
+  padding:20px;
+  border-bottom:1px solid #e2e8f0;
+}
+
+.indexlar-register-note{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 12px;
+  border-radius:999px;
+  background:#f1f5f9;
+  color:#475569;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.indexlar-table-scroll{
+  width:100%;
+  max-height:520px;
+  min-height:360px;
+  overflow:auto;
+  scrollbar-gutter:stable;
+}
+
+.indexlar-table{
+  width:100%;
+  min-width:1180px;
+  border-collapse:separate;
+  border-spacing:0;
+}
+
+.indexlar-table th{
+  position:sticky;
+  top:0;
+  z-index:2;
+  background:#f8fafc;
+  color:#334155;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  text-align:left;
+  padding:13px 14px;
+  border-bottom:1px solid #e2e8f0;
+}
+
+.indexlar-table td{
+  padding:13px 14px;
+  border-bottom:1px solid #edf2f7;
+  vertical-align:middle;
+  color:#0f172a;
+  font-size:13px;
+  font-weight:700;
+}
+
+.indexlar-table tr:hover td{
+  background:#f8fafc;
+}
+
+.indexlar-component-pill,
+.indexlar-score-pill,
+.indexlar-source-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:11px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.indexlar-component-pill{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.indexlar-source-pill{
+  background:#f1f5f9;
+  color:#475569;
+}
+
+.indexlar-score-pill.good{ background:#dcfce7; color:#15803d; }
+.indexlar-score-pill.mid{ background:#fef3c7; color:#b45309; }
+.indexlar-score-pill.bad{ background:#fee2e2; color:#b91c1c; }
+
+.indexlar-fact-input{
+  width:92px;
+  height:36px;
+  border:1px solid #dbe3ef;
+  border-radius:12px;
+  background:#fff;
+  color:#0f172a;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:900;
+  padding:0 10px;
+  outline:none;
+}
+
+.indexlar-fact-input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.1);
+}
+
+.indexlar-muted-cell{
+  color:#64748b !important;
+  font-size:12px !important;
+  font-weight:700 !important;
+  line-height:1.45;
+}
+
+.indexlar-steps{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.indexlar-step{
+  display:grid;
+  grid-template-columns:42px 1fr;
+  gap:12px;
+  padding:14px;
+  border:1px solid #e2e8f0;
+  border-radius:18px;
+  background:#f8fafc;
+}
+
+.indexlar-step-no{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#2563eb;
+  color:#fff;
+  font-size:14px;
+  font-weight:900;
+}
+
+.indexlar-step h4{
+  margin:0;
+  color:#0f172a;
+  font-size:13px;
+  font-weight:900;
+}
+
+.indexlar-step p{
+  margin:5px 0 0;
+  color:#64748b;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.45;
+}
+
+.indexlar-step span{
+  display:inline-flex;
+  margin-top:8px;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#e0e7ff;
+  color:#3730a3;
+  font-size:11px;
+  font-weight:900;
+}
+
+.indexlar-report-list{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+
+.indexlar-report-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:13px 14px;
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  background:#f8fafc;
+}
+
+.indexlar-report-item strong{
+  display:block;
+  color:#0f172a;
+  font-size:13px;
+  font-weight:900;
+}
+
+.indexlar-report-item span{
+  display:block;
+  margin-top:3px;
+  color:#64748b;
+  font-size:11px;
+  font-weight:700;
+}
+
+.indexlar-report-item i{
+  color:#2563eb;
+  font-size:19px;
+}
+
+#indexlarSection::-webkit-scrollbar,
+.indexlar-table-scroll::-webkit-scrollbar{
+  width:10px;
+  height:10px;
+}
+
+#indexlarSection::-webkit-scrollbar-thumb,
+.indexlar-table-scroll::-webkit-scrollbar-thumb{
+  background:#cbd5e1;
+  border-radius:999px;
+  border:2px solid #f8fafc;
+}
+
+#indexlarSection::-webkit-scrollbar-track,
+.indexlar-table-scroll::-webkit-scrollbar-track{
+  background:#f1f5f9;
+  border-radius:999px;
+}
+
+@media (max-width:1200px){
+  .indexlar-filter-grid,
+  .indexlar-summary-grid,
+  .indexlar-main-grid,
+  .indexlar-bottom-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .indexlar-mi-card{
+    grid-column:1 / -1;
+  }
+}
+
+@media (max-width:760px){
+  .indexlar-filter-grid,
+  .indexlar-summary-grid,
+  .indexlar-main-grid,
+  .indexlar-bottom-grid,
+  .indexlar-component-list,
+  .indexlar-source-grid{
+    grid-template-columns:1fr;
+  }
+
+  .indexlar-head,
+  .indexlar-panel-head{
+    flex-direction:column;
+  }
+}
+
+
+/* INDEXLAR HEADER REMOVED FIX */
+.indexlar-page > .indexlar-filter-card:first-child{
+  margin-top:0;
+}
+
+
+/* Indexlar: yuqoridagi ortiqcha KPI cardlar olib tashlandi */
+.indexlar-summary-grid{
+  display:none !important;
+}
+
+
+/* =========================================================
+   INDEXLAR — SIDEBAR SUBMENU VIEW MODE
+   Pastki menyu bosilganda o'ngda faqat tanlangan blok ko'rinadi
+========================================================= */
+
+#indexlarSection.indexlar-single-view .indexlar-page{
+  gap:0;
+}
+
+#indexlarSection.indexlar-single-view .indexlar-panel{
+  width:100%;
+}
+
+#indexlarSection.indexlar-single-view .indexlar-bottom-grid{
+  grid-template-columns:1fr;
+  gap:0;
+}
+
+#indexlarSection.indexlar-single-view #indexlarRegisterPanel,
+#indexlarSection.indexlar-single-view #indexlarWorkflowPanel,
+#indexlarSection.indexlar-single-view #indexlarReportFormsPanel{
+  margin-top:0;
+}
+
+
+/* Indexlar: filter panel komponent/formula ustidan olib tashlandi;
+   endi u reestr blokidan oldin joylashadi. */
+.indexlar-main-grid + .indexlar-filter-card{
+  margin-top:0;
+}

@@ -5,6 +5,70 @@ let projectFilteredCount = 0;
 /* =========================================================
    PROJECTS SECTION — TABLE MODE + WORKSPACE OPEN
 ========================================================= */
+/* =========================================================
+   PROJECTS TOP STATS
+========================================================= */
+
+function setProjectsKpiText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function getProjectsKpiPercent(count, total) {
+  if (!total) return 0;
+  return Math.round((count / total) * 100);
+}
+
+function isProjectCompletedStatus(status) {
+  const value = String(status || "").toLowerCase();
+  return value === "completed" || value === "done" || value === "bajarilgan";
+}
+
+function isProjectRiskStatus(status) {
+  const value = String(status || "").toLowerCase();
+  return value === "risk" || value === "late" || value === "kechikkan" || value === "xavf";
+}
+
+function isProjectActiveStatus(status) {
+  const value = String(status || "").toLowerCase();
+  return value === "active" || value === "process" || value === "jarayonda" || (!isProjectCompletedStatus(value) && !isProjectRiskStatus(value));
+}
+
+function isProjectDeadlineOverdue(project) {
+  if (!project || !project.deadline || isProjectCompletedStatus(project.status)) return false;
+
+  const deadline = new Date(project.deadline);
+  if (Number.isNaN(deadline.getTime())) return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  deadline.setHours(0, 0, 0, 0);
+
+  return deadline < today;
+}
+
+function renderProjectsTopStats() {
+  const projects = Array.isArray(AppState?.projects)
+    ? AppState.projects.map(normalizeProject)
+    : [];
+
+  const total = projects.length;
+  const completed = projects.filter(project => isProjectCompletedStatus(project.status)).length;
+  const risk = projects.filter(project => isProjectRiskStatus(project.status) || isProjectDeadlineOverdue(project)).length;
+  const active = projects.filter(project => isProjectActiveStatus(project.status) && !isProjectDeadlineOverdue(project)).length;
+
+  setProjectsKpiText("projectsTotalKpi", total);
+  setProjectsKpiText("projectsActiveKpi", active);
+  setProjectsKpiText("projectsCompletedKpi", completed);
+  setProjectsKpiText("projectsRiskKpi", risk);
+
+  setProjectsKpiText("projectsTotalTrend", `↗ ${total ? 100 : 0}%`);
+  setProjectsKpiText("projectsActiveTrend", `↗ ${getProjectsKpiPercent(active, total)}%`);
+  setProjectsKpiText("projectsCompletedTrend", `↗ ${getProjectsKpiPercent(completed, total)}%`);
+  setProjectsKpiText("projectsRiskTrend", `↗ ${getProjectsKpiPercent(risk, total)}%`);
+}
+
+
 
 function getStatusLabel(status) {
   if (status === "completed") return "Completed";
@@ -25,6 +89,30 @@ function getProjectIconClass(status) {
 }
 
 function normalizeProject(project = {}) {
+  const taskSender =
+    project.taskSender ||
+    project.task_sender ||
+    project.author ||
+    project.muallif ||
+    project.docName ||
+    project.doc_name ||
+    "";
+
+  const leadershipTask =
+    project.leadershipTask ||
+    project.leadership_task ||
+    project.manager ||
+    project.mechanism ||
+    "";
+
+  const taskSummary =
+    project.taskSummary ||
+    project.task_summary ||
+    project.name ||
+    project.eventName ||
+    project.event_name ||
+    "";
+
   return {
     id: project.id,
 
@@ -34,11 +122,16 @@ function normalizeProject(project = {}) {
     chiqimNumber: project.chiqimNumber || project.chiqim_number || project.outNumber || project.out_number || "",
     chiqimDate: project.chiqimDate || project.chiqim_date || project.outDate || project.out_date || "",
 
-    author: project.author || project.muallif || project.docName || project.doc_name || "",
+    author: taskSender,
 
-    name: project.name || project.eventName || project.event_name || "",
-    manager: project.manager || project.mechanism || "",
+    name: taskSummary,
+    manager: leadershipTask,
     form: project.form || project.implementation_form || "",
+
+    taskSender: taskSender,
+    leadershipTask: leadershipTask,
+    taskSummary: taskSummary,
+    taskFile: project.taskFile || project.task_file || null,
 
     deadline: project.deadline || "",
 
@@ -70,32 +163,120 @@ function parseExecutors(value) {
    MODAL
 ========================================================= */
 
+function getEmptyProjectFileText() {
+  return "PDF, Word, Excel, JPG, JPEG, PNG va boshqa fayllar";
+}
+
+function formatProjectFileSize(bytes) {
+  const size = Number(bytes) || 0;
+
+  if (size < 1024) return `${size} B`;
+  if (size < 1024 * 1024) return `${Math.round(size / 1024)} KB`;
+
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function updateProjectFileUI(file = null) {
+  if (AppEls.taskFileName) {
+    AppEls.taskFileName.textContent = file?.name || "Fayl tanlanmagan";
+  }
+
+  if (AppEls.taskFileSize) {
+    AppEls.taskFileSize.textContent = file
+      ? `${formatProjectFileSize(file.size)} • ${file.type || "file"}`
+      : getEmptyProjectFileText();
+  }
+
+  if (AppEls.clearTaskFileBtn) {
+    AppEls.clearTaskFileBtn.style.display = file ? "inline-flex" : "none";
+  }
+}
+
+function clearProjectFile() {
+  AppState.projectUploadedFile = null;
+
+  if (AppEls.taskFileInput) {
+    AppEls.taskFileInput.value = "";
+  }
+
+  updateProjectFileUI(null);
+}
+
+function handleProjectFileUpload(event) {
+  const file = event?.target?.files?.[0];
+
+  if (!file) {
+    clearProjectFile();
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    AppState.projectUploadedFile = {
+      name: file.name,
+      type: file.type || "application/octet-stream",
+      size: file.size,
+      data: reader.result,
+      uploadedAt: new Date().toISOString()
+    };
+
+    updateProjectFileUI(AppState.projectUploadedFile);
+  };
+
+  reader.onerror = () => {
+    alert("Faylni o‘qishda xatolik yuz berdi");
+    clearProjectFile();
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function downloadProjectFile(file) {
+  if (!file || !file.data) {
+    alert("Fayl biriktirilmagan");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.href = file.data;
+  link.download = file.name || "topshiriq-fayli";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function downloadProjectFileById(id) {
+  const project = (AppState.projects || [])
+    .map(normalizeProject)
+    .find(item => String(item.id) === String(id));
+
+  downloadProjectFile(project?.taskFile || null);
+}
+
 function openProjectModal() {
   AppState.editIndex = null;
   AppState.editId = null;
   AppState.executors = [];
+  AppState.projectUploadedFile = null;
 
-  renderExecutors();
-
-  AppEls.modalTitle.innerText = "New Project";
+  if (AppEls.modalTitle) {
+    AppEls.modalTitle.innerText = "Yangi topshiriq";
+  }
 
   [
-    AppEls.kirimNumber,
-    AppEls.kirimDate,
-    AppEls.chiqimNumber,
-    AppEls.chiqimDate,
-    AppEls.author,
-    AppEls.eventName,
-    AppEls.mechanism,
-    AppEls.form,
-    AppEls.deadline
+    AppEls.taskSender,
+    AppEls.leadershipTask,
+    AppEls.taskSummary
   ].forEach(input => {
     if (input) input.value = "";
   });
 
-  if (AppEls.status) {
-    AppEls.status.value = "active";
+  if (AppEls.taskFileInput) {
+    AppEls.taskFileInput.value = "";
   }
+
+  updateProjectFileUI(null);
 
   if (AppEls.modal) {
     AppEls.modal.classList.add("show");
@@ -109,96 +290,55 @@ function closeModal() {
 }
 
 /* =========================================================
-   EXECUTORS
-========================================================= */
-
-function addExecutor() {
-  const value = AppEls.executorInput.value.trim();
-
-  if (!value) return;
-
-  AppState.executors.push(value);
-  AppEls.executorInput.value = "";
-
-  renderExecutors();
-}
-
-function removeExecutor(index) {
-  AppState.executors.splice(index, 1);
-  renderExecutors();
-}
-
-function renderExecutors() {
-  if (!AppEls.executorList) return;
-
-  AppEls.executorList.innerHTML = AppState.executors.map((executor, index) => `
-    <div class="executor">
-      <span>• ${escapeHTML(executor)}</span>
-      <button type="button" onclick="removeExecutor(${index})">❌</button>
-    </div>
-  `).join("");
-}
-
-/* =========================================================
    SAVE PROJECT
 ========================================================= */
 
 async function saveProject() {
   try {
-    if (!AppEls.kirimNumber.value.trim()) {
-      alert("Kirim raqamini kiriting");
-      AppEls.kirimNumber.focus();
+    const taskSender = AppEls.taskSender?.value?.trim() || "";
+    const leadershipTask = AppEls.leadershipTask?.value?.trim() || "";
+    const taskSummary = AppEls.taskSummary?.value?.trim() || "";
+
+    if (!taskSender) {
+      alert("Topshiriqni yuborgan vazirlik, idora yoki tashkilotni tanlang");
+      AppEls.taskSender?.focus();
       return;
     }
 
-    if (!AppEls.kirimDate.value) {
-      alert("Kirim sanasini tanlang");
-      AppEls.kirimDate.focus();
+    if (!leadershipTask) {
+      alert("Rahbariyat tomonidan berilgan topshiriq turini tanlang");
+      AppEls.leadershipTask?.focus();
       return;
     }
 
-    if (!AppEls.author.value.trim()) {
-      alert("Muallifni kiriting");
-      AppEls.author.focus();
-      return;
-    }
-
-    if (!AppEls.eventName.value.trim()) {
-      alert("Tadbir nomini kiriting");
-      AppEls.eventName.focus();
-      return;
-    }
-
-    if (!AppEls.deadline.value) {
-      alert("Muddat sanasini tanlang");
-      AppEls.deadline.focus();
+    if (!taskSummary) {
+      alert("Topshiriqning qisqacha mazmunini kiriting");
+      AppEls.taskSummary?.focus();
       return;
     }
 
     const data = {
-      kirimNumber: AppEls.kirimNumber.value.trim(),
-      kirimDate: AppEls.kirimDate.value || null,
+      taskSender,
+      task_sender: taskSender,
+      leadershipTask,
+      leadership_task: leadershipTask,
+      taskSummary,
+      task_summary: taskSummary,
+      taskFile: AppState.projectUploadedFile || null,
+      task_file: AppState.projectUploadedFile || null,
 
-      chiqimNumber: AppEls.chiqimNumber.value.trim(),
-      chiqimDate: AppEls.chiqimDate.value || null,
-
-      author: AppEls.author.value.trim(),
-
-      name: AppEls.eventName.value.trim(),
-      manager: AppEls.mechanism.value.trim(),
-      form: AppEls.form.value.trim(),
-
-      deadline: AppEls.deadline.value,
-      executors: [...AppState.executors],
-      status: AppEls.status.value,
-
-      /*
-        Eski backend bilan vaqtincha moslik uchun.
-        Backend yangilangandan keyin bularni olib tashlash mumkin.
-      */
-      docNumber: AppEls.kirimNumber.value.trim(),
-      docDate: AppEls.kirimDate.value || null,
-      docName: AppEls.author.value.trim()
+      /* Eski kodlar bilan moslik */
+      author: taskSender,
+      name: taskSummary,
+      eventName: taskSummary,
+      manager: leadershipTask,
+      mechanism: leadershipTask,
+      form: "",
+      implementationForm: "",
+      deadline: null,
+      executors: [],
+      status: "active",
+      docName: taskSender
     };
 
     if (AppState.editId === null) {
@@ -226,6 +366,8 @@ async function saveProject() {
 function renderProjectsSection() {
   if (!AppEls.projectsEl) return;
 
+  renderProjectsTopStats();
+
   const searchText = AppEls.searchInput
     ? AppEls.searchInput.value.toLowerCase()
     : "";
@@ -244,16 +386,10 @@ function renderProjectsSection() {
     .filter(project => {
       const text = `
         ${project.id || ""}
-        ${project.kirimNumber || ""}
-        ${project.kirimDate || ""}
-        ${project.chiqimNumber || ""}
-        ${project.chiqimDate || ""}
-        ${project.author || ""}
-        ${project.name || ""}
-        ${project.manager || ""}
-        ${project.form || ""}
-        ${(project.executors || []).join(" ")}
-        ${project.deadline || ""}
+        ${project.taskSender || ""}
+        ${project.leadershipTask || ""}
+        ${project.taskSummary || ""}
+        ${project.taskFile?.name || ""}
         ${project.status || ""}
       `.toLowerCase();
 
@@ -278,7 +414,7 @@ function renderProjectsSection() {
   if (pageProjects.length === 0) {
     AppEls.projectsEl.innerHTML = `
       <tr class="projects-empty-row">
-        <td colspan="12">
+        <td colspan="7">
           <div class="projects-empty">
             <i class="ri-folder-open-line"></i>
             <strong>Project topilmadi</strong>
@@ -296,9 +432,6 @@ function renderProjectsSection() {
   }
 
   pageProjects.forEach(project => {
-    const isOverdue = overdue(project.deadline);
-    const deadlineText = getDeadlineText(project.deadline);
-
     AppEls.projectsEl.innerHTML += `
       <tr class="project-table-row" onclick="openProjectWorkspace(${project.id})">
         <td>
@@ -312,66 +445,34 @@ function renderProjectsSection() {
         </td>
 
         <td>
-          <div class="doc-info">
-            <span class="doc-number">${escapeHTML(project.kirimNumber || "-")}</span>
-            <span class="doc-date">${escapeHTML(project.kirimDate || "-")}</span>
-          </div>
-        </td>
-
-        <td>
-          <div class="doc-info">
-            <span class="doc-number">${escapeHTML(project.chiqimNumber || "-")}</span>
-            <span class="doc-date">${escapeHTML(project.chiqimDate || "-")}</span>
+          <div class="table-text">
+            ${escapeHTML(project.taskSender || "-")}
           </div>
         </td>
 
         <td>
           <div class="table-text">
-            ${escapeHTML(project.author || "-")}
+            ${escapeHTML(project.leadershipTask || "-")}
           </div>
         </td>
 
         <td>
           <div class="table-title">
-            ${escapeHTML(project.name || "-")}
+            ${escapeHTML(project.taskSummary || "-")}
           </div>
         </td>
 
         <td>
-          <div class="table-text">
-            ${escapeHTML(project.manager || "-")}
-          </div>
-        </td>
-
-        <td>
-          <div class="table-text">
-            ${escapeHTML(project.form || "-")}
-          </div>
-        </td>
-
-        <td>
-          <div class="executor-chips">
-            ${
-              project.executors && project.executors.length
-                ? project.executors.map(executor => `
-                    <span class="executor-chip">${escapeHTML(executor)}</span>
-                  `).join("")
-                : `<span class="executor-chip empty">Kiritilmagan</span>`
-            }
-          </div>
-        </td>
-
-        <td>
-          <span class="deadline-cell ${isOverdue ? "overdue" : ""}">
-            <i class="ri-time-line"></i>
-            ${escapeHTML(deadlineText || "-")}
-          </span>
-        </td>
-
-        <td>
-          <span class="status-badge status-${escapeHTML(project.status)}">
-            ${getStatusLabel(project.status)}
-          </span>
+          ${project.taskFile && project.taskFile.data ? `
+            <button
+              type="button"
+              class="project-file-download"
+              onclick="event.stopPropagation(); downloadProjectFileById(${project.id})"
+              title="Faylni yuklab olish"
+            >
+              <i class="ri-download-2-line"></i>
+            </button>
+          ` : `<span class="executor-chip empty">Fayl yo‘q</span>`}
         </td>
 
         <td>
@@ -492,28 +593,25 @@ function editProject(index) {
   AppState.editIndex = index;
   AppState.editId = project.id;
 
-  AppEls.modalTitle.innerText = "Edit Project";
+  if (AppEls.modalTitle) {
+    AppEls.modalTitle.innerText = "Edit Project";
+  }
 
-  AppEls.kirimNumber.value = project.kirimNumber || "";
-  AppEls.kirimDate.value = project.kirimDate || "";
+  if (AppEls.taskSender) AppEls.taskSender.value = project.taskSender || "";
+  if (AppEls.leadershipTask) AppEls.leadershipTask.value = project.leadershipTask || "";
+  if (AppEls.taskSummary) AppEls.taskSummary.value = project.taskSummary || "";
 
-  AppEls.chiqimNumber.value = project.chiqimNumber || "";
-  AppEls.chiqimDate.value = project.chiqimDate || "";
+  AppState.projectUploadedFile = project.taskFile || null;
 
-  AppEls.author.value = project.author || "";
+  if (AppEls.taskFileInput) {
+    AppEls.taskFileInput.value = "";
+  }
 
-  AppEls.eventName.value = project.name || "";
-  AppEls.mechanism.value = project.manager || "";
-  AppEls.form.value = project.form || "";
+  updateProjectFileUI(AppState.projectUploadedFile);
 
-  AppEls.deadline.value = project.deadline || "";
-  AppEls.status.value = project.status || "active";
-
-  AppState.executors = [...(project.executors || [])];
-
-  renderExecutors();
-
-  AppEls.modal.classList.add("show");
+  if (AppEls.modal) {
+    AppEls.modal.classList.add("show");
+  }
 }
 
 async function deleteProject(index) {

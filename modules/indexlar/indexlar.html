@@ -1,0 +1,137 @@
+<section id="indexlarSection" style="display:none">
+  <div class="indexlar-page">
+
+    <div class="indexlar-main-grid">
+
+      <div class="indexlar-panel indexlar-components-panel">
+        <div class="indexlar-panel-head">
+          <div>
+            <h3>Komponentlar bo‘yicha natija</h3>
+            <p>Uslubiyotdagi 30/30/20/20 ulush asosida</p>
+          </div>
+        </div>
+        <div class="indexlar-component-list" id="indexComponentCards"></div>
+      </div>
+
+      <div class="indexlar-panel indexlar-formula-panel">
+        <div class="indexlar-panel-head">
+          <div>
+            <h3>Hisoblash formulasi</h3>
+            <p>Yakuniy MI komponentlar yig‘indisi bilan aniqlanadi</p>
+          </div>
+        </div>
+        <div class="indexlar-formula-box">
+          <strong>MI = IQ + XS + VS + O‘H</strong>
+          <span>IQ — 30 ball, XS — 30 ball, VS — 20 ball, O‘H — 20 ball</span>
+        </div>
+        <div class="indexlar-source-grid">
+          <div>
+            <i class="ri-user-smile-line"></i>
+            <strong>Subyektiv ma’lumotlar</strong>
+            <span>SMS, Push, QR, Telegram va qayta aloqa kanallari</span>
+          </div>
+          <div>
+            <i class="ri-database-2-line"></i>
+            <strong>Obyektiv ma’lumotlar</strong>
+            <span>my.soliq.uz, mobil ilova, koll-markaz, murojaatlar bazasi</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="indexlar-filter-card">
+      <div class="indexlar-filter-grid">
+        <label>
+          <span>Hisobot davri</span>
+          <input id="indexPeriodInput" type="month" value="2026-07">
+        </label>
+
+        <label>
+          <span>Hudud / daraja</span>
+          <select id="indexRegionFilter">
+            <option value="republic">Respublika bo‘yicha</option>
+            <option value="central">Markaziy apparat</option>
+            <option value="tashkent">Toshkent shahri</option>
+            <option value="surxondaryo">Surxondaryo viloyati</option>
+            <option value="samarqand">Samarqand viloyati</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Komponent</span>
+          <select id="indexComponentFilter">
+            <option value="all">Barcha komponentlar</option>
+            <option value="IQ">IQ — Imkoniyat va qulaylik</option>
+            <option value="XS">XS — Xizmatlar sifati</option>
+            <option value="VS">VS — Vaqt samaradorligi</option>
+            <option value="OH">O‘H — O‘zaro hamkorlik</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Qidirish</span>
+          <div class="indexlar-search-box">
+            <i class="ri-search-line"></i>
+            <input id="indexSearchInput" type="text" placeholder="Ko‘rsatkich, manba yoki mas’ul tuzilma">
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="indexlar-panel indexlar-register-panel" id="indexlarRegisterPanel">
+      <div class="indexlar-panel-head indexlar-register-head">
+        <div>
+          <h3>Ko‘rsatkichlar reestri</h3>
+          <p>12 ta ko‘rsatkich bo‘yicha fakt qiymatni kiriting — ball avtomatik hisoblanadi</p>
+        </div>
+        <div class="indexlar-register-note">
+          <i class="ri-information-line"></i>
+          Ma’lumot localStorage’da saqlanadi
+        </div>
+      </div>
+
+      <div class="indexlar-table-scroll">
+        <table class="indexlar-table">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Komponent</th>
+              <th>Ko‘rsatkich</th>
+              <th>Fakt</th>
+              <th>Max</th>
+              <th>Ball</th>
+              <th>Og‘ish</th>
+              <th>Manba</th>
+              <th>Mas’ul</th>
+            </tr>
+          </thead>
+          <tbody id="indexIndicatorsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="indexlar-bottom-grid">
+      <div class="indexlar-panel" id="indexlarWorkflowPanel">
+        <div class="indexlar-panel-head">
+          <div>
+            <h3>Hisoblash va amalga oshirish sxemasi</h3>
+            <p>Uslubiyot 2-ilovasiga mos bosqichlar</p>
+          </div>
+        </div>
+        <div class="indexlar-steps" id="indexWorkflowSteps"></div>
+      </div>
+
+      <div class="indexlar-panel" id="indexlarReportFormsPanel">
+        <div class="indexlar-panel-head">
+          <div>
+            <h3>Hisobot shakllari</h3>
+            <p>Uslubiyot 3-ilovasidagi taqdim etish shakllari</p>
+          </div>
+        </div>
+        <div class="indexlar-report-list" id="indexReportForms"></div>
+      </div>
+    </div>
+
+  </div>
+</section>

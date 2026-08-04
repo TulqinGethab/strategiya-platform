@@ -1,123 +1,69 @@
 <section id="structureSection" style="display:none">
 
-  <div class="structure-page">
+  <div class="sq-structure-page" id="structureRoot" data-structure-view="committee">
 
-    <aside class="structure-builder-panel">
-      <div class="builder-header">
-        <span>STRUCTURE BUILDER</span>
-        <h3>Struktura yaratish</h3>
+    <aside class="sq-structure-side">
+      <div class="sq-side-head">
+        <span>STRUKTURA</span>
+        <h3 id="structureSideTitle">Soliq qo‘mitasi</h3>
+        <p id="structureSideText">Markaziy apparat tuzilmasi</p>
       </div>
 
-      <div class="builder-body">
+      <div class="sq-side-stat-card">
+        <span>Markaziy apparat</span>
+        <strong>468</strong>
+        <p>boshqaruv xodimlari shtat birligi</p>
+      </div>
 
-        <div class="builder-format-box">
-          <div class="builder-format-title">
-            <span>Format tanlash</span>
-            <p>Preview uchun qog‘oz formati va yo‘nalishini tanlang</p>
-          </div>
+      <div class="sq-side-note">
+        <i class="ri-information-line"></i>
+        <p>
+          Diagramma SQ submenu — “Soliq qo‘mitasi strukturasi” qismi uchun tayyorlandi.
+          Bloklar PDF namunadagi markaziy apparat bo‘linmalari asosida joylashtirildi.
+        </p>
+      </div>
 
-          <div class="format-buttons">
-            <button type="button" class="format-btn active" id="createA4Format">
-              <i class="ri-file-paper-2-line"></i>
-              A4 format
-            </button>
-
-            <button type="button" class="format-btn" id="createA3Format">
-              <i class="ri-file-paper-line"></i>
-              A3 format
-            </button>
-          </div>
-
-          <div class="orientation-buttons">
-            <button type="button" class="orientation-btn" id="selectPortraitFormat">
-              <i class="ri-layout-top-line"></i>
-              Knijni
-            </button>
-
-            <button type="button" class="orientation-btn active" id="selectLandscapeFormat">
-              <i class="ri-layout-left-line"></i>
-              Albom
-            </button>
-          </div>
-        </div>
-
-        <div class="builder-help-box">
-          <i class="ri-cursor-line"></i>
-
-          <div>
-            <h4>Sarlavhani format ichida yozing</h4>
-            <p>
-              A4/A3 qog‘oz ichidagi sarlavha joyiga bosing va matnni bevosita shu yerda yozing.
-            </p>
-          </div>
-        </div>
-
+      <div class="sq-legend">
+        <div><span class="sq-legend-dot leader"></span> Rahbariyat</div>
+        <div><span class="sq-legend-dot dept"></span> Departament / boshqarma</div>
+        <div><span class="sq-legend-dot sub"></span> Bo‘lim / quyi tuzilma</div>
+        <div><span class="sq-legend-dot external"></span> Alohida tashkilot / inspeksiya</div>
       </div>
     </aside>
 
-    <main class="structure-preview-panel">
-      <div class="preview-header">
+    <main class="sq-structure-main">
+      <div class="sq-structure-toolbar">
         <div>
-          <span>PREVIEW</span>
-          <h2>Struktura preview</h2>
+          <span id="structureToolbarBadge">SOLIQ QO‘MITASI</span>
+          <h2 id="structureToolbarTitle">Soliq qo‘mitasi markaziy apparatining tuzilmasi</h2>
         </div>
 
-        <div class="preview-header-actions">
-          <div class="zoom-controls">
-            <button type="button" class="zoom-btn" id="zoomOutStructure">
-              <i class="ri-subtract-line"></i>
-            </button>
-
-            <button type="button" class="zoom-value" id="zoomResetStructure">
-              100%
-            </button>
-
-            <button type="button" class="zoom-btn" id="zoomInStructure">
-              <i class="ri-add-line"></i>
-            </button>
-          </div>
-
-          <div class="preview-format-badge" id="previewFormatBadge">
-            A4 • Albom
-          </div>
+        <div class="sq-toolbar-actions">
+          <button type="button" class="sq-zoom-btn" id="zoomOutStructure">
+            <i class="ri-subtract-line"></i>
+          </button>
+          <button type="button" class="sq-zoom-value" id="zoomResetStructure">100%</button>
+          <button type="button" class="sq-zoom-btn" id="zoomInStructure">
+            <i class="ri-add-line"></i>
+          </button>
         </div>
       </div>
 
-      <div class="preview-canvas">
-
-        <div class="paper-stage">
-          <div class="paper-zoom-stage" id="paperZoomStage">
-
-            <div class="preview-paper paper-a4 paper-landscape" id="previewPaper">
-
-              <div class="paper-body">
-
-                <div class="paper-title-area">
-                  <h2
-                    id="paperTitlePreview"
-                    contenteditable="true"
-                    spellcheck="false"
-                    data-placeholder="Sarlavhani shu yerga yozing"
-                  ></h2>
-                </div>
-
-                <div class="paper-content-area">
-                  <div class="paper-empty">
-                    <i class="ri-organization-chart"></i>
-                    <h3>Preview panel</h3>
-                    <p>
-                      Keyingi bosqichlarda struktura bloklari shu format ichida yaratiladi.
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-
+      <div class="sq-chart-scroll">
+        <div class="sq-chart-zoom" id="structureZoomStage">
+          <div class="sq-org-paper" id="structurePaper">
+            <div class="sq-org-header">
+              <h1 id="sqOrgTitle">Soliq qo‘mitasi markaziy apparatining<br>TUZILMASI</h1>
             </div>
 
+            <div class="sq-org-chart" id="sqOrgChart"></div>
+
+            <div class="sq-org-footer">
+              <p>Soliq qo‘mitasi markaziy apparati boshqaruv xodimlarining soni — <b>468 ta shtat birligi</b>.</p>
+              <p>* Soliq qo‘mitasining umumiy xodimlar soniga kiritilmaydi. &nbsp; ** Ishlab chiqarish xodimlari.</p>
+            </div>
           </div>
         </div>
-
       </div>
     </main>
 
