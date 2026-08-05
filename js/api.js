@@ -4,9 +4,9 @@
 ========================================================= */
 
 const API_ORIGIN =
-  window.location.protocol === 'file:' || !window.location.origin.startsWith('http')
-    ? 'http://localhost:3000'
-    : window.location.origin;
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:3000"
+    : "http://77.83.206.247/strategy-api";
 
 const PROJECTS_API_URL = `${API_ORIGIN}/api/projects`;
 
